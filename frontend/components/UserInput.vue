@@ -10,7 +10,6 @@
         name: 'user-input',
         methods: {
             submitGenes () {
-                console.log('OKAY')
                 this.$store.dispatch('submitGenes')
             }
         }

@@ -10,7 +10,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "apexcharts": "^2.2.4",
     "vue": "^2.1.0",
+    "vue-apexcharts": "^1.2.7",
     "vue-resource": "^1.5.1",
     "vuex": "^3.0.1"
   },

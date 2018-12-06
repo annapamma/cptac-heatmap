@@ -1,17 +1,19 @@
 <template>
     <div class="the-heatmap-container">
-        <heatmap/>
-        <heatmap/>
-        <heatmap/>
+        <heatmap-nominal :name="1"/>
+        <heatmap-nominal :name="2"/>
+        <heatmap-nominal :name="3"/>
     </div>
 </template>
 
 <script>
-    import Heatmap from './Heatmap.vue';
+    import HeatmapOrdinal from './HeatmapOrdinal.vue';
+    import HeatmapNominal from './HeatmapNominal.vue';
 
     export default {
         components: {
-            Heatmap
+            HeatmapNominal,
+            HeatmapOrdinal
         },
         name: 'the-heatmap-container'
     }

@@ -20,8 +20,9 @@ from django.contrib import admin
 import backend.views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', backend.views.index)
+    # url(r'^admin/', admin.site.urls),
+    url(r'^$', backend.views.index),
+    url('submit_genes', backend.views.submit_genes)
 ]
 
 if settings.DEBUG:
