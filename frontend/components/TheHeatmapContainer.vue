@@ -15,6 +15,7 @@
         },
         name: 'the-heatmap-container'
     }
+
 </script>
 
 <style scoped>
