@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import Heatmap from './Heatmap';
+    import Heatmap from './Heatmap.vue';
 
     export default {
         components: {
