@@ -1,8 +1,6 @@
 <template>
     <div class="the-heatmap-container">
-        <heatmap-nominal :name="1"/>
-        <heatmap-nominal :name="2"/>
-        <heatmap-nominal :name="3"/>
+        <heatmap-nominal />
     </div>
 </template>
 

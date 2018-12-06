@@ -1,0 +1,111 @@
+Case ID,Stage,Grade,3p,5q,7p,14q,ccrcc,cimp
+C3N-01808,I,II,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3N-01651,II,III,loss,LR neutral,LR amplification,LR neutral LOH,Yes,CIMP+
+C3N-01649,III,II,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3N-01648,II,II,LR neutral,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3N-01646,III,III,loss,LR neutral,LR neutral,loss,Yes,CIMP+
+C3N-01524,II,III,loss,LR amplification,LR neutral,LR neutral LOH,Yes,CIMP-
+C3N-01522,I,II,loss,LR neutral,LR neutral,LR neutral LOH,Yes,CIMP+
+C3N-01361,I,II,LR neutral LOH,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3N-01261,I,I,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP+
+C3N-01220,IV,IV,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3N-01214,II,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3N-01213,III,I,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3N-01200,IV,III,loss,LR neutral,LR neutral,loss,Yes,CIMP-
+C3N-01180,I,II,LR neutral,LR neutral,LR neutral,LR neutral,No,CIMP-
+C3N-01179,III,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3N-01178,III,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3N-01176,III,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3N-01175,III,II,LR neutral,LR neutral,LR neutral,LR neutral,No,CIMP-
+C3N-00953,II,III,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3N-00852,III,III,loss,LR amplification,LR amplification,LR neutral LOH,Yes,CIMP+
+C3N-00834,I,I,loss,LR neutral,LR neutral,loss,Yes,CIMP-
+C3N-00832,I,II,LR neutral,LR neutral,LR neutral,loss,No,CIMP-
+C3N-00831,II,II,loss,LR amplification,LR amplification,LR neutral,Yes,CIMP-
+C3N-00733,III,II,loss,LR amplification,LR amplification,loss,Yes,CIMP+
+C3N-00646,I,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3N-00577,IV,III,LR neutral LOH,LR amplification,LR neutral,loss,Yes,CIMP+
+C3N-00573,II,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3N-00495,I,II,loss,LR amplification,LR amplification,LR neutral,Yes,CIMP-
+C3N-00494,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3N-00492,II,III,LR neutral,LR neutral,LR neutral,LR neutral,No,CIMP-
+C3N-00491,I,II,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3N-00437,III,III,LR neutral LOH,LR neutral LOH,LR neutral,LR neutral LOH,Yes,CIMP+
+C3N-00435,III,III,LR neutral LOH,LR neutral,LR amplification,LR neutral,No,CIMP+
+C3N-00390,IV,II,loss,LR amplification,LR amplification,loss,Yes,CIMP-
+C3N-00380,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP+
+C3N-00320,III,II,loss,LR neutral,LR neutral,loss,Yes,CIMP-
+C3N-00317,I,II,loss,LR amplification,NA,loss,Yes,CIMP+
+C3N-00315,I,III,loss,LR neutral,LR neutral,loss,Yes,CIMP+
+C3N-00314,I,II,loss,LR neutral,LR amplification,loss,Yes,CIMP-
+C3N-00313,I,II,LR amplification,LR neutral,LR amplification,LR neutral,No,CIMP-
+C3N-00312,III,III,loss,LR neutral,LR neutral,loss,Yes,CIMP-
+C3N-00310,III,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP+
+C3N-00305,I,I,loss,LR amplification,LR amplification,LR neutral,Yes,CIMP-
+C3N-00246,I,II,loss,LR amplification,LR amplification,LR neutral,Yes,CIMP-
+C3N-00244,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3N-00242,I,II,loss,LR amplification,LR amplification,loss,Yes,CIMP+
+C3N-00194,IV,III,loss,LR amplification,NA,loss,Yes,CIMP+
+C3N-00177,III,II,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3N-00168,I,I,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3N-00154,II,III,LR neutral LOH,LR neutral,LR amplification,loss,Yes,CIMP+
+C3N-00150,IV,I,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3N-00149,IV,III,LR neutral LOH,LR amplification,LR amplification,loss,Yes,CIMP+
+C3N-00148,I,II,loss,LR amplification,LR amplification,loss,Yes,CIMP-
+C3L-01885,I,II,NA,NA,NA,NA,NA,NA
+C3L-01882,I,II,NA,NA,NA,NA,NA,NA
+C3L-01861,I,III,loss,LR neutral,LR neutral,loss,Yes,CIMP-
+C3L-01836,I,III,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-01607,III,III,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-01603,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-01560,I,III,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-01557,III,III,loss,LR amplification,LR amplification,loss,Yes,CIMP+
+C3L-01553,I,II,LR neutral LOH,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-01352,I,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-01313,III,IV,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3L-01302,III,IV,loss,LR amplification,LR amplification,loss,Yes,CIMP+
+C3L-01288,I,I,LR neutral LOH,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-01287,IV,IV,loss,LR amplification,LR amplification,loss,Yes,CIMP+
+C3L-01286,III,III,LR neutral LOH,LR amplification,LR amplification,LR amplification,Yes,CIMP+
+C3L-01283,I,III,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-01281,IV,IV,NA,NA,NA,NA,NA,NA
+C3L-00917,I,III,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-00910,I,III,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP+
+C3L-00908,II,III,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-00907,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00902,I,I,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-00817,I,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-00814,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00813,III,III,loss,LR neutral,LR amplification,loss,Yes,CIMP-
+C3L-00812,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00800,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00799,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00796,I,II,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-00792,II,III,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3L-00791,III,III,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP+
+C3L-00790,I,II,loss,LR amplification,LR amplification,LR neutral,Yes,CIMP-
+C3L-00766,I,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-00765,I,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00610,I,III,loss,LR amplification,LR amplification,LR neutral,Yes,CIMP-
+C3L-00607,III,III,loss,LR amplification,LR amplification,loss,Yes,CIMP-
+C3L-00606,III,III,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00583,I,III,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3L-00581,II,II,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-00561,III,IV,LR neutral LOH,LR amplification,LR neutral,NA,Yes,CIMP+
+C3L-00448,I,II,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3L-00447,I,III,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-00418,III,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP-
+C3L-00416,III,IV,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3L-00369,III,II,loss,LR neutral,LR neutral,LR neutral,Yes,CIMP+
+C3L-00360,II,III,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3L-00359,I,I,LR neutral,LR neutral,LR neutral,LR neutral,No,CIMP-
+C3L-00183,III,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00103,III,III,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-00097,I,II,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3L-00096,IV,IV,loss,LR neutral,LR neutral,loss,Yes,CIMP+
+C3L-00088,III,II,loss,LR amplification,LR neutral,LR neutral,Yes,CIMP-
+C3L-00079,III,III,LR neutral LOH,LR amplification,LR neutral,loss,Yes,CIMP+
+C3L-00026,I,III,loss,LR neutral,LR amplification,LR neutral,Yes,CIMP-
+C3L-00011,IV,IV,loss,LR amplification,LR neutral,loss,Yes,CIMP+
+C3L-00010,I,III,loss,LR amplification,LR neutral,loss,Yes,CIMP-
+C3L-00004,III,III,loss,LR amplification,LR neutral,loss,Yes,CIMP+

@@ -1,9 +1,7 @@
 <template>
     <div class="heatmap">
-        <button @click="readData">Click me</button>
-        <h3>hi this is where it goes: {{ geneList }}</h3>
         <div v-if="grade.length">
-            <apexchart type=heatmap height=200 :options="chartOptions" :series="series" />
+            <apexchart type=heatmap height=250 :options="chartOptions" :series="series" />
         </div>
     </div>
 </template>
@@ -18,21 +16,22 @@
                     dataLabels: {
                         enabled: false,
                     },
-                    // animations: {
-                    //     enabled: false,
-                    // },
-                    colors: ['#008FFB'],
-                    title: {
-                        text: this.name
-                    },
+                    colors:
+                        ['#58883c', // grade
+                        '#2d2bea', // stage
+                        '#ea1c3a', // cimp
+                        '#d534ea', // cimp
+                        '#6a6a6a', // ccrcc
+                        ],
                     xaxis: {
-                        labels: {show: false}
-                    }
+                        labels: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false,
+                        }
+                    },
                 },
-                // series: [{
-                //     name: 'Grade',
-                //     data: this.grade
-                // }]
             }
         },
         computed: {
@@ -40,19 +39,21 @@
                 return this.$store.state.geneList;
             },
             grade () {
-                // console.log(this.$store.state.grade);
                 return this.$store.state.grade;
             },
             series () {
                 return [
                     {name: 'Grade', data: this.$store.state.grade},
+                    {name: 'Stage', data: this.$store.state.stage},
+                    {name: 'CIMP', data: this.$store.state.cimp},
+                    {name: '3p', data: this.$store.state.threeP},
+                    {name: 'CCRCC', data: this.$store.state.ccrcc},
                 ]
             }
         },
         methods: {
             readData () {
                 console.log(this.series)
-                console.log('hi')
             }
         }
     }
