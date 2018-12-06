@@ -45,8 +45,8 @@
                                         color: '#FFFFFF'
                                     },
                                     {
-                                        from: -2,
-                                        to: -2,
+                                        from: 50,
+                                        to: 50,
                                         // name: 'loss',
                                         color: '#000000'
                                     },
