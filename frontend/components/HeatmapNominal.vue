@@ -2,7 +2,7 @@
     <div class="heatmap">
         <div v-if="grade.length">
             <button @lick="viewSeries">View Series</button>
-            <apexchart type=heatmap height=110 :options="chartOptions" :series="series" />
+            <apexchart type=heatmap height=93 :options="chartOptions" :series="series" />
         </div>
     </div>
 </template>
@@ -14,6 +14,9 @@
         props: ['name'],
         data () {
             return {
+                tooltip: {
+                    enabled: false,
+                },
                 chartOptions: {
                     dataLabels: {
                         enabled: false,
@@ -24,13 +27,36 @@
                         },
                         axisTicks: {
                             show: false,
+                        },
+                        axisBorder: {
+                            show: false
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        y: {
+                            formatter: (val) => {
+                                if (val === -100) {
+                                    return 'No';
+                                }
+
+                                const valueDict = {
+                                    0: 'NA',
+                                    1: 'Loss',
+                                    2: 'Neutral LOH',
+                                    3: 'Neutral',
+                                    4: 'Amplification',
+                                    100: 'Yes',
+                                };
+                                return valueDict[val];
+                            }
                         }
                     },
                     // na = 0
-                    // loss = -2
-                    // neutral LOH = -1
-                    // neutral = 1
-                    // amplification = 2
+                    // loss = 1
+                    // neutral LOH = 2
+                    // neutral = 3
+                    // amplification = 4
                     // no = -100
                     // yes = 100
                     plotOptions: {
@@ -45,41 +71,41 @@
                                         color: '#FFFFFF'
                                     },
                                     {
-                                        from: 50,
-                                        to: 50,
+                                        from: 1,
+                                        to: 1,
                                         // name: 'loss',
-                                        color: '#000000'
+                                        color: '#003366'
                                     },
-                                    // {
-                                    //     from: -1,
-                                    //     to: -1,
-                                    //     // name: 'neutral LOH',
-                                    //     color: '#ADD8E6'
-                                    // },
-                                    // {
-                                    //     from: 1,
-                                    //     to: 1,
-                                    //     // name: 'neutral',
-                                    //     color: '#b4b4b4'
-                                    // },
-                                    // {
-                                    //     from: 2,
-                                    //     to: 2,
-                                    //     // name: 'amplification',
-                                    //     color: '#cc0000'
-                                    // },
-                                    // {
-                                    //     from: 100,
-                                    //     to: 100,
-                                    //     // name: 'CCRCC yes',
-                                    //     color: '#cc59bc'
-                                    // },
-                                    // {
-                                    //     from: -100,
-                                    //     to: -100,
-                                    //     // name: 'CCRCC no',
-                                    //     color: '#b4b4b4'
-                                    // }
+                                    {
+                                        from: 2,
+                                        to: 2,
+                                        // name: 'neutral LOH',
+                                        color: '#ADD8E6'
+                                    },
+                                    {
+                                        from: 3,
+                                        to: 3,
+                                        // name: 'neutral',
+                                        color: '#b4b4b4'
+                                    },
+                                    {
+                                        from: 4,
+                                        to: 4,
+                                        // name: 'amplification',
+                                        color: '#cc0000'
+                                    },
+                                    {
+                                        from: 100,
+                                        to: 100,
+                                        // name: 'CCRCC yes',
+                                        color: '#003366'
+                                    },
+                                    {
+                                        from: -100,
+                                        to: -100,
+                                        // name: 'CCRCC no',
+                                        color: '#b4b4b4'
+                                    }
                                 ]
                             }
                         }
