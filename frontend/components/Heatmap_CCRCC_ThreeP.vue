@@ -1,22 +1,17 @@
 <template>
-    <div class="heatmap">
-        <div v-if="grade.length">
-            <button @lick="viewSeries">View Series</button>
-            <apexchart type=heatmap height=93 :options="chartOptions" :series="series" />
-        </div>
+    <div class="heatmap-ccrcc-3p">
+        <apexchart type=heatmap height=150 :options="chartOptions" :series="series" />
     </div>
 </template>
 
 <script>
     // For CCRCC & 3p
     export default {
-        name: 'heatmap',
-        props: ['name'],
+        name: 'heatmap-ccrcc-3p',
+        props: [],
         data () {
             return {
-                tooltip: {
-                    enabled: false,
-                },
+                gene: '',
                 chartOptions: {
                     dataLabels: {
                         enabled: false,
@@ -32,6 +27,11 @@
                             show: false
                         }
                     },
+                    title: {
+                        text: '',
+                        align: 'center',
+                        margin: -18,
+                    },
                     tooltip: {
                         enabled: true,
                         y: {
@@ -46,19 +46,12 @@
                                     2: 'Neutral LOH',
                                     3: 'Neutral',
                                     4: 'Amplification',
-                                    100: 'Yes',
+                                    100: 'Yes'
                                 };
                                 return valueDict[val];
                             }
                         }
                     },
-                    // na = 0
-                    // loss = 1
-                    // neutral LOH = 2
-                    // neutral = 3
-                    // amplification = 4
-                    // no = -100
-                    // yes = 100
                     plotOptions: {
                         heatmap: {
                             shadeIntensity: 0.5,
@@ -114,40 +107,21 @@
             }
         },
         computed: {
-            geneList () {
-                return this.$store.state.geneList;
-            },
-            grade () {
-                return this.$store.state.grade;
-            },
             series () {
+                const blankRow = {name: '', data: []};
                 return [
-                    // {name: 'Grade', data: this.$store.state.grade}, // data: an array of {x: label, y: value}
-                    // {name: 'Stage', data: this.$store.state.stage},
-                    // {name: 'CIMP', data: this.$store.state.cimp},
+                    {name: '14q', data: this.$store.state.fourteenQ},
+                    {name: '7p', data: this.$store.state.sevenP}, // data: an array of {x: label, y: value}
+                    {name: '5q', data: this.$store.state.fiveQ},
+                    blankRow,
+                    blankRow,
                     {name: '3p', data: this.$store.state.threeP},
-                    {name: 'CCRCC', data: this.$store.state.ccrcc}
+                    {name: 'CCRCC', data: this.$store.state.ccrcc},
                 ]
             }
-        },
-        methods: {
-            viewSeries () {
-                console.log(this.series)
-            }
-        },
-        updated () {
-            removeElementsByClassName('.apexcharts-toolbar');
-            removeElementsByClassName('.apexcharts-legend-series');
-            removeElementsByClassName('.apexcharts-legend-point');
-            removeElementsByClassName('.apexcharts-legend-text');
         }
     }
 
-    function removeElementsByClassName (className) {
-        document.querySelectorAll(className).forEach((a) => {
-            a.remove()
-        })
-    }
 </script>
 
 <style scoped>
