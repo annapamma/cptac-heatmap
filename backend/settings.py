@@ -162,3 +162,5 @@ PHOSPHO = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'phospho.pkl'),
          'rb')
 )
+
+ALL_GENES = ['KDM5C']

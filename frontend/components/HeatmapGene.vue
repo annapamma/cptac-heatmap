@@ -1,7 +1,7 @@
 <template>
     <div class="heatmap-gene">
-        <p>{{ gene }}</p>
-        <apexchart type=heatmap :height=135 :options="chartOptions" :series="series" />
+        <p class="heatmap-gene-title">{{ gene }}</p>
+        <apexchart type=heatmap :height=110 :options="chartOptions" :series="series" />
     </div>
 </template>
 

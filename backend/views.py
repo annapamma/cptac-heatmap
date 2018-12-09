@@ -18,6 +18,9 @@ def submit_genes(request):
         data = json.loads(request.body)
         genes = data['genes']
 
+    all_genes = settings.ALL_GENES
+    genes = [gene for gene in genes if gene in all_genes]
+
     sample_data = settings.CPTAC_DATA
     cnv_baf = settings.CNV_BAF[genes]
     cnv_lr = settings.CNV_LR[genes]

@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap height=128 :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height=110 :options="chartOptions" :series="series" />
     </div>
 </template>
 

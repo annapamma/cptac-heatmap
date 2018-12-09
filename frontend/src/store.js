@@ -81,11 +81,14 @@ const store = new Vuex.Store({
         },
         'FINISHED_LOADING' (state) {
             state.loaded = true;
+        },
+        'START_LOADING' (state) {
+            state.loaded = false;
         }
     },
     actions: {
         submitGenes (store, geneInput) {
-            removeElementsByClassName('.apexcharts-svg');
+            store.commit('START_LOADING');
 
             const { genes } = geneInput;
             store.commit('ADD_GENE_LIST', genes);
