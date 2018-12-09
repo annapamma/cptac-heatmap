@@ -14,7 +14,9 @@ def index(request):
 
 @csrf_exempt
 def submit_genes(request):
-    genes = ['KDM5C']
+    if request.method == "POST":
+        data = json.loads(request.body)
+        genes = data['genes']
 
     sample_data = settings.CPTAC_DATA
     cnv_baf = settings.CNV_BAF[genes]
@@ -24,9 +26,6 @@ def submit_genes(request):
     methylation = settings.METHYLATION[genes]
     protein = settings.PROTEIN[genes]
     phospho = settings.PHOSPHO[genes]
-
-    if request.method == "POST":
-        data = json.loads(request.body)
 
     sample_data = sample_data.to_json()
     cnv_baf = cnv_baf.to_json()
