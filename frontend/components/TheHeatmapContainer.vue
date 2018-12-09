@@ -1,8 +1,8 @@
 <template>
-    <div class="the-heatmap-container">
-        <div v-if="grade.length">
+    <div class="the-heatmap-container" id="html-2-pdfwrapper">
+        <div v-if="loaded">
             <heatmap-ccrcc-3p />
-            <heatmap-gene :gene="'KDM5C'"/>
+            <heatmap-gene v-for="gene in genes" :key="gene.id" :gene="gene"/>
         </div>
     </div>
 </template>
@@ -19,15 +19,19 @@
         },
         name: 'the-heatmap-container',
         computed: {
-            grade () {
-                return this.$store.state.grade;
+            loaded () {
+                return this.$store.state.loaded;
+            },
+            genes () {
+                return this.$store.state.genes;
             }
         },
-        updated () {
-            removeElementsByClassName('.apexcharts-toolbar');
-            removeElementsByClassName('.apexcharts-legend-series');
-            removeElementsByClassName('.apexcharts-legend-point');
-            removeElementsByClassName('.apexcharts-legend-text');
+        beforeMount () {
+            // removeElementsByTagName('svg')
+            // removeElementsByClassName('.apexcharts-svg');
+            // removeElementsByClassName('.apexcharts-legend-series');
+            // removeElementsByClassName('.apexcharts-legend-point');
+            // removeElementsByClassName('.apexcharts-legend-text');
         },
     }
 
@@ -37,8 +41,15 @@
         })
     }
 
+    // function removeElementsByTagName (tag) {
+    //     document.getElementsByTagName(tag).forEach((a) => {
+    //         a.parentNode.removeChild(a);
+    //     })
+    // }
 </script>
 
 <style scoped>
-
+    .the-heatmap-container {
+        width: 75%;
+    }
 </style>

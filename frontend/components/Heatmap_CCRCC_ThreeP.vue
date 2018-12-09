@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap height=150 :options="chartOptions" :series="series" />
+        <apexchart type=heatmap height=128 :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -11,8 +11,27 @@
         props: [],
         data () {
             return {
-                gene: '',
                 chartOptions: {
+                    legend: {
+                        show: false
+                    },
+                    chart: {
+                        toolbar: {
+                            show: false
+                        },
+                        animations: {
+                            enabled: true,
+                            easing: 'linear',
+                            speed: 20,
+                            animateGradually: {
+                                enabled: false,
+                            },
+                            dynamicAnimation: {
+                                enabled: false,
+                                speed: 10
+                            }
+                        }
+                    },
                     dataLabels: {
                         enabled: false,
                     },
@@ -27,10 +46,10 @@
                             show: false
                         }
                     },
-                    title: {
-                        text: '',
-                        align: 'center',
-                        margin: -18,
+                    yaxis: {
+                        labels: {
+                            minWidth: 80
+                        }
                     },
                     tooltip: {
                         enabled: true,
@@ -113,7 +132,6 @@
                     {name: '14q', data: this.$store.state.fourteenQ},
                     {name: '7p', data: this.$store.state.sevenP}, // data: an array of {x: label, y: value}
                     {name: '5q', data: this.$store.state.fiveQ},
-                    blankRow,
                     blankRow,
                     {name: '3p', data: this.$store.state.threeP},
                     {name: 'CCRCC', data: this.$store.state.ccrcc},

@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "apexcharts": "^2.2.4",
+    "canvas2image": "^1.0.5",
+    "dom-to-image": "^2.6.0",
+    "file-saver": "^2.0.0",
+    "jspdf": "^1.4.1",
     "vue": "^2.1.0",
     "vue-apexcharts": "^1.2.7",
     "vue-resource": "^1.5.1",

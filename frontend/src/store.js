@@ -1,7 +1,9 @@
 /* eslint-disable no-trailing-spaces */
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 import api from './api.js'
+
 
 Vue.use(Vuex); // only required if you're using modules.
               // We're using modules, so there you go.
@@ -14,8 +16,9 @@ const store = new Vuex.Store({
         cnv_lr: {},
         fiveQ: [],
         fourteenQ: [],
-        geneList: '',
+        genes: [],
         grade: [],
+        loaded: false,
         methylation: {},
         mutation: {},
         phospho: {},
@@ -42,6 +45,9 @@ const store = new Vuex.Store({
         },
         'ADD_FOURTEEN_Q' (state, fourteenQ) {
             state.fourteenQ = fourteenQ;
+        },
+        'ADD_GENE_LIST' (state, genes) {
+            state.genes = genes
         },
         'ADD_GRADE' (state, grade) {
             state.grade = grade;
@@ -72,11 +78,19 @@ const store = new Vuex.Store({
         },
         'API_FAIL' (state, error) {
             console.error(error)
+        },
+        'FINISHED_LOADING' (state) {
+            state.loaded = true;
         }
     },
     actions: {
-        submitGenes () {
-            api.post('submit_genes/', {'genes': []})
+        submitGenes (store, geneInput) {
+            removeElementsByClassName('.apexcharts-svg');
+
+            const { genes } = geneInput;
+            store.commit('ADD_GENE_LIST', genes);
+
+            api.post('submit_genes/', { genes })
                 .then(
                     response => {
                         const res = JSON.parse(response.body['sample_data']);
@@ -109,6 +123,7 @@ const store = new Vuex.Store({
 
                         const cnv_lr = JSON.parse(response.body['cnv_lr']);
                         store.commit('ADD_CNV_LR', cnv_lr);
+
                         const mutation = JSON.parse(response.body['mutation']);
                         store.commit('ADD_MUTATION', mutation);
 
@@ -124,7 +139,7 @@ const store = new Vuex.Store({
                         const phospho = JSON.parse(response.body['phospho']);
                         store.commit('ADD_PHOSPHO', phospho);
 
-                        console.log(phospho)
+                        store.commit('FINISHED_LOADING');
                     }
                 )
                 .catch(
@@ -144,6 +159,12 @@ function convertToArrayOfObjects (obj) {
         )
     });
     return arrayOfObjects;
+}
+
+function removeElementsByClassName (className) {
+    document.querySelectorAll(className).forEach((a) => {
+        a.remove()
+    })
 }
 
 export default store;

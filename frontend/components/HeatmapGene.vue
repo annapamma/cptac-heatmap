@@ -1,6 +1,7 @@
 <template>
     <div class="heatmap-gene">
-        <apexchart type=heatmap height=150 :options="chartOptions" :series="series" />
+        <p>{{ gene }}</p>
+        <apexchart type=heatmap :height=135 :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -11,6 +12,32 @@
         data () {
             return {
                 chartOptions: {
+                    legend: {
+                        show: false
+                    },
+                    chart: {
+                        toolbar: {
+                            show: false
+                        },
+                        animations: {
+                            enabled: true,
+                            easing: 'linear',
+                            speed: 20,
+                            animateGradually: {
+                                enabled: false,
+                            },
+                            dynamicAnimation: {
+                                enabled: false,
+                                speed: 10
+                            }
+                        }
+                    },
+                    grid: {
+                      padding: {
+                        top: 0,
+                        bottom: 0
+                      }
+                    },
                     dataLabels: {
                         enabled: false,
                     },
@@ -25,10 +52,10 @@
                             show: false
                         }
                     },
-                    title: {
-                        text: '',
-                        align: 'center',
-                        margin: -18,
+                    yaxis: {
+                        labels: {
+                            minWidth: 80
+                        },
                     },
                     tooltip: {
                         enabled: true,
@@ -149,7 +176,7 @@
             }
         },
         mounted () {
-            updateGraphTitle('.apexcharts-title-text', this.gene)
+            // updateGraphTitle('.apexcharts-svg')
         }
     }
 
@@ -165,11 +192,18 @@
 
     function updateGraphTitle (className, geneName) {
         document.querySelectorAll(className).forEach((a) => {
-            a.innerHTML = geneName
+            // a.innerHTML = geneName
+            a.style.marginTop = "0px";
         })
     }
+
 </script>
 
 <style scoped>
-
+.heatmap-gene p {
+    margin: 0;
+    text-align: left;
+    /*display: flex;*/
+    /*flex-direction: row;*/
+}
 </style>
