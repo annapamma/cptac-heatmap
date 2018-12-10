@@ -1,6 +1,6 @@
 <template>
     <div class="user-input">
-        <textarea v-model="geneInput" id="gene-input"></textarea>
+        <textarea v-model="geneInput" id="gene-input" :placeholder="'Paste gene list'"></textarea>
         <button @click="submitGenes">Visualize</button>
         <button @click="downloadImage">Download Image</button>
     </div>
@@ -25,19 +25,36 @@
                     return []
                 }
 
-                if ((trimmedGeneList.includes('\t') && trimmedGeneList.includes(' ')) ||
-                    (trimmedGeneList.includes('\t') && trimmedGeneList.includes('\n')) ||
-                    (trimmedGeneList.includes(' ') && trimmedGeneList.includes('\n'))
-                ) {
-                    alert('Enter genes separated by a newline, tab, or space. ' +
-                        'Your list seems to include multiple separators.');
-                    return;
+                const combinations = [
+                    ['\t', ' '],
+                    ['\t', '\n'],
+                    ['\t', ','],
+                    ['\n', ' '],
+                    ['\n', ','],
+                    [' ', ','],
+                    [';', ','],
+                    [';', '\t'],
+                    [';', '\n'],
+                    [';', ' ']
+                ];
+
+                for (let i = 0; i < combinations.length; i++) {
+                    let c = combinations[i];
+                    if (trimmedGeneList.includes(c[0]) && trimmedGeneList.includes(c[1])) {
+                        alert('Enter genes separated by a newline, tab, or space. ' +
+                            'Your list seems to include multiple separators.')
+                        return [];
+                    }
                 }
 
                 if (trimmedGeneList.includes('\t')) {
                     geneListArr = trimmedGeneList.split('\t');
                 } else if (trimmedGeneList.includes(' ')) {
                     geneListArr = trimmedGeneList.split(' ');
+                } else if (trimmedGeneList.includes(';')) {
+                    geneListArr = trimmedGeneList.split(';');
+                } else if (trimmedGeneList.includes(',')) {
+                    geneListArr = trimmedGeneList.split(',');
                 } else {
                     geneListArr = trimmedGeneList.split('\n')
                 }
@@ -93,7 +110,22 @@
 </script>
 
 <style scoped>
-.gene-input {
-    width: 100%;
-}
+    .user-input {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        margin-left: 10px;
+    }
+
+    /*.user-input textarea {*/
+        /*!*margin: 20px 5px auto;*!*/
+        /*border: 1px solid;*/
+        /*padding: 1%;*/
+        /*height: 30vh;*/
+        /*!*width: 100%;*!*/
+    /*}*/
+
+    .user-input button {
+        margin: 10px;
+    }
 </style>

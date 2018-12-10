@@ -168,12 +168,13 @@
         computed: {
             series () {
                 return [
-                    // {name: 'Phospho', data: convertToArrayOfObjects(this.$store.state.phospho[this.gene])},
-                    // {name: 'Pro', data: convertToArrayOfObjects(this.$store.state.protein[this.gene])},
-                    // {name: 'mRNA', data: convertToArrayOfObjects(this.$store.state.rna[this.gene])},
-                    // {name: 'CNV (lr)', data: convertToArrayOfObjects(this.$store.state.cnv_lr[this.gene])},
-                    // {name: 'CNV (baf)', data: convertToArrayOfObjects(this.$store.state.cnv_baf[this.gene])},
-                    // {name: 'Methy', data: convertToArrayOfObjects(this.$store.state.methylation[this.gene])},
+                    {name: 'Phospho', data: convertToArrayOfObjects(this.$store.state.phospho[this.gene])},
+                    {name: 'Pro', data: convertToArrayOfObjects(this.$store.state.protein[this.gene])},
+                    {name: 'mRNA', data: convertToArrayOfObjects(this.$store.state.rna[this.gene])},
+                    {name: 'CNV (baf)', data: convertToArrayOfObjects(this.$store.state.cnv_baf[this.gene])},
+                    {name: 'CNV (lr)', data: convertToArrayOfObjects(this.$store.state.cnv_lr[this.gene])},
+                    {name: 'Test', data: []},
+                    {name: 'Methy', data: convertToArrayOfObjects(this.$store.state.methylation[this.gene])},
                     {name: 'Mut', data: convertToArrayOfObjects(this.$store.state.mutation[this.gene])}
                 ]
             }

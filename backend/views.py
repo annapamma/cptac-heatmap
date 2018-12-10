@@ -23,32 +23,31 @@ def submit_genes(request):
 
     sample_data = settings.CPTAC_DATA
     mutation = settings.MUTATION[genes]
-    # cnv_baf = settings.CNV_BAF[genes]
-    # cnv_lr = settings.CNV_LR[genes]
-    # rna = settings.RNA[genes]
-    # methylation = settings.METHYLATION[genes]
-    # protein = settings.PROTEIN[genes]
-    # phospho = settings.PHOSPHO[genes]
+    methylation = settings.METHYLATION[genes]
+    cnv_lr = settings.CNV_LR[genes]
+    cnv_baf = settings.CNV_BAF[genes]
+    rna = settings.RNA[genes]
+    protein = settings.PROTEIN[genes]
+    phospho = settings.PHOSPHO[genes]
 
     sample_data = sample_data.to_json()
     mutation = mutation.to_json()
-    # cnv_baf = cnv_baf.to_json()
-    # cnv_lr = cnv_lr.to_json()
-    # rna = rna.to_json()
-    # methylation = methylation.to_json()
-    # protein = protein.to_json()
-    # phospho = phospho.to_json()
+    methylation = methylation.to_json()
+    cnv_lr = cnv_lr.to_json()
+    cnv_baf = cnv_baf.to_json()
+    rna = rna.to_json()
+    protein = protein.to_json()
+    phospho = phospho.to_json()
 
     return JsonResponse(
         {'sample_data': sample_data,
          'mutation': mutation,
-         # 'cnv_baf': cnv_baf,
-         # 'cnv_lr': cnv_lr,
-         # 'rna': rna,
-         # 'methylation': methylation,
-         # 'protein': protein,
-         # 'phospho': phospho
+         'methylation': methylation,
+         'cnv_lr': cnv_lr,
+         'cnv_baf': cnv_baf,
+         'rna': rna,
+         'protein': protein,
+         'phospho': phospho
          },
         safe=False
     )
-    # return render(request, 'index.html')
