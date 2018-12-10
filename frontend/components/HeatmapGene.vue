@@ -1,7 +1,7 @@
 <template>
     <div class="heatmap-gene">
-        <p class="">{{ gene }}</p>
-        <apexchart type=heatmap :height=110 :options="chartOptions" :series="series" />
+        <p class="heatmap-gene-title">{{ gene }}</p>
+        <apexchart type=heatmap :height=115 :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -16,7 +16,7 @@
                         show: false
                     },
                     chart: {
-                        width: '500',
+                        // width: '500',
                         toolbar: {
                             show: false
                         },
@@ -35,7 +35,7 @@
                         }
                     },
                     grid: {
-                      padding: {
+                      margin: {
                         top: 0,
                         bottom: 0
                       }
@@ -168,25 +168,16 @@
         computed: {
             series () {
                 return [
-                    {name: 'Phospho', data: convertToArrayOfObjects(this.$store.state.phospho[this.gene])},
-                    {name: 'Pro', data: convertToArrayOfObjects(this.$store.state.protein[this.gene])},
-                    {name: 'mRNA', data: convertToArrayOfObjects(this.$store.state.rna[this.gene])},
-                    {name: 'CNV (lr)', data: convertToArrayOfObjects(this.$store.state.cnv_lr[this.gene])},
-                    {name: 'CNV (baf)', data: convertToArrayOfObjects(this.$store.state.cnv_baf[this.gene])},
-                    {name: 'Methy', data: convertToArrayOfObjects(this.$store.state.methylation[this.gene])},
+                    // {name: 'Phospho', data: convertToArrayOfObjects(this.$store.state.phospho[this.gene])},
+                    // {name: 'Pro', data: convertToArrayOfObjects(this.$store.state.protein[this.gene])},
+                    // {name: 'mRNA', data: convertToArrayOfObjects(this.$store.state.rna[this.gene])},
+                    // {name: 'CNV (lr)', data: convertToArrayOfObjects(this.$store.state.cnv_lr[this.gene])},
+                    // {name: 'CNV (baf)', data: convertToArrayOfObjects(this.$store.state.cnv_baf[this.gene])},
+                    // {name: 'Methy', data: convertToArrayOfObjects(this.$store.state.methylation[this.gene])},
                     {name: 'Mut', data: convertToArrayOfObjects(this.$store.state.mutation[this.gene])}
                 ]
             }
         },
-        mounted () {
-            // updateGraphTitle('.apexcharts-svg')
-            window.addEventListener('load', function () {
-                var rotates = document.getElementsByClassName('rotate');
-                for (var i = 0; i < rotates.length; i++) {
-                    rotates[i].style.height = rotates[i].offsetWidth + 'px';
-                }
-            });
-        }
     }
 
     function convertToArrayOfObjects (obj) {
@@ -199,29 +190,31 @@
         return arrayOfObjects;
     }
 
-    function updateGraphTitle (className, geneName) {
-        document.querySelectorAll(className).forEach((a) => {
-            // a.innerHTML = geneName
-            a.style.marginTop = "0px";
-        })
-    }
-
 </script>
 
 <style scoped>
+    /*.apex-charts-svg {*/
+        /*margin: 0*/
+    /*}*/
+
     .heatmap-gene {
         position: relative;
+        /*margin-top: -10px;*/
     }
 
 .heatmap-gene-title {
     /*background: red;*/
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    margin-top: 35px;
-    /*margin-right: 35px;*/
-    z-index: 999;
-
+    padding: 0;
+    margin-bottom: -30px;
+    margin-top: -20px;
+    font-weight: bold;
+    font-size: small;
+    /*display: inline-block;*/
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*margin-top: 35px;*/
+    /*!*margin-right: 35px;*!*/
+    /*z-index: 999;*/
 }
 
 .rotate {

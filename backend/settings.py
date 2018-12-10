@@ -163,4 +163,4 @@ PHOSPHO = pickle.load(
          'rb')
 )
 
-ALL_GENES = ['KDM5C']
+ALL_GENES = ['KDM5C', 'VHL']

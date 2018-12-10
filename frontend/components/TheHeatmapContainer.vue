@@ -51,6 +51,6 @@
 
 <style scoped>
     .the-heatmap-container {
-        width: 75%;
+        width: 100%;
     }
 </style>

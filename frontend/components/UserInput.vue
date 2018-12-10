@@ -1,6 +1,6 @@
 <template>
     <div class="user-input">
-        <input v-model="geneInput">
+        <textarea v-model="geneInput" id="gene-input"></textarea>
         <button @click="submitGenes">Visualize</button>
         <button @click="downloadImage">Download Image</button>
     </div>
@@ -18,7 +18,7 @@
         },
         computed: {
             genes () {
-                return this.geneInput.toUpperCase().split('\t')
+                return this.geneInput.toUpperCase().split(' ')
             }
         },
         methods: {
@@ -26,7 +26,7 @@
                 this.$store.dispatch(
                     'submitGenes',
                     {
-                        genes: this.genes
+                        genes: [ ...new Set(this.genes) ]
                     }
                 )
             },
@@ -39,12 +39,37 @@
                         link.href = dataUrl;
                         link.click();
                     });
-            }
+            },
+        },
+        mounted () {
+            enableTabsInTextarea()
         }
     }
 
+    function enableTabsInTextarea () {
+        document.getElementById('gene-input')
+            .addEventListener('keydown', function (event) {
+                if (event.key === 'Tab') {
+                    // Set up some variables. We need to know the current position of the cursor or selection.
+                    let selectionStartPos = this.selectionStart;
+                    let selectionEndPos = this.selectionEnd;
+                    let oldContent = this.value;
+
+                    // Set the new content.
+                    this.value = oldContent.substring(0, selectionStartPos) + '\t' + oldContent.substring(selectionEndPos);
+
+                    // Set the new cursor position (current position + 1 to account for the new tab character).
+                    this.selectionStart = this.selectionEnd = selectionStartPos + 1;
+
+                    // Prevent the default action (tabbing to the next field or control).
+                    event.preventDefault();
+                }
+            })
+    }
 </script>
 
 <style scoped>
-
+.gene-input {
+    width: 100%;
+}
 </style>

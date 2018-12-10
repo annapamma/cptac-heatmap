@@ -120,27 +120,27 @@ const store = new Vuex.Store({
                         store.commit('ADD_SEVEN_P', sevenP);
                         store.commit('ADD_FOURTEEN_Q', fourteenQ);
 
-                        const cnv_baf = JSON.parse(response.body['cnv_baf']);
-
-                        store.commit('ADD_CNV_BAF', cnv_baf);
-
-                        const cnv_lr = JSON.parse(response.body['cnv_lr']);
-                        store.commit('ADD_CNV_LR', cnv_lr);
-
                         const mutation = JSON.parse(response.body['mutation']);
                         store.commit('ADD_MUTATION', mutation);
 
-                        const rna = JSON.parse(response.body['rna']);
-                        store.commit('ADD_RNA', rna);
-
-                        const methylation = JSON.parse(response.body['methylation']);
-                        store.commit('ADD_METHYLATION', methylation);
-
-                        const protein = JSON.parse(response.body['protein']);
-                        store.commit('ADD_PROTEIN', protein);
-
-                        const phospho = JSON.parse(response.body['phospho']);
-                        store.commit('ADD_PHOSPHO', phospho);
+                        // const cnv_baf = JSON.parse(response.body['cnv_baf']);
+                        // store.commit('ADD_CNV_BAF', cnv_baf);
+                        //
+                        // const cnv_lr = JSON.parse(response.body['cnv_lr']);
+                        // store.commit('ADD_CNV_LR', cnv_lr);
+                        //
+                        //
+                        // const rna = JSON.parse(response.body['rna']);
+                        // store.commit('ADD_RNA', rna);
+                        //
+                        // const methylation = JSON.parse(response.body['methylation']);
+                        // store.commit('ADD_METHYLATION', methylation);
+                        //
+                        // const protein = JSON.parse(response.body['protein']);
+                        // store.commit('ADD_PROTEIN', protein);
+                        //
+                        // const phospho = JSON.parse(response.body['phospho']);
+                        // store.commit('ADD_PHOSPHO', phospho);
 
                         store.commit('FINISHED_LOADING');
                     }
