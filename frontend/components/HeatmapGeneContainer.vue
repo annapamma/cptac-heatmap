@@ -1,7 +1,13 @@
 <template>
     <div class="heatmap-gene-container">
+        <!--<div id="loader-container" v-if="!loaded">-->
+            <!--&lt;!&ndash;<spinner></spinner>&ndash;&gt;-->
+            <!--<h3> LOADING </h3>-->
+        <!--</div>-->
         <p class="heatmap-gene-title rotate">{{ gene }}</p>
-        <heatmap-gene :gene="gene"/>
+        <div class="heatmap-genes">
+            <heatmap-gene :gene="gene"/>
+        </div>
     </div>
 </template>
 
@@ -15,15 +21,30 @@
             return {
                 gene: 'KDM5C'
             }
+        },
+        computed () {
+            return this.$store.state.loaded;
         }
     }
 </script>
 
 <style scoped>
     .heatmap-gene-container {
-        display: flex;
-        flex-direction: row;
+        /*display: flex;*/
+        /*flex-direction: row;*/
+        /*height: 100%;*/
+        width: 100%;
+        min-height: 100%;
+        overflow-y: scroll;
+        background: green;
+        border: solid 1px black;
     }
+
+    .heatmap-genes {
+        width: 100%;
+        overflow: auto;
+    }
+
 .rotate {
   /* FF3.5+ */
   -moz-transform: rotate(-90.0deg);

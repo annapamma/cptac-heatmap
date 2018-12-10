@@ -1,7 +1,7 @@
 <template>
-    <div class="heatmap-gene">
+    <div class="heatmap-gene" v-if="series.length">
         <p class="heatmap-gene-title">{{ gene }}</p>
-        <apexchart type=heatmap :height=115 :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="height" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -166,22 +166,49 @@
             }
         },
         computed: {
+            height () {
+                const series = this.series.length;
+                const calcHeights = {
+                    7: 110,
+                    6: 100,
+                    5: 90,
+                    4: 80,
+                    3: 72,
+                    2: 62,
+                    1: 54
+                };
+                return calcHeights[series]
+            },
             series () {
-                return [
-                    {name: 'Phospho', data: convertToArrayOfObjects(this.$store.state.phospho[this.gene])},
-                    {name: 'Pro', data: convertToArrayOfObjects(this.$store.state.protein[this.gene])},
-                    {name: 'mRNA', data: convertToArrayOfObjects(this.$store.state.rna[this.gene])},
-                    {name: 'CNV (baf)', data: convertToArrayOfObjects(this.$store.state.cnv_baf[this.gene])},
-                    {name: 'CNV (lr)', data: convertToArrayOfObjects(this.$store.state.cnv_lr[this.gene])},
-                    {name: 'Test', data: []},
-                    {name: 'Methy', data: convertToArrayOfObjects(this.$store.state.methylation[this.gene])},
-                    {name: 'Mut', data: convertToArrayOfObjects(this.$store.state.mutation[this.gene])}
-                ]
+                let dataTypes = [
+                    ['phospho', 'Phospho'],
+                    ['protein', 'Protein'],
+                    ['rna', 'mRNA'],
+                    ['cnv_baf', 'CNV (baf)'],
+                    ['cnv_lr', 'CNV (lr)'],
+                    ['methylation', 'Methy'],
+                    ['mutation', 'Mut']
+                ];
+                let allData = [];
+                dataTypes.forEach((dataType) => {
+                    let data = this.$store.state[dataType[0]][this.gene];
+                    if (data) {
+                        allData.push(
+                            {
+                                name: dataType[1],
+                                data: convertToArrayOfObjects(data)
+                            }
+                        )
+                    }
+                });
+                return allData;
             }
         },
     }
 
     function convertToArrayOfObjects (obj) {
+        if (!obj) {
+        }
         let arrayOfObjects = [];
         Object.keys(obj).forEach((k) => {
             arrayOfObjects.push(
@@ -194,42 +221,31 @@
 </script>
 
 <style scoped>
-    /*.apex-charts-svg {*/
-        /*margin: 0*/
-    /*}*/
-
     .heatmap-gene {
         position: relative;
-        /*margin-top: -10px;*/
+        min-height: 80px;
     }
 
-.heatmap-gene-title {
-    /*background: red;*/
-    padding: 0;
-    margin-bottom: -30px;
-    margin-top: -20px;
-    font-weight: bold;
-    font-size: small;
-    /*display: inline-block;*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*margin-top: 35px;*/
-    /*!*margin-right: 35px;*!*/
-    /*z-index: 999;*/
-}
+    .heatmap-gene-title {
+        padding: 0;
+        margin-bottom: -30px;
+        margin-top: -20px;
+        font-weight: bold;
+        font-size: small;
+    }
 
-.rotate {
-  /* FF3.5+ */
-  -moz-transform: rotate(-90.0deg);
-  /* Opera 10.5 */
-  -o-transform: rotate(-90.0deg);
-  /* Saf3.1+, Chrome */
-  -webkit-transform: rotate(-90.0deg);
-  /* IE6,IE7 */
-  filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
-  /* IE8 */
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-  /* Standard */
-  transform: rotate(-90.0deg);
-}
+    /*.rotate {*/
+      /*!* FF3.5+ *!*/
+      /*-moz-transform: rotate(-90.0deg);*/
+      /*!* Opera 10.5 *!*/
+      /*-o-transform: rotate(-90.0deg);*/
+      /*!* Saf3.1+, Chrome *!*/
+      /*-webkit-transform: rotate(-90.0deg);*/
+      /*!* IE6,IE7 *!*/
+      /*filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);*/
+      /*!* IE8 *!*/
+      /*-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";*/
+      /*!* Standard *!*/
+      /*transform: rotate(-90.0deg);*/
+    /*}*/
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap :height=100 :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="100" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -127,6 +127,9 @@
             }
         },
         computed: {
+            // height () {
+            //     return Math.round(this.series.length * 16.7)
+            // },
             series () {
                 const blankRow = {name: '', data: []};
                 return [

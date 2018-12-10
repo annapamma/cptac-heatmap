@@ -19,6 +19,7 @@ const store = new Vuex.Store({
         genes: [],
         grade: [],
         loaded: false,
+        loading: false,
         methylation: {},
         mutation: {},
         phospho: {},
@@ -80,9 +81,11 @@ const store = new Vuex.Store({
             console.error(error)
         },
         'FINISHED_LOADING' (state) {
+            state.loading = false;
             state.loaded = true;
         },
         'START_LOADING' (state) {
+            state.loading = true;
             state.loaded = false;
         }
     },

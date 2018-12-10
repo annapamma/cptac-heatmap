@@ -128,6 +128,11 @@ CPTAC_DATA = pickle.load(
          'rb')
 )
 
+ALL_GENES = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'all_genes.pkl'),
+         'rb')
+)
+
 CNV_BAF = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'cnv_baf.pkl'),
          'rb')
@@ -162,5 +167,3 @@ PHOSPHO = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'phospho.pkl'),
          'rb')
 )
-
-ALL_GENES = ['KDM5C', 'VHL']

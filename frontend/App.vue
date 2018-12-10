@@ -52,5 +52,7 @@ a {
 #app {
     display: flex;
     flex-direction: row;
+    min-height: 100%;
+    overflow: auto;
 }
 </style>

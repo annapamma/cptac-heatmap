@@ -53,19 +53,19 @@ import pickle
 # pickle.dump(cnv_lr, open('data/{}.pkl'.format(data_type), 'wb'))
 
 # # Process rna_normalized, protein_normalized, phospho_normalized
-data_type = 'phospho'
-x_df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
-x_df = x_df.T
-
-x_df[x_df < -2] = 2000 # (-3, -2)
-x_df[x_df < -1] = 4000 # (-2, -1)
-x_df[x_df < 0] = 6000 # (-1, 0)
-x_df[x_df < 1] = 8000 # (0, 1)
-x_df[x_df < 2] = 10000 # (1, 2)
-x_df[x_df < 3] = 12000 # (2, 3)
-x_df[x_df < 4] = 14000 #(3)
-x_df = x_df / 1000
-pickle.dump(x_df, open('data/{}.pkl'.format(data_type), 'wb'))
+# data_type = 'phospho'
+# x_df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
+# x_df = x_df.T
+#
+# x_df[x_df < -2] = 2000 # (-3, -2)
+# x_df[x_df < -1] = 4000 # (-2, -1)
+# x_df[x_df < 0] = 6000 # (-1, 0)
+# x_df[x_df < 1] = 8000 # (0, 1)
+# x_df[x_df < 2] = 10000 # (1, 2)
+# x_df[x_df < 3] = 12000 # (2, 3)
+# x_df[x_df < 4] = 14000 #(3)
+# x_df = x_df / 1000
+# pickle.dump(x_df, open('data/{}.pkl'.format(data_type), 'wb'))
 
 # # Process cnv_baf
 # cnv_baf = pd.DataFrame.empty()
@@ -80,3 +80,20 @@ pickle.dump(x_df, open('data/{}.pkl'.format(data_type), 'wb'))
 # cnv_baf[cnv_baf < 0.6] = 8000
 # cnv_baf = cnv_baf / 1000
 # pickle.dump(cnv_baf, open('data/{}.pkl'.format(data_type), 'wb'))
+
+# # pull out all genes
+data_types = ['cnv_baf', 'mutation', 'cnv_lr', 'methylation', 'phospho', 'protein', 'rna']
+all_genes = {}
+
+
+def pull_out_all(data_type):
+    df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
+    all_genes = list(df.index)
+    return all_genes
+    # pickle.dump(all_genes, open('data/{}_genes.pkl'.format(data_type), 'wb'))
+
+
+for data_type in data_types:
+    all_genes[data_type] = pull_out_all(data_type)
+
+pickle.dump(all_genes, open('data/all_genes.pkl', 'wb'))
