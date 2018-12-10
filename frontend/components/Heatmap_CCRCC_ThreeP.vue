@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap :height=110 :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height=100 :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -20,7 +20,7 @@
                             show: false
                         },
                         animations: {
-                            enabled: true,
+                            enabled: false,
                             easing: 'linear',
                             speed: 20,
                             animateGradually: {
@@ -73,7 +73,8 @@
                     },
                     plotOptions: {
                         heatmap: {
-                            shadeIntensity: 0.5,
+                            enableShades: false,
+                            // shadeIntensity: 0.5,
                             colorScale: {
                                 ranges: [
                                     {

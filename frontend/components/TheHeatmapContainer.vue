@@ -10,10 +10,11 @@
 <script>
     import HeatmapCcrcc3p from './Heatmap_CCRCC_ThreeP.vue';
     import HeatmapGene from './HeatmapGene.vue';
+    import HeatmapGeneContainer from './HeatmapGeneContainer.vue';
 
     export default {
         components: {
-            // HeatmapGeneCnvLr,
+            HeatmapGeneContainer,
             HeatmapGene,
             HeatmapCcrcc3p
         },

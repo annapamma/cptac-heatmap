@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-gene">
-        <p class="heatmap-gene-title">{{ gene }}</p>
+        <p class="">{{ gene }}</p>
         <apexchart type=heatmap :height=110 :options="chartOptions" :series="series" />
     </div>
 </template>
@@ -16,11 +16,13 @@
                         show: false
                     },
                     chart: {
+                        width: '500',
                         toolbar: {
                             show: false
                         },
                         animations: {
-                            enabled: true,
+                            // enabled: true,
+                            enabled: false,
                             easing: 'linear',
                             speed: 20,
                             animateGradually: {
@@ -43,10 +45,10 @@
                     },
                     xaxis: {
                         labels: {
-                            show: false
+                            show: false,
                         },
                         axisTicks: {
-                            show: false,
+                            show: false
                         },
                         axisBorder: {
                             show: false
@@ -54,7 +56,7 @@
                     },
                     yaxis: {
                         labels: {
-                            minWidth: 80
+                            minWidth: 80,
                         },
                     },
                     tooltip: {
@@ -67,7 +69,8 @@
                     },
                     plotOptions: {
                         heatmap: {
-                            shadeIntensity: 0.5,
+                            enableShades: false,
+                            // shadeIntensity: 0.5,
                             colorScale: {
                                 ranges: [
                                     {
@@ -177,6 +180,12 @@
         },
         mounted () {
             // updateGraphTitle('.apexcharts-svg')
+            window.addEventListener('load', function () {
+                var rotates = document.getElementsByClassName('rotate');
+                for (var i = 0; i < rotates.length; i++) {
+                    rotates[i].style.height = rotates[i].offsetWidth + 'px';
+                }
+            });
         }
     }
 
@@ -200,10 +209,33 @@
 </script>
 
 <style scoped>
-.heatmap-gene p {
-    margin: 0;
-    text-align: left;
-    /*display: flex;*/
-    /*flex-direction: row;*/
+    .heatmap-gene {
+        position: relative;
+    }
+
+.heatmap-gene-title {
+    /*background: red;*/
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    margin-top: 35px;
+    /*margin-right: 35px;*/
+    z-index: 999;
+
+}
+
+.rotate {
+  /* FF3.5+ */
+  -moz-transform: rotate(-90.0deg);
+  /* Opera 10.5 */
+  -o-transform: rotate(-90.0deg);
+  /* Saf3.1+, Chrome */
+  -webkit-transform: rotate(-90.0deg);
+  /* IE6,IE7 */
+  filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+  /* IE8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+  /* Standard */
+  transform: rotate(-90.0deg);
 }
 </style>
