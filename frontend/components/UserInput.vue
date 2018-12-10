@@ -18,7 +18,31 @@
         },
         computed: {
             genes () {
-                return this.geneInput.toUpperCase().split(' ')
+                const trimmedGeneList = this.geneInput.trim().toUpperCase();
+                let geneListArr = [];
+
+                if (trimmedGeneList.length === 0) {
+                    return []
+                }
+
+                if ((trimmedGeneList.includes('\t') && trimmedGeneList.includes(' ')) ||
+                    (trimmedGeneList.includes('\t') && trimmedGeneList.includes('\n')) ||
+                    (trimmedGeneList.includes(' ') && trimmedGeneList.includes('\n'))
+                ) {
+                    alert('Enter genes separated by a newline, tab, or space. ' +
+                        'Your list seems to include multiple separators.');
+                    return;
+                }
+
+                if (trimmedGeneList.includes('\t')) {
+                    geneListArr = trimmedGeneList.split('\t');
+                } else if (trimmedGeneList.includes(' ')) {
+                    geneListArr = trimmedGeneList.split(' ');
+                } else {
+                    geneListArr = trimmedGeneList.split('\n')
+                }
+
+                return [...new Set(geneListArr)];
             }
         },
         methods: {
@@ -26,7 +50,7 @@
                 this.$store.dispatch(
                     'submitGenes',
                     {
-                        genes: [ ...new Set(this.genes) ]
+                        genes: this.genes
                     }
                 )
             },
