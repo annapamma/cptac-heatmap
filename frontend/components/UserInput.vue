@@ -3,6 +3,10 @@
         <textarea v-model="geneInput" id="gene-input" :placeholder="'Paste gene list'"></textarea>
         <button @click="submitGenes">Visualize</button>
         <button @click="downloadImage">Download Image</button>
+        <p class="description">Enter up to 30 gene symbols.
+            They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
+            The dataset provides data for 22,867 genes. Not all data types will be available for every gene.</p>
+        <p class="description">For more details, see publication …</p>
     </div>
 </template>
 
@@ -117,15 +121,20 @@
         margin-left: 10px;
     }
 
-    /*.user-input textarea {*/
-        /*!*margin: 20px 5px auto;*!*/
-        /*border: 1px solid;*/
-        /*padding: 1%;*/
-        /*height: 30vh;*/
-        /*!*width: 100%;*!*/
-    /*}*/
+    .user-input textarea {
+        /*margin: 20px 5px auto;*/
+        border: 1px solid;
+        padding: 1%;
+        height: 30vh;
+        /*width: 100%;*/
+    }
 
     .user-input button {
         margin: 10px;
+    }
+
+    .description {
+        text-align: justify;
+        font-weight: bold;
     }
 </style>
