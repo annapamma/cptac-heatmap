@@ -7,6 +7,7 @@
 
 <script>
     /* eslint-disable camelcase */
+    'use strict'
 
     // hack to deal with nested objects
     let that = {};
@@ -20,6 +21,7 @@
                     legend: {
                         show: false
                     },
+                    // chart,
                     chart: {
                         toolbar: {
                             show: false
@@ -38,22 +40,23 @@
                             }
                         },
                         events: {
-                            click: function (event, chartContext, config) {
+                            click: (event, chartContext, config) => {
                                 const series_i = event.target.getAttribute('i');
                                 const sample_i = event.target.getAttribute('j');
+
                                 if (!series_i || !sample_i) {
                                     return
                                 }
-                                const label = that.series[series_i]['name'];
-                                const sample = that.series[series_i]['data'][sample_i]['x'];
-                                const series = that['gene'] + " " + label;
+                                const label = this.series[series_i]['name'];
+                                const sample = this.series[series_i]['data'][sample_i]['x'];
+                                const series = this['gene'] + " " + label;
 
-                                const values = that.$store.state['selectGeneData']['data'];
+                                const values = this.$store.state['selectGeneData']['data'];
                                 const found = values.find((obj) => {
                                     return obj['Index'] === series
                                 });
                                 const value = found[sample];
-                                that.$store.dispatch('displayData', {
+                                this.$store.dispatch('displayData', {
                                     series,
                                     sample,
                                     value
@@ -228,7 +231,64 @@
             }
         },
         mounted () {
+            // that = this;
+            // chart.bind(this);
             that = this;
+            let chart = {
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    // enabled: true,
+                    enabled: false,
+                    easing: 'linear',
+                    speed: 20,
+                    animateGradually: {
+                        enabled: false,
+                    },
+                    dynamicAnimation: {
+                        enabled: false,
+                        speed: 10
+                    }
+                },
+                events: {
+                    click: function (event, chartContext, config) {
+                        // console.log(this)
+                        // const series_i = event.target.getAttribute('i');
+                        // const sample_i = event.target.getAttribute('j');
+                        // console.log(series_i, that['gene'])
+                        // console.log(that.series)
+                        // if (!series_i || !sample_i) {
+                        //     return
+                        // }
+                        // const label = that.series[series_i]['name'];
+                        // const sample = that.series[series_i]['data'][sample_i]['x'];
+                        // const series = that['gene'] + " " + label;
+                        //
+                        // const values = that.$store.state['selectGeneData']['data'];
+                        // const found = values.find((obj) => {
+                        //     return obj['Index'] === series
+                        // });
+                        // const value = found[sample];
+                        // that.$store.dispatch('displayData', {
+                        //     series,
+                        //     sample,
+                        //     value
+                        // })
+                    }
+                }
+            };
+
+            // (Chart) => ({
+            //     console.log(this)
+            //     // this.event = event;
+            //     // return chart;
+            // })
+            //
+            // Chart()
+            // let newChart = new Chart('h').bind(this);
+            // let boundChart = newChart.bind(this);
+            // console.log(newChart)
         }
     }
 
