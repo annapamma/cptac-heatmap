@@ -3,6 +3,15 @@
         <textarea v-model="geneInput" id="gene-input" :placeholder="'Paste gene list'"></textarea>
         <button @click="submitGenes">Visualize</button>
         <button @click="downloadImage">Download Image</button>
+
+        <download-excel
+            class   = "btn btn-default"
+            :data   = "selectGeneData"
+            :param = "selectGeneSchema"
+            name    = "filename.xls"
+        >
+            Download Excel (you can customize this with html code!)
+        </download-excel>
         <p class="description">Enter up to 30 gene symbols.
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
             The dataset provides data for 22,867 genes. Not all data types will be available for every gene.</p>
@@ -11,13 +20,15 @@
 </template>
 
 <script>
+    /* eslint-disable camelcase */
+
     import domtoimage from 'dom-to-image';
 
     export default {
         name: 'user-input',
         data () {
             return {
-                geneInput: ''
+                geneInput: '',
             }
         },
         computed: {
@@ -64,6 +75,12 @@
                 }
 
                 return [...new Set(geneListArr)];
+            },
+            selectGeneData () {
+                return this.$store.state.selectGeneData['data'];
+            },
+            selectGeneSchema () {
+                return this.$store.state.selectGeneData['params'];
             }
         },
         methods: {
@@ -73,8 +90,17 @@
                     {
                         genes: this.genes
                     }
-                )
+                );
+                this.$store.dispatch(
+                    'downloadGeneData',
+                    {
+                        genes: this.genes
+                    }
+                );
             },
+            // downloadData () {
+            //
+            // },
             downloadImage () {
                 let node = document.querySelectorAll('.the-heatmap-container')[0];
                 domtoimage.toPng(node, { quality: 0.95, bgcolor: '#FFFFFF' })
@@ -111,6 +137,7 @@
                 }
             })
     }
+
 </script>
 
 <style scoped>

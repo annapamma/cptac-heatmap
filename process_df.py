@@ -7,7 +7,7 @@ import pickle
 # df = pd.read_csv('data/heatmap_info_Anna.csv', index_col=0)
 # df = df.replace({'loss': 1, 'LR neutral LOH': 2, 'LR neutral': 3, 'LR amplification': 4, 'No': -100, 'Yes': 100})
 # df = df.rename(str.lower, axis="columns")
-#
+# #
 # pickle.dump(df, open('data/cptac.pkl', 'wb'))
 
 # PROCESS GENE INFO
@@ -82,18 +82,56 @@ import pickle
 # pickle.dump(cnv_baf, open('data/{}.pkl'.format(data_type), 'wb'))
 
 # # pull out all genes
-data_types = ['cnv_baf', 'mutation', 'cnv_lr', 'methylation', 'phospho', 'protein', 'rna']
-all_genes = {}
+# data_types = ['cnv_baf', 'mutation', 'cnv_lr', 'methylation', 'phospho', 'protein', 'rna']
+# all_genes = {}
+#
+#
+# def pull_out_all(data_type):
+#     df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
+#     all_genes = list(df.index)
+#     return all_genes
+#     # pickle.dump(all_genes, open('data/{}_genes.pkl'.format(data_type), 'wb'))
+#
+#
+# for data_type in data_types:
+#     all_genes[data_type] = pull_out_all(data_type)
+#
+# pickle.dump(all_genes, open('data/all_genes.pkl', 'wb'))
+
+# def data_to_pickle(data_type):
+#     df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
+#     pickle.dump(df, open('data/{}_real.pkl'.format(data_type), 'wb'))
+#
+# data_types = ['cnv_baf', 'mutation', 'cnv_lr', 'methylation', 'phospho', 'protein', 'rna', 'cptac']
+# for dt in data_types:
+#     data_to_pickle(dt)
 
 
-def pull_out_all(data_type):
-    df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
-    all_genes = list(df.index)
-    return all_genes
-    # pickle.dump(all_genes, open('data/{}_genes.pkl'.format(data_type), 'wb'))
+# process data for download file
 
+data_types = {
+    'cnv_baf': 'CNV (baf)',
+    'mutation': 'Mut',
+    'cnv_lr': 'CNV (lr)',
+    'methylation': 'Methy',
+    'phospho': 'Phospho',
+    'protein': 'Protein',
+    'rna': 'mRNA'
+}
 
-for data_type in data_types:
-    all_genes[data_type] = pull_out_all(data_type)
+def process_data_for_dl_file(data_type, data_type_title):
+    f = 'data/{}_real.pkl'.format(data_type)
+    df = pickle.load(open(f, 'rb'))
+    genes = df.index
+    df['Data type'] = None
+    df['Data type'] = data_type
+    df['Gene symbol'] = genes
+    new_index = {}
+    for gene in genes:
+        new_index[gene] = '{} {}'.format(gene, data_type_title)
+    df = df.rename(index=new_index)
+    pickle.dump(df, open(f, 'wb'))
+    print('Finished: {}'.format(f))
 
-pickle.dump(all_genes, open('data/all_genes.pkl', 'wb'))
+for dt in data_types:
+    process_data_for_dl_file(dt, data_types[dt])

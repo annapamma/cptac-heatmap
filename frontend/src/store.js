@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 
 import api from './api.js'
 
-
 Vue.use(Vuex); // only required if you're using modules.
               // We're using modules, so there you go.
 
@@ -24,9 +23,13 @@ const store = new Vuex.Store({
         mutation: {},
         phospho: {},
         rna: [],
+        selectGeneData: {'data': [], 'params': {}},
         sevenP: [],
         stage: [],
-        threeP: []
+        threeP: [],
+        test_json_to_excel:[
+            {"VHL mRNA":0.6463432581,
+                "VHL Phospho":null,"VHL Methy":-0.3959340441,"VHL Protein":null,"VHL CNV (baf)":0.1152,"VHL Mut":1.0,"VHL CNV (lr)":-0.584305}]
     },
     mutations: {
         'ADD_CCRCC' (state, ccrcc) {
@@ -68,6 +71,9 @@ const store = new Vuex.Store({
         'ADD_RNA' (state, rna) {
             state.rna = rna;
         },
+        'ADD_SELECT_GENE_DATA' (state, selectGeneData) {
+            state.selectGeneData = selectGeneData;
+        },
         'ADD_SEVEN_P' (state, sevenP) {
             state.sevenP = sevenP;
         },
@@ -90,6 +96,29 @@ const store = new Vuex.Store({
         }
     },
     actions: {
+        downloadGeneData (store, geneInput) {
+            const { genes } = geneInput;
+
+            api.post('download_gene_data/', { genes })
+                .then(
+                    response => {
+                        console.log(response);
+                        const selectGeneData = response.body;
+                        store.commit(
+                            'ADD_SELECT_GENE_DATA',
+                            {
+                                'params': selectGeneData['params'],
+                                'data': selectGeneData['data']
+                            }
+                        );
+                    }
+                )
+                .catch(
+                    error => {
+                        store.commit('API_FAIL', error);
+                    }
+                )
+        },
         submitGenes (store, geneInput) {
             store.commit('START_LOADING');
 

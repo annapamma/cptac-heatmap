@@ -36,15 +36,6 @@ def submit_genes(request):
     protein = settings.PROTEIN[protein_genes].to_json()
     phospho = settings.PHOSPHO[phospho_genes].to_json()
 
-    # sample_data = sample_data.to_json()
-    # mutation = mutation.to_json()
-    # methylation = methylation.to_json()
-    # cnv_lr = cnv_lr.to_json()
-    # cnv_baf = cnv_baf.to_json()
-    # rna = rna.to_json()
-    # protein = protein.to_json()
-    # phospho = phospho.to_json()
-
     return JsonResponse(
         {'sample_data': sample_data,
          'mutation': mutation,
@@ -57,3 +48,31 @@ def submit_genes(request):
          },
         safe=False
     )
+
+
+@csrf_exempt
+def download_data(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        genes = data['genes']
+
+    sample_data = settings.SAMPLE_DATA
+    all_gene_data = settings.ALL_GENE_DATA
+
+    select_gene_data = all_gene_data.loc[all_gene_data['Gene symbol'].isin(genes)]
+
+    gene_data = json.loads(select_gene_data.to_json(orient='table'))
+    sample_data = json.loads(sample_data.to_json(orient='table'))
+    data = sample_data['data'] + gene_data['data']
+
+    params = {}
+    fields = gene_data['schema']['fields']
+    for field in fields:
+        name = field['name']
+        type = field['type']
+        params[name] = type
+
+    return JsonResponse({
+        'params': params,
+        'data': data
+    }, safe=False)

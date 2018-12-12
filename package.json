@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "apexcharts": "^2.2.4",
+    "babel-regenerator-runtime": "^6.5.0",
     "canvas2image": "^1.0.5",
     "css-loader": "^0.26.4",
     "dom-to-image": "^2.6.0",
@@ -19,9 +20,12 @@
     "style-loader": "^0.23.1",
     "vue": "^2.1.0",
     "vue-apexcharts": "^1.2.7",
+    "vue-json-excel": "^0.2.96",
+    "vue-json-to-excel": "0.0.8",
     "vue-resource": "^1.5.1",
     "vue-spinners": "^1.0.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

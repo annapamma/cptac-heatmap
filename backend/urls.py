@@ -22,7 +22,8 @@ import backend.views
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^$', backend.views.index),
-    url('submit_genes', backend.views.submit_genes)
+    url('submit_genes', backend.views.submit_genes),
+    url('download_gene_data', backend.views.download_data)
 ]
 
 if settings.DEBUG:

@@ -123,13 +123,18 @@ WEBPACK_LOADER = {
 }
 
 # Load data as pandas df
-CPTAC_DATA = pickle.load(
-    open(os.path.join(BASE_DIR, 'data', 'cptac.pkl'),
+ALL_GENES = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'all_genes.pkl'),
          'rb')
 )
 
-ALL_GENES = pickle.load(
-    open(os.path.join(BASE_DIR, 'data', 'all_genes.pkl'),
+ALL_GENE_DATA = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'all_gene_data.pkl'),
+         'rb')
+)
+
+CPTAC_DATA = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'cptac.pkl'),
          'rb')
 )
 
@@ -165,5 +170,10 @@ PROTEIN = pickle.load(
 
 PHOSPHO = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'phospho.pkl'),
+         'rb')
+)
+
+SAMPLE_DATA = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'sample.pkl'),
          'rb')
 )
