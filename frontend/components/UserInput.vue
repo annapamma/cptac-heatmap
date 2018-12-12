@@ -8,9 +8,9 @@
             class   = "btn btn-default"
             :data   = "selectGeneData"
             :param = "selectGeneSchema"
-            name    = "filename.xls"
+            name    = "CPTAC3-heatmap.xls"
         >
-            Download Excel (you can customize this with html code!)
+            <button :disabled="!loadedExcel">Download Excel</button>
         </download-excel>
         <p class="description">Enter up to 30 gene symbols.
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
@@ -75,6 +75,9 @@
                 }
 
                 return [...new Set(geneListArr)];
+            },
+            loadedExcel () {
+                return this.$store.state['loaded_excel']
             },
             selectGeneData () {
                 return this.$store.state.selectGeneData['data'];
@@ -158,6 +161,7 @@
 
     .user-input button {
         margin: 10px;
+        width: 100%;
     }
 
     .description {

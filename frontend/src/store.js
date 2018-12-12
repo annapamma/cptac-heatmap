@@ -18,6 +18,7 @@ const store = new Vuex.Store({
         genes: [],
         grade: [],
         loaded: false,
+        loaded_excel: false,
         loading: false,
         methylation: {},
         mutation: {},
@@ -90,13 +91,20 @@ const store = new Vuex.Store({
             state.loading = false;
             state.loaded = true;
         },
+        'FINISHED_LOADING_EXCEL' (state) {
+            state.loaded_excel = true;
+        },
         'START_LOADING' (state) {
             state.loading = true;
             state.loaded = false;
+        },
+        'START_LOADING_EXCEL' (state) {
+            state.loaded_excel = false;
         }
     },
     actions: {
         downloadGeneData (store, geneInput) {
+            store.commit('START_LOADING_EXCEL');
             const { genes } = geneInput;
 
             api.post('download_gene_data/', { genes })
@@ -117,7 +125,9 @@ const store = new Vuex.Store({
                     error => {
                         store.commit('API_FAIL', error);
                     }
-                )
+                );
+
+            store.commit('FINISHED_LOADING_EXCEL');
         },
         submitGenes (store, geneInput) {
             store.commit('START_LOADING');
