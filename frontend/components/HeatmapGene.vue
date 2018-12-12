@@ -6,6 +6,11 @@
 </template>
 
 <script>
+    /* eslint-disable camelcase */
+
+    // hack to deal with nested objects
+    let that = {};
+
     export default {
         name: 'heatmap-gene',
         props: ['gene'],
@@ -16,7 +21,6 @@
                         show: false
                     },
                     chart: {
-                        // width: '500',
                         toolbar: {
                             show: false
                         },
@@ -32,7 +36,30 @@
                                 enabled: false,
                                 speed: 10
                             }
-                        }
+                        },
+                        events: {
+                            click: function (event, chartContext, config) {
+                                const series_i = event.target.getAttribute('i');
+                                const sample_i = event.target.getAttribute('j');
+                                if (!series_i || !sample_i) {
+                                    return
+                                }
+                                const label = that.series[series_i]['name'];
+                                const sample = that.series[series_i]['data'][sample_i]['x'];
+                                const series = that['gene'] + " " + label;
+
+                                const values = that.$store.state['selectGeneData']['data'];
+                                const found = values.find((obj) => {
+                                    return obj['Index'] === series
+                                });
+                                const value = found[sample];
+                                that.$store.dispatch('displayData', {
+                                    series,
+                                    sample,
+                                    value
+                                })
+                            }
+                        },
                     },
                     grid: {
                       margin: {
@@ -180,22 +207,23 @@
                 return calcHeights[series]
             },
             series () {
-                let dataTypes = [
-                    ['phospho', 'Phospho'],
-                    ['protein', 'Protein'],
-                    ['rna', 'mRNA'],
-                    ['cnv_baf', 'CNV (baf)'],
-                    ['cnv_lr', 'CNV (lr)'],
-                    ['methylation', 'Methy'],
-                    ['mutation', 'Mut']
-                ];
+                // let dataTypes = [
+                //     ['phospho', 'Phospho'],
+                //     ['protein', 'Protein'],
+                //     ['rna', 'mRNA'],
+                //     ['cnv_baf', 'CNV (baf)'],
+                //     ['cnv_lr', 'CNV (lr)'],
+                //     ['methylation', 'Methy'],
+                //     ['mutation', 'Mut']
+                // ];
+                const dataTypes = ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut']
                 let allData = [];
                 dataTypes.forEach((dataType) => {
-                    let data = this.$store.state[dataType[0]][this.gene];
+                    let data = this.$store.state[dataType][this.gene];
                     if (data) {
                         allData.push(
                             {
-                                name: dataType[1],
+                                name: dataType,
                                 data: convertToArrayOfObjects(data)
                             }
                         )
@@ -204,6 +232,9 @@
                 return allData;
             }
         },
+        mounted () {
+            that = this;
+        }
     }
 
     function convertToArrayOfObjects (obj) {

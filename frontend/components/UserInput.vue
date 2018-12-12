@@ -12,6 +12,16 @@
         >
             <button :disabled="!loadedExcel">Download Excel</button>
         </download-excel>
+        <div class="data-display-container" v-if="loadedExcel">
+            <div class="data-display">
+                <p>Data type: <b>{{ displayData['series'] }}</b></p>
+                <p>Sample: <b>{{ displayData['sample'] }}</b></p>
+                <p>Value: <b>{{ displayData['value'] }}</b></p>
+                <!--<p>Gene: <b>{{ displayData['gene'] }}</b></p>-->
+                <small><i>Click data point to display</i></small>
+            </div>
+            <button @click="sortBySeries" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}</button>
+        </div>
         <p class="description">Enter up to 30 gene symbols.
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
             The dataset provides data for 22,867 genes. Not all data types will be available for every gene.</p>
@@ -32,6 +42,9 @@
             }
         },
         computed: {
+            displayData () {
+                return this.$store.state.displayData;
+            },
             genes () {
                 const trimmedGeneList = this.geneInput.trim().toUpperCase();
                 let geneListArr = [];
@@ -87,6 +100,26 @@
             }
         },
         methods: {
+            downloadImage () {
+                let node = document.querySelectorAll('.the-heatmap-container')[0];
+                domtoimage.toPng(node, { quality: 0.95, bgcolor: '#FFFFFF' })
+                    .then(function (dataUrl) {
+                        let link = document.createElement('a');
+                        link.download = 'CPTAC-heatmap.png';
+                        link.href = dataUrl;
+                        link.click();
+                    });
+            },
+            sortBySeries () {
+                const series = this.displayData['series'];
+                const sampleDataTypes = ['14q', '7p', '5q', '3p', 'ccrcc'];
+                const type = sampleDataTypes.indexOf(series) > 0 ? 'sample' : 'gene'
+                this.$store.dispatch('sortBySeries',
+                    {
+                        series,
+                        type
+                    })
+            },
             submitGenes () {
                 this.$store.dispatch(
                     'submitGenes',
@@ -100,19 +133,6 @@
                         genes: this.genes
                     }
                 );
-            },
-            // downloadData () {
-            //
-            // },
-            downloadImage () {
-                let node = document.querySelectorAll('.the-heatmap-container')[0];
-                domtoimage.toPng(node, { quality: 0.95, bgcolor: '#FFFFFF' })
-                    .then(function (dataUrl) {
-                        let link = document.createElement('a');
-                        link.download = 'CPTAC-heatmap.png';
-                        link.href = dataUrl;
-                        link.click();
-                    });
             },
         },
         mounted () {

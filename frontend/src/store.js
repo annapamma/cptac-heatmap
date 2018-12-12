@@ -9,47 +9,50 @@ Vue.use(Vuex); // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
-        ccrcc: [],
+        CCRCC: [],
         cimp: [],
-        cnv_baf: {},
-        cnv_lr: {},
-        fiveQ: [],
-        fourteenQ: [],
+        'CNV (baf)': {},
+        'CNV (lr)': {},
+        displayData: {
+            series: '',
+            sample: '',
+            value: ''
+        },
+        '5q': [],
+        '14q': [],
         genes: [],
         grade: [],
         loaded: false,
         loaded_excel: false,
         loading: false,
-        methylation: {},
-        mutation: {},
-        phospho: {},
-        rna: [],
+        'Methy': {},
+        'Mut': {},
+        'Phospho': {},
+        'Protein': {},
+        'mRNA': [],
         selectGeneData: {'data': [], 'params': {}},
-        sevenP: [],
+        '7p': [],
         stage: [],
-        threeP: [],
-        test_json_to_excel:[
-            {"VHL mRNA":0.6463432581,
-                "VHL Phospho":null,"VHL Methy":-0.3959340441,"VHL Protein":null,"VHL CNV (baf)":0.1152,"VHL Mut":1.0,"VHL CNV (lr)":-0.584305}]
+        '3p': [],
     },
     mutations: {
         'ADD_CCRCC' (state, ccrcc) {
-            state.ccrcc = ccrcc;
+            state['CCRCC'] = ccrcc;
         },
         'ADD_CIMP' (state, cimp) {
             state.cimp = cimp;
         },
         'ADD_CNV_BAF' (state, cnv_baf) {
-            state.cnv_baf = cnv_baf;
+            state['CNV (baf)'] = cnv_baf;
         },
         'ADD_CNV_LR' (state, cnv_lr) {
-            state.cnv_lr = cnv_lr;
+            state['CNV (lr)'] = cnv_lr;
         },
         'ADD_FIVE_Q' (state, fiveQ) {
-            state.fiveQ = fiveQ;
+            state['5q'] = fiveQ;
         },
         'ADD_FOURTEEN_Q' (state, fourteenQ) {
-            state.fourteenQ = fourteenQ;
+            state['14q'] = fourteenQ;
         },
         'ADD_GENE_LIST' (state, genes) {
             state.genes = genes
@@ -58,31 +61,31 @@ const store = new Vuex.Store({
             state.grade = grade;
         },
         'ADD_METHYLATION' (state, methylation) {
-            state.methylation = methylation;
+            state['Methy'] = methylation;
         },
         'ADD_MUTATION' (state, mutation) {
-            state.mutation = mutation;
+            state['Mut'] = mutation;
         },
         'ADD_PHOSPHO' (state, phospho) {
-            state.phospho = phospho;
+            state['Phospho'] = phospho;
         },
         'ADD_PROTEIN' (state, protein) {
-            state.protein = protein;
+            state['Protein'] = protein;
         },
         'ADD_RNA' (state, rna) {
-            state.rna = rna;
+            state['mRNA'] = rna;
         },
         'ADD_SELECT_GENE_DATA' (state, selectGeneData) {
             state.selectGeneData = selectGeneData;
         },
         'ADD_SEVEN_P' (state, sevenP) {
-            state.sevenP = sevenP;
+            state['7p'] = sevenP;
         },
         'ADD_STAGE' (state, stage) {
             state.stage = stage;
         },
         'ADD_THREE_P' (state, threeP) {
-            state.threeP = threeP;
+            state['3p'] = threeP;
         },
         'API_FAIL' (state, error) {
             console.error(error)
@@ -100,9 +103,56 @@ const store = new Vuex.Store({
         },
         'START_LOADING_EXCEL' (state) {
             state.loaded_excel = false;
+        },
+        'SORT_BY_SERIES' (state, { series, type }) {
+            // sort the sample data
+            // const dataTypes = {
+            //     '14q': 'fourteenQ',
+            //     '7p': 'sevenP',
+            //     '5q': 'fiveQ',
+            //     '3p': 'threeP',
+            //     'ccrcc': 'ccrcc'
+            // };
+            // const label = dataTypes[series];
+            let gene = ''
+            console.log(series, type)
+            if (type === 'gene') {
+                let dat = series.split(' ')
+                gene = dat[0]
+                series = dat.slice(1,).join(' ')
+            }
+            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q'];
+            let seriesToSortBy = type === 'sample' ? state[series] : state[series][gene];
+            // console.log(seriesToSortBy)
+
+            if (type === 'gene') {
+                let temp = [];
+                for (let k in seriesToSortBy) {
+                    temp.push({x: k, y: seriesToSortBy[k]})
+                }
+                seriesToSortBy = temp
+            }
+            const sortedSeries = seriesToSortBy.sort(compare_ascending);
+            console.log(sortedSeries)
+            const order = sortedSeries.map(el => { return el.x });
+
+            dataTypesSamples.forEach((dt) => {
+                if (dt !== series) {
+                    state[dt].sort(sortBySample(order));
+                }
+            });
+
+            // sort gene data
+            // first steo: check if sample data osrs with gene
+        },
+        'UPDATE_DISPLAY_DATA' (state, displayData) {
+            state.displayData = displayData;
         }
     },
     actions: {
+        displayData (store, displayData) {
+            store.commit('UPDATE_DISPLAY_DATA', displayData)
+        },
         downloadGeneData (store, geneInput) {
             store.commit('START_LOADING_EXCEL');
             const { genes } = geneInput;
@@ -110,7 +160,6 @@ const store = new Vuex.Store({
             api.post('download_gene_data/', { genes })
                 .then(
                     response => {
-                        console.log(response);
                         const selectGeneData = response.body;
                         store.commit(
                             'ADD_SELECT_GENE_DATA',
@@ -128,6 +177,9 @@ const store = new Vuex.Store({
                 );
 
             store.commit('FINISHED_LOADING_EXCEL');
+        },
+        sortBySeries (store, sortData) {
+            store.commit('SORT_BY_SERIES', sortData)
         },
         submitGenes (store, geneInput) {
             store.commit('START_LOADING');
@@ -205,10 +257,32 @@ function convertToArrayOfObjects (obj) {
     return arrayOfObjects;
 }
 
-function removeElementsByClassName (className) {
-    document.querySelectorAll(className).forEach((a) => {
-        a.remove()
-    })
+// function removeElementsByClassName (className) {
+//     document.querySelectorAll(className).forEach((a) => {
+//         a.remove()
+//     })
+// }
+
+function compare_ascending (a,b) {
+  if (a.y < b.y)
+    return -1;
+  if (a.y > b.y)
+    return 1;
+  return 0;
+}
+
+function compare_descending (a,b) {
+  if (a.y > b.y)
+    return -1;
+  if (a.y < b.y)
+    return 1;
+  return 0;
+}
+
+function sortBySample (sortOrder) {
+    return function (a, b) {
+        return sortOrder.indexOf(a.x) - sortOrder.indexOf(b.x);
+    }
 }
 
 export default store;
