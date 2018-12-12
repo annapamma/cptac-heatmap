@@ -112,8 +112,8 @@
             },
             sortBySeries () {
                 const series = this.displayData['series'];
-                const sampleDataTypes = ['14q', '7p', '5q', '3p', 'ccrcc'];
-                const type = sampleDataTypes.indexOf(series) > 0 ? 'sample' : 'gene'
+                const sampleDataTypes = ['14q', '7p', '5q', '3p', 'CCRCC'];
+                const type = sampleDataTypes.indexOf(series) > -1 ? 'sample' : 'gene';
                 this.$store.dispatch('sortBySeries',
                     {
                         series,

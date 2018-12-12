@@ -42,7 +42,8 @@
                                 // const labels = ['14q', '7p', '5q', '', '3p', 'ccrcc'];
                                 const series_i = event.target.getAttribute('i');
                                 const sample_i = event.target.getAttribute('j');
-                                const series = that.series[series_i]['name'];
+                                let series = that.series[series_i]['name'];
+
                                 const sample = that.series[series_i]['data'][sample_i]['x'];
                                 const values = that.$store.state['selectGeneData']['data'];
                                 const found = values.find((obj) => {

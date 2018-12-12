@@ -114,27 +114,25 @@ const store = new Vuex.Store({
             //     'ccrcc': 'ccrcc'
             // };
             // const label = dataTypes[series];
-            let gene = ''
-            console.log(series, type)
+            let gene = '';
             if (type === 'gene') {
                 let dat = series.split(' ')
-                gene = dat[0]
+                gene = dat[0];
                 series = dat.slice(1,).join(' ')
             }
             const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q'];
+            const dataTypesGenes = ['Methy', 'Mut'];
             let seriesToSortBy = type === 'sample' ? state[series] : state[series][gene];
             // console.log(seriesToSortBy)
-
+            //
             if (type === 'gene') {
-                let temp = [];
-                for (let k in seriesToSortBy) {
-                    temp.push({x: k, y: seriesToSortBy[k]})
-                }
-                seriesToSortBy = temp
+                seriesToSortBy = normalizeGeneData(seriesToSortBy)
             }
+
             const sortedSeries = seriesToSortBy.sort(compare_ascending);
-            console.log(sortedSeries)
             const order = sortedSeries.map(el => { return el.x });
+            // console.log(series, order)
+            // console.log(series, sortedSeries)
 
             dataTypesSamples.forEach((dt) => {
                 if (dt !== series) {
@@ -142,6 +140,19 @@ const store = new Vuex.Store({
                 }
             });
 
+            dataTypesGenes.forEach((dt) => {
+                // if (dt !== series) {
+                for (let gene in state[dt]) {
+                    let sortable = normalizeGeneData(state[dt][gene]);
+                    // const sorted = sortable.sort(sortBySampleGene(order));
+                    // console.log(dt, gene)
+                    // console.log(sorted)
+                    state[dt][gene] = sorted;
+                    // Vue.set(state[dt], gene, sorted );
+                }
+                    // state[dt].sort(sortBySample(order));
+                // }
+            });
             // sort gene data
             // first steo: check if sample data osrs with gene
         },
@@ -285,4 +296,25 @@ function sortBySample (sortOrder) {
     }
 }
 
+function sortBySampleGene (sortOrder) {
+    return function (a, b) {
+        return sortOrder.indexOf(a) - sortOrder.indexOf(b);
+    }
+}
+
+function normalizeGeneData(obj) {
+    let temp = [];
+    for (let k in obj) {
+        temp.push({x: k, y: obj[k]})
+    }
+    return temp
+}
+
+function revertGeneData (arr) {
+    let temp = {};
+    arr.forEach(el => {
+        temp[el.x] = el.y
+    })
+    return temp;
+}
 export default store;
