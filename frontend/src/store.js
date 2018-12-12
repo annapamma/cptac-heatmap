@@ -1,4 +1,4 @@
-/* eslint-disable no-trailing-spaces */
+/* eslint-disable no-trailing-spaces,camelcase */
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -9,7 +9,7 @@ Vue.use(Vuex); // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
-        CCRCC: [],
+        'CCRCC': [],
         cimp: [],
         'CNV (baf)': {},
         'CNV (lr)': {},
@@ -29,7 +29,7 @@ const store = new Vuex.Store({
         'Mut': {},
         'Phospho': {},
         'Protein': {},
-        'mRNA': [],
+        'mRNA': {},
         selectGeneData: {'data': [], 'params': {}},
         '7p': [],
         stage: [],
@@ -104,55 +104,39 @@ const store = new Vuex.Store({
         'START_LOADING_EXCEL' (state) {
             state.loaded_excel = false;
         },
-        'SORT_BY_SERIES' (state, { series, type, ascending }) {
-            // sort the sample data
-            // const dataTypes = {
-            //     '14q': 'fourteenQ',
-            //     '7p': 'sevenP',
-            //     '5q': 'fiveQ',
-            //     '3p': 'threeP',
-            //     'ccrcc': 'ccrcc'
-            // };
-            // const label = dataTypes[series];
-            let gene = '';
-            if (type === 'gene') {
-                let dat = series.split(' ')
-                gene = dat[0];
-                series = dat.slice(1,).join(' ')
-            }
+        'SORT_BY_SERIES' (state, { series, ascending }) {
             const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q'];
-            const dataTypesGenes = ['Methy', 'Mut'];
-            let seriesToSortBy = type === 'sample' ? state[series] : state[series][gene];
-            // console.log(seriesToSortBy)
-            //
+            const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
+            const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
+            // console.log(series, type, ascending)
+
+            // pull gene from series name (eg VHL Mut)
+            let gene = '';
+
             if (type === 'gene') {
-                seriesToSortBy = normalizeGeneData(seriesToSortBy)
+                let dat = series.split(' ');
+                gene = dat[0];
+                series = dat.slice(1,).join(' ');
             }
+
+            // pull series data
+            let seriesToSortBy = type === 'sample' ? state[series].slice() : state[series][gene].slice();
+            // console.log(seriesToSortBy);
 
             const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
             const order = sortedSeries.map(el => { return el.x });
-            // console.log(series, order)
-            // console.log(series, sortedSeries)
 
             dataTypesSamples.forEach((dt) => {
-                if (dt !== series) {
-                    state[dt].sort(sortBySample(order));
-                }
+                let sampleSortedData = state[dt].slice().sort(sortBySample(order));
+                Vue.set(state, dt, sampleSortedData);
             });
 
             // sort gene data
             dataTypesGenes.forEach((dt) => {
-                // if (dt !== series) {
                 for (let gene in state[dt]) {
-                    let sortable = normalizeGeneData(state[dt][gene]);
-                    // const sorted = sortable.sort(sortBySampleGene(order));
-                    // console.log(dt, gene)
-                    // console.log(sorted)
-                    state[dt][gene] = sorted;
-                    // Vue.set(state[dt], gene, sorted );
+                    let geneSortedData = state[dt][gene].slice().sort(sortBySample(order));
+                    Vue.set(state[dt], gene, geneSortedData);
                 }
-                    // state[dt].sort(sortBySample(order));
-                // }
             });
         },
         'UPDATE_DISPLAY_DATA' (state, displayData) {
@@ -200,49 +184,48 @@ const store = new Vuex.Store({
             api.post('submit_genes/', { genes })
                 .then(
                     response => {
-                        const res = JSON.parse(response.body['sample_data']);
+                        // const res = JSON.parse(response.body);
+                        const res = response.body;
+                        const sampleData = JSON.parse(res['sample_data']);
 
-                        const ccrcc = convertToArrayOfObjects(res['ccrcc']);
-                        const threeP = convertToArrayOfObjects(res['3p']);
-
-                        const fiveQ = convertToArrayOfObjects(res['5q']);
-                        const sevenP = convertToArrayOfObjects(res['7p']);
-                        const fourteenQ = convertToArrayOfObjects(res['14q']);
-
-                        const grade = convertToArrayOfObjects(res['grade']);
-                        const stage = convertToArrayOfObjects(res['stage']);
-                        const cimp = convertToArrayOfObjects(res['cimp']);
+                        // add sample data
+                        const ccrcc = orderBackendData(sampleData['ccrcc']);
+                        const threeP = orderBackendData(sampleData['3p']);
+                        const fiveQ = orderBackendData(sampleData['5q']);
+                        const sevenP = orderBackendData(sampleData['7p']);
+                        const fourteenQ = orderBackendData(sampleData['14q']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
-
-                        store.commit('ADD_GRADE', grade);
-                        store.commit('ADD_STAGE', stage);
-                        store.commit('ADD_CIMP', cimp);
-
+                        //
+                        // store.commit('ADD_GRADE', grade);
+                        // store.commit('ADD_STAGE', stage);
+                        // store.commit('ADD_CIMP', cimp);
+                        //
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);
                         store.commit('ADD_FOURTEEN_Q', fourteenQ);
 
-                        const mutation = JSON.parse(response.body['mutation']);
+                        // add gene data
+                        const mutation = orderBackendData(JSON.parse(res['mutation']), true);
                         store.commit('ADD_MUTATION', mutation);
 
-                        const methylation = JSON.parse(response.body['methylation']);
+                        const methylation = orderBackendData(JSON.parse(res['methylation']), true);
                         store.commit('ADD_METHYLATION', methylation);
 
-                        const cnv_lr = JSON.parse(response.body['cnv_lr']);
+                        const cnv_lr = orderBackendData(JSON.parse(res['cnv_lr']), true);
                         store.commit('ADD_CNV_LR', cnv_lr);
 
-                        const cnv_baf = JSON.parse(response.body['cnv_baf']);
+                        const cnv_baf = orderBackendData(JSON.parse(res['cnv_baf']), true);
                         store.commit('ADD_CNV_BAF', cnv_baf);
 
-                        const rna = JSON.parse(response.body['rna']);
+                        const rna = orderBackendData(JSON.parse(res['rna']), true);
                         store.commit('ADD_RNA', rna);
 
-                        const protein = JSON.parse(response.body['protein']);
+                        const protein = orderBackendData(JSON.parse(res['protein']), true);
                         store.commit('ADD_PROTEIN', protein);
 
-                        const phospho = JSON.parse(response.body['phospho']);
+                        const phospho = orderBackendData(JSON.parse(res['phospho']), true);
                         store.commit('ADD_PHOSPHO', phospho);
 
                         store.commit('FINISHED_LOADING');
@@ -256,22 +239,6 @@ const store = new Vuex.Store({
         }
     }
 });
-
-function convertToArrayOfObjects (obj) {
-    let arrayOfObjects = [];
-    Object.keys(obj).forEach((k) => {
-        arrayOfObjects.push(
-            {x: k, y: obj[k]}
-        )
-    });
-    return arrayOfObjects;
-}
-
-// function removeElementsByClassName (className) {
-//     document.querySelectorAll(className).forEach((a) => {
-//         a.remove()
-//     })
-// }
 
 function compare_ascending (a,b) {
   if (a.y < b.y)
@@ -295,25 +262,23 @@ function sortBySample (sortOrder) {
     }
 }
 
-function sortBySampleGene (sortOrder) {
-    return function (a, b) {
-        return sortOrder.indexOf(a) - sortOrder.indexOf(b);
+function orderBackendData (obj, gene_type = false) {
+    const originalOrder =
+        ['CPT0014450004', 'CPT0024670003', 'CPT0009000003', 'CPT0014370004', 'CPT0019130003', 'CPT0025110003', 'CPT0012900004', 'CPT0079480003', 'CPT0012370003', 'CPT0026410003', 'CPT0065810003', 'CPT0077490003', 'CPT0006630003', 'CPT0079270003', 'CPT0009060003', 'CPT0025230003', 'CPT0064370003', 'CPT0085670003', 'CPT0019990003', 'CPT0007860003', 'CPT0088630003', 'CPT0088900003', 'CPT0086870003', 'CPT0081600003', 'CPT0001540009', 'CPT0092290003', 'CPT0092790003', 'CPT0025880003', 'CPT0011240003', 'CPT0021240003', 'CPT0092160003', 'CPT0012670003', 'CPT0075720003', 'CPT0065690003', 'CPT0001340003', 'CPT0086820003', 'CPT0015730003', 'CPT0007320003', 'CPT0075130003', 'CPT0015810003', 'CPT0012280003', 'CPT0065430003', 'CPT0079410003', 'CPT0075560003', 'CPT0006440003', 'CPT0025580004', 'CPT0077310003', 'CPT0006900003', 'CPT0001500009', 'CPT0078830003', 'CPT0010160003', 'CPT0000780007', 'CPT0086030003', 'CPT0000640003', 'CPT0078930003', 'CPT0078990003', 'CPT0078510003', 'CPT0087040003', 'CPT0001180009', 'CPT0014160003', 'CPT0069000003', 'CPT0017410003', 'CPT0063320003', 'CPT0000870016', 'CPT0025290003', 'CPT0001220008', 'CPT0025350003', 'CPT0088690003', 'CPT0023690003', 'CPT0065870003', 'CPT0002350011', 'CPT0020120003', 'CPT0012180003', 'CPT0086360003', 'CPT0063630003', 'CPT0077110003', 'CPT0066470004', 'CPT0012080003', 'CPT0065750003', 'CPT0081990003', 'CPT0088480003', 'CPT0079380003', 'CPT0066480003', 'CPT0025170003', 'CPT0089020003', 'CPT0071150004', 'CPT0089460004', 'CPT0025050003', 'CPT0015910003', 'CPT0076330003', 'CPT0092730003', 'CPT0010110003', 'CPT0001260009', 'CPT0081880003', 'CPT0084560003', 'CPT0012550003', 'CPT0079230003', 'CPT0065930003', 'CPT0088760003', 'CPT0023350003', 'CPT0086950003', 'CPT0069160003', 'CPT0088550004', 'CPT0017850003', 'CPT0078800003', 'CPT0078660003', 'CPT0002270011', 'CPT0079180003', 'CPT0088970003', 'CPT0011410003']
+
+    if (gene_type) {
+        let gene_data = {};
+        for (let gene in obj) {
+            gene_data[gene] = originalOrder.map((sample) => {
+                return {x: sample, y: obj[gene][sample]}
+            });
+        }
+        return gene_data
     }
+
+    return originalOrder.map((sample) => {
+        return {x: sample, y: obj[sample]}
+    });
 }
 
-function normalizeGeneData(obj) {
-    let temp = [];
-    for (let k in obj) {
-        temp.push({x: k, y: obj[k]})
-    }
-    return temp
-}
-
-function revertGeneData (arr) {
-    let temp = {};
-    arr.forEach(el => {
-        temp[el.x] = el.y
-    })
-    return temp;
-}
 export default store;

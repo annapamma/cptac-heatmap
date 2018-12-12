@@ -27,14 +27,15 @@ def submit_genes(request):
     protein_genes = [gene for gene in genes if gene in all_genes['protein']]
     phospho_genes = [gene for gene in genes if gene in all_genes['phospho']]
 
-    sample_data = settings.CPTAC_DATA.to_json()
-    mutation = settings.MUTATION[mutation_genes].to_json()
-    methylation = settings.METHYLATION[methylation_genes].to_json()
-    cnv_lr = settings.CNV_LR[cnv_lr_genes].to_json()
-    cnv_baf = settings.CNV_BAF[cnv_baf_genes].to_json()
-    rna = settings.RNA[rna_genes].to_json()
-    protein = settings.PROTEIN[protein_genes].to_json()
-    phospho = settings.PHOSPHO[phospho_genes].to_json()
+    # might want to just transpose all of the data in the databases
+    sample_data = settings.CPTAC_DATA.T.to_json(orient='index')
+    mutation = settings.MUTATION[mutation_genes].T.to_json(orient='index')
+    methylation = settings.METHYLATION[methylation_genes].T.to_json(orient='index')
+    cnv_lr = settings.CNV_LR[cnv_lr_genes].T.to_json(orient='index')
+    cnv_baf = settings.CNV_BAF[cnv_baf_genes].T.to_json(orient='index')
+    rna = settings.RNA[rna_genes].T.to_json(orient='index')
+    protein = settings.PROTEIN[protein_genes].T.to_json(orient='index')
+    phospho = settings.PHOSPHO[phospho_genes].T.to_json(orient='index')
 
     return JsonResponse(
         {'sample_data': sample_data,

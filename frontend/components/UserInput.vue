@@ -71,7 +71,7 @@
                     let c = combinations[i];
                     if (trimmedGeneList.includes(c[0]) && trimmedGeneList.includes(c[1])) {
                         alert('Enter genes separated by a newline, tab, or space. ' +
-                            'Your list seems to include multiple separators.')
+                            'Your list seems to include multiple separators.');
                         return [];
                     }
                 }
@@ -113,12 +113,9 @@
             },
             sortBySeries (ascending) {
                 const series = this.displayData['series'];
-                const sampleDataTypes = ['14q', '7p', '5q', '3p', 'CCRCC'];
-                const type = sampleDataTypes.indexOf(series) > -1 ? 'sample' : 'gene';
                 this.$store.dispatch('sortBySeries',
                     {
                         series,
-                        type,
                         ascending
                     })
             },

@@ -73,8 +73,7 @@
                     },
                     plotOptions: {
                         heatmap: {
-                            enableShades: false,
-                            // shadeIntensity: 0.5,
+                            enableShades: true,
                             colorScale: {
                                 ranges: [
                                     {
@@ -184,7 +183,7 @@
                 return calcHeights[series]
             },
             series () {
-                const dataTypes = ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut']
+                const dataTypes = ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut'];
                 let allData = [];
                 dataTypes.forEach((dataType) => {
                     let data = this.$store.state[dataType][this.gene];
@@ -192,7 +191,7 @@
                         allData.push(
                             {
                                 name: dataType,
-                                data: convertToArrayOfObjects(data)
+                                data: data
                             }
                         )
                     }
@@ -201,18 +200,18 @@
             }
         },
     }
-
-    function convertToArrayOfObjects (obj) {
-        if (!obj) {
-        }
-        let arrayOfObjects = [];
-        Object.keys(obj).forEach((k) => {
-            arrayOfObjects.push(
-                {x: k, y: obj[k]}
-            )
-        });
-        return arrayOfObjects;
-    }
+    //
+    // function convertToArrayOfObjects (obj) {
+    //     if (!obj) {
+    //     }
+    //     let arrayOfObjects = [];
+    //     Object.keys(obj).forEach((k) => {
+    //         arrayOfObjects.push(
+    //             {x: k, y: obj[k]}
+    //         )
+    //     });
+    //     return arrayOfObjects;
+    // }
 
 </script>
 

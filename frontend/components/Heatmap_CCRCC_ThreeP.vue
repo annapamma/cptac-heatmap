@@ -68,50 +68,42 @@
                     },
                     plotOptions: {
                         heatmap: {
-                            enableShades: false,
-                            // shadeIntensity: 0.5,
+                            enableShades: true,
                             colorScale: {
                                 ranges: [
                                     {
                                         from: 0,
                                         to: 0.1,
-                                        // name: 'na',
                                         color: '#FFFFFF'
                                     },
                                     {
                                         from: 1,
                                         to: 1,
-                                        // name: 'loss',
                                         color: '#003366'
                                     },
                                     {
                                         from: 2,
                                         to: 2,
-                                        // name: 'neutral LOH',
                                         color: '#ADD8E6'
                                     },
                                     {
                                         from: 3,
                                         to: 3,
-                                        // name: 'neutral',
                                         color: '#b4b4b4'
                                     },
                                     {
                                         from: 4,
                                         to: 4,
-                                        // name: 'amplification',
                                         color: '#cc0000'
                                     },
                                     {
                                         from: 100,
                                         to: 100,
-                                        // name: 'CCRCC yes',
                                         color: '#003366'
                                     },
                                     {
                                         from: -100,
                                         to: -100,
-                                        // name: 'CCRCC no',
                                         color: '#b4b4b4'
                                     }
                                 ]
@@ -123,10 +115,11 @@
         },
         computed: {
             series () {
+                // data: an array of {x: label, y: value}
                 const blankRow = {name: '', data: []};
                 return [
                     {name: '14q', data: this.$store.state['14q']},
-                    {name: '7p', data: this.$store.state['7p']}, // data: an array of {x: label, y: value}
+                    {name: '7p', data: this.$store.state['7p']},
                     {name: '5q', data: this.$store.state['5q']},
                     blankRow,
                     {name: '3p', data: this.$store.state['3p']},
@@ -134,8 +127,20 @@
                 ]
             }
         },
+        mounted () {
+            // applyColors()
+        }
     }
 
+    // function applyColors () {
+    //     const rects = document.getElementsByTagName('rect');
+    //     for (let i = 0; i < rects.length; i++) {
+    //         // console.log(rects[i].getAttribute('val'))
+    //         console.log(rects[i].getAttribute('color'))
+    //         rects[i].setAttribute('color', '#ff37eb')
+    //         // element[index].parentNode.removeChild(element[index]);
+    //     }
+    // }
 </script>
 
 <style scoped>
