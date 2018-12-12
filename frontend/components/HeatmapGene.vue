@@ -87,12 +87,7 @@
                         },
                     },
                     tooltip: {
-                        enabled: true,
-                        y: {
-                            formatter: (val) => {
-                                return ''
-                            }
-                        }
+                        enabled: false,
                     },
                     plotOptions: {
                         heatmap: {

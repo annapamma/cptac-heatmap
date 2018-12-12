@@ -20,7 +20,8 @@
                 <!--<p>Gene: <b>{{ displayData['gene'] }}</b></p>-->
                 <small><i>Click data point to display</i></small>
             </div>
-            <button @click="sortBySeries" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}</button>
+            <button @click="sortBySeries(ascending=1)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Ascending</button>
+            <button @click="sortBySeries(ascending=0)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Descending</button>
         </div>
         <p class="description">Enter up to 30 gene symbols.
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
@@ -110,14 +111,15 @@
                         link.click();
                     });
             },
-            sortBySeries () {
+            sortBySeries (ascending) {
                 const series = this.displayData['series'];
                 const sampleDataTypes = ['14q', '7p', '5q', '3p', 'CCRCC'];
                 const type = sampleDataTypes.indexOf(series) > -1 ? 'sample' : 'gene';
                 this.$store.dispatch('sortBySeries',
                     {
                         series,
-                        type
+                        type,
+                        ascending
                     })
             },
             submitGenes () {

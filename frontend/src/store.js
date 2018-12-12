@@ -104,7 +104,7 @@ const store = new Vuex.Store({
         'START_LOADING_EXCEL' (state) {
             state.loaded_excel = false;
         },
-        'SORT_BY_SERIES' (state, { series, type }) {
+        'SORT_BY_SERIES' (state, { series, type, ascending }) {
             // sort the sample data
             // const dataTypes = {
             //     '14q': 'fourteenQ',
@@ -129,7 +129,7 @@ const store = new Vuex.Store({
                 seriesToSortBy = normalizeGeneData(seriesToSortBy)
             }
 
-            const sortedSeries = seriesToSortBy.sort(compare_ascending);
+            const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
             const order = sortedSeries.map(el => { return el.x });
             // console.log(series, order)
             // console.log(series, sortedSeries)
@@ -140,6 +140,7 @@ const store = new Vuex.Store({
                 }
             });
 
+            // sort gene data
             dataTypesGenes.forEach((dt) => {
                 // if (dt !== series) {
                 for (let gene in state[dt]) {
@@ -153,8 +154,6 @@ const store = new Vuex.Store({
                     // state[dt].sort(sortBySample(order));
                 // }
             });
-            // sort gene data
-            // first steo: check if sample data osrs with gene
         },
         'UPDATE_DISPLAY_DATA' (state, displayData) {
             state.displayData = displayData;
