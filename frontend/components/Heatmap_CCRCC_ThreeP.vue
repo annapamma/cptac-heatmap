@@ -1,14 +1,11 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart @click="handleClick" type=heatmap :height="100" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="100" :options="chartOptions" :series="series" />
     </div>
 </template>
 
 <script>
     /* eslint-disable camelcase */
-
-    // hack to deal with nested objects
-    let that = {};
 
     export default {
         name: 'heatmap-ccrcc-3p',
@@ -25,56 +22,26 @@
                         },
                         animations: {
                             enabled: false,
-                            easing: 'linear',
-                            speed: 20,
-                            animateGradually: {
-                                enabled: false,
-                            },
-                            dynamicAnimation: {
-                                enabled: false,
-                                speed: 10
-                            }
                         },
                         events: {
-                            click: function (event, chartContext, config) {
-                                // console.log(context)
-                                // const data_types = ['fourteenQ', 'sevenP', 'fiveQ', '', 'threeP', 'ccrcc'];
-                                // const labels = ['14q', '7p', '5q', '', '3p', 'ccrcc'];
+                            click: (event, chartContext, config) => {
                                 const series_i = event.target.getAttribute('i');
                                 const sample_i = event.target.getAttribute('j');
-                                let series = that.series[series_i]['name'];
+                                let series = this.series[series_i]['name'];
 
-                                const sample = that.series[series_i]['data'][sample_i]['x'];
-                                const values = that.$store.state['selectGeneData']['data'];
+                                const sample = this.series[series_i]['data'][sample_i]['x'];
+                                const values = this.$store.state['selectGeneData']['data'];
                                 const found = values.find((obj) => {
                                     return obj['Index'] === series
                                 });
                                 const value = found[sample];
-                                that.$store.dispatch('displayData', {
+
+                                this.$store.dispatch('displayData', {
                                     series,
                                     sample,
                                     value
                                 });
-                                // const clicked = data_types[series_i];
-                                // // const series = labels[series_i];
-                                // const sample = that.$store.state[clicked][sample_i]['x'];
-                                // const values = that.$store.state['selectGeneData']['data'];
-                                // const found = values.find((obj) => {
-                                //     return obj['Index'] === series
-                                // });
-                                // const value = found[sample];
-                                // that.$store.dispatch('displayData', {
-                                //     series,
-                                //     sample,
-                                //     value
-                                // })
-                              // ...
                             },
-                            // dataPointSelection: function(chartContext, { xaxis, yaxis }) {
-                            //     console.log('working??')
-                            //     console.log(chartContext)
-                            //   // ...
-                            // }
                         },
                     },
                     dataLabels: {
@@ -155,9 +122,6 @@
             }
         },
         computed: {
-            // height () {
-            //     return Math.round(this.series.length * 16.7)
-            // },
             series () {
                 const blankRow = {name: '', data: []};
                 return [
@@ -170,14 +134,6 @@
                 ]
             }
         },
-        methods: {
-            handleClick (evt) {
-                console.log(evt)
-            }
-        },
-        mounted () {
-            that = this;
-        }
     }
 
 </script>

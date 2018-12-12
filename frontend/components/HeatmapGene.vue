@@ -7,10 +7,6 @@
 
 <script>
     /* eslint-disable camelcase */
-    'use strict'
-
-    // hack to deal with nested objects
-    let that = {};
 
     export default {
         name: 'heatmap-gene',
@@ -21,23 +17,12 @@
                     legend: {
                         show: false
                     },
-                    // chart,
                     chart: {
                         toolbar: {
                             show: false
                         },
                         animations: {
-                            // enabled: true,
                             enabled: false,
-                            easing: 'linear',
-                            speed: 20,
-                            animateGradually: {
-                                enabled: false,
-                            },
-                            dynamicAnimation: {
-                                enabled: false,
-                                speed: 10
-                            }
                         },
                         events: {
                             click: (event, chartContext, config) => {
@@ -63,12 +48,6 @@
                                 })
                             }
                         },
-                    },
-                    grid: {
-                      margin: {
-                        top: 0,
-                        bottom: 0
-                      }
                     },
                     dataLabels: {
                         enabled: false,
@@ -205,15 +184,6 @@
                 return calcHeights[series]
             },
             series () {
-                // let dataTypes = [
-                //     ['phospho', 'Phospho'],
-                //     ['protein', 'Protein'],
-                //     ['rna', 'mRNA'],
-                //     ['cnv_baf', 'CNV (baf)'],
-                //     ['cnv_lr', 'CNV (lr)'],
-                //     ['methylation', 'Methy'],
-                //     ['mutation', 'Mut']
-                // ];
                 const dataTypes = ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut']
                 let allData = [];
                 dataTypes.forEach((dataType) => {
@@ -230,66 +200,6 @@
                 return allData;
             }
         },
-        mounted () {
-            // that = this;
-            // chart.bind(this);
-            that = this;
-            let chart = {
-                toolbar: {
-                    show: false
-                },
-                animations: {
-                    // enabled: true,
-                    enabled: false,
-                    easing: 'linear',
-                    speed: 20,
-                    animateGradually: {
-                        enabled: false,
-                    },
-                    dynamicAnimation: {
-                        enabled: false,
-                        speed: 10
-                    }
-                },
-                events: {
-                    click: function (event, chartContext, config) {
-                        // console.log(this)
-                        // const series_i = event.target.getAttribute('i');
-                        // const sample_i = event.target.getAttribute('j');
-                        // console.log(series_i, that['gene'])
-                        // console.log(that.series)
-                        // if (!series_i || !sample_i) {
-                        //     return
-                        // }
-                        // const label = that.series[series_i]['name'];
-                        // const sample = that.series[series_i]['data'][sample_i]['x'];
-                        // const series = that['gene'] + " " + label;
-                        //
-                        // const values = that.$store.state['selectGeneData']['data'];
-                        // const found = values.find((obj) => {
-                        //     return obj['Index'] === series
-                        // });
-                        // const value = found[sample];
-                        // that.$store.dispatch('displayData', {
-                        //     series,
-                        //     sample,
-                        //     value
-                        // })
-                    }
-                }
-            };
-
-            // (Chart) => ({
-            //     console.log(this)
-            //     // this.event = event;
-            //     // return chart;
-            // })
-            //
-            // Chart()
-            // let newChart = new Chart('h').bind(this);
-            // let boundChart = newChart.bind(this);
-            // console.log(newChart)
-        }
     }
 
     function convertToArrayOfObjects (obj) {
@@ -319,19 +229,4 @@
         font-weight: bold;
         font-size: small;
     }
-
-    /*.rotate {*/
-      /*!* FF3.5+ *!*/
-      /*-moz-transform: rotate(-90.0deg);*/
-      /*!* Opera 10.5 *!*/
-      /*-o-transform: rotate(-90.0deg);*/
-      /*!* Saf3.1+, Chrome *!*/
-      /*-webkit-transform: rotate(-90.0deg);*/
-      /*!* IE6,IE7 *!*/
-      /*filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);*/
-      /*!* IE8 *!*/
-      /*-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";*/
-      /*!* Standard *!*/
-      /*transform: rotate(-90.0deg);*/
-    /*}*/
 </style>
