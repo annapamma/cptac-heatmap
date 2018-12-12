@@ -22,6 +22,7 @@ const store = new Vuex.Store({
         '14q': [],
         geneDetails: {},
         genes: [],
+        genomicInstability: [],
         grade: [],
         loaded: false,
         loaded_excel: false,
@@ -31,7 +32,10 @@ const store = new Vuex.Store({
         'Phospho': {},
         'Protein': {},
         'mRNA': {},
-        selectGeneData: {'data': [], 'params': {}},
+        selectGeneData: {
+            'data': [],
+            'params': {}
+        },
         '7p': [],
         stage: [],
         '3p': [],
@@ -60,6 +64,9 @@ const store = new Vuex.Store({
         },
         'ADD_GENE_LIST' (state, genes) {
             state.genes = genes
+        },
+        'ADD_GENOMIC_INSTABILITY' (state, genomicInstability) {
+            state.genomicInstability = genomicInstability
         },
         'ADD_GRADE' (state, grade) {
             state.grade = grade;
@@ -193,7 +200,6 @@ const store = new Vuex.Store({
                         store.commit('ADD_GENE_DETAILS', geneDetails);
 
                         const sampleData = JSON.parse(res['sample_data']);
-
                         // add sample data
                         const ccrcc = orderBackendData(sampleData['ccrcc']);
                         const threeP = orderBackendData(sampleData['3p']);
@@ -201,13 +207,19 @@ const store = new Vuex.Store({
                         const sevenP = orderBackendData(sampleData['7p']);
                         const fourteenQ = orderBackendData(sampleData['14q']);
 
+                        const stage = orderBackendData(sampleData['stage']);
+                        const grade = orderBackendData(sampleData['grade']);
+                        const genomic_instability = orderBackendData(sampleData['genomically unstable']);
+                        const cimp = orderBackendData(sampleData['cimp']);
+
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
-                        //
-                        // store.commit('ADD_GRADE', grade);
-                        // store.commit('ADD_STAGE', stage);
-                        // store.commit('ADD_CIMP', cimp);
-                        //
+
+                        store.commit('ADD_GRADE', grade);
+                        store.commit('ADD_STAGE', stage);
+                        store.commit('ADD_CIMP', cimp);
+                        store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
+
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);
                         store.commit('ADD_FOURTEEN_Q', fourteenQ);

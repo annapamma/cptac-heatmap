@@ -209,7 +209,6 @@
         },
         methods: {
             displayGeneDetails () {
-                console.log(this.$store.state.geneDetails[this.gene])
                 this.$modal.show(this.gene);
             },
             hide () {
