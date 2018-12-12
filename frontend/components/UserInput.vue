@@ -171,11 +171,9 @@
     }
 
     .user-input textarea {
-        /*margin: 20px 5px auto;*/
         border: 1px solid;
         padding: 1%;
         height: 30vh;
-        /*width: 100%;*/
     }
 
     .user-input button {

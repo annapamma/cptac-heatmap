@@ -20,6 +20,7 @@ const store = new Vuex.Store({
         },
         '5q': [],
         '14q': [],
+        geneDetails: {},
         genes: [],
         grade: [],
         loaded: false,
@@ -53,6 +54,9 @@ const store = new Vuex.Store({
         },
         'ADD_FOURTEEN_Q' (state, fourteenQ) {
             state['14q'] = fourteenQ;
+        },
+        'ADD_GENE_DETAILS' (state, geneDetails) {
+            state.geneDetails = geneDetails
         },
         'ADD_GENE_LIST' (state, genes) {
             state.genes = genes
@@ -108,7 +112,6 @@ const store = new Vuex.Store({
             const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
-            // console.log(series, type, ascending)
 
             // pull gene from series name (eg VHL Mut)
             let gene = '';
@@ -121,7 +124,6 @@ const store = new Vuex.Store({
 
             // pull series data
             let seriesToSortBy = type === 'sample' ? state[series].slice() : state[series][gene].slice();
-            // console.log(seriesToSortBy);
 
             const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
             const order = sortedSeries.map(el => { return el.x });
@@ -186,6 +188,10 @@ const store = new Vuex.Store({
                     response => {
                         // const res = JSON.parse(response.body);
                         const res = response.body;
+
+                        const geneDetails = JSON.parse(res['gene_details']);
+                        store.commit('ADD_GENE_DETAILS', geneDetails);
+
                         const sampleData = JSON.parse(res['sample_data']);
 
                         // add sample data

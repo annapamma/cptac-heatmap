@@ -133,6 +133,11 @@ ALL_GENE_DATA = pickle.load(
          'rb')
 )
 
+GENE_DETAILS = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'gene_details.pkl'),
+         'rb')
+)
+
 CPTAC_DATA = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'cptac.pkl'),
          'rb')

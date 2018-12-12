@@ -19,6 +19,7 @@ def submit_genes(request):
         genes = data['genes']
 
     all_genes = settings.ALL_GENES
+
     mutation_genes = [gene for gene in genes if gene in all_genes['mutation']]
     methylation_genes = [gene for gene in genes if gene in all_genes['methylation']]
     cnv_lr_genes = [gene for gene in genes if gene in all_genes['cnv_lr']]
@@ -26,6 +27,7 @@ def submit_genes(request):
     rna_genes = [gene for gene in genes if gene in all_genes['rna']]
     protein_genes = [gene for gene in genes if gene in all_genes['protein']]
     phospho_genes = [gene for gene in genes if gene in all_genes['phospho']]
+    gene_details_genes = [gene for gene in genes if gene in all_genes['gene_details']]
 
     # might want to just transpose all of the data in the databases
     sample_data = settings.CPTAC_DATA.T.to_json(orient='index')
@@ -36,6 +38,7 @@ def submit_genes(request):
     rna = settings.RNA[rna_genes].T.to_json(orient='index')
     protein = settings.PROTEIN[protein_genes].T.to_json(orient='index')
     phospho = settings.PHOSPHO[phospho_genes].T.to_json(orient='index')
+    gene_details = settings.GENE_DETAILS.loc[gene_details_genes].to_json(orient='index')
 
     return JsonResponse(
         {'sample_data': sample_data,
@@ -45,7 +48,8 @@ def submit_genes(request):
          'cnv_baf': cnv_baf,
          'rna': rna,
          'protein': protein,
-         'phospho': phospho
+         'phospho': phospho,
+         'gene_details': gene_details
          },
         safe=False
     )

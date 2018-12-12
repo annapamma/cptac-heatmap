@@ -1,7 +1,12 @@
 <template>
     <div class="heatmap-gene" v-if="series.length">
-        <p class="heatmap-gene-title">{{ gene }}</p>
+        <div class="heatmap-gene-title"><a @click="displayGeneDetails">{{ gene }}</a></div>
         <apexchart type=heatmap :height="height" :options="chartOptions" :series="series" />
+        <modal :height="'auto'" :scrollable="true" :draggable="true" :name="gene">
+            <h3 class="modal-header"> {{ gene }}</h3>
+            <div class="summary-text">{{ geneDetails['summary'] }}</div>
+            <div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>
+        </modal>
     </div>
 </template>
 
@@ -169,6 +174,9 @@
             }
         },
         computed: {
+            geneDetails () {
+                return this.$store.state.geneDetails[this.gene]
+            },
             height () {
                 const series = this.series.length;
                 const calcHeights = {
@@ -199,19 +207,16 @@
                 return allData;
             }
         },
+        methods: {
+            displayGeneDetails () {
+                console.log(this.$store.state.geneDetails[this.gene])
+                this.$modal.show(this.gene);
+            },
+            hide () {
+                this.$modal.hide(this.gene);
+            }
+        },
     }
-    //
-    // function convertToArrayOfObjects (obj) {
-    //     if (!obj) {
-    //     }
-    //     let arrayOfObjects = [];
-    //     Object.keys(obj).forEach((k) => {
-    //         arrayOfObjects.push(
-    //             {x: k, y: obj[k]}
-    //         )
-    //     });
-    //     return arrayOfObjects;
-    // }
 
 </script>
 
@@ -227,5 +232,33 @@
         margin-top: -20px;
         font-weight: bold;
         font-size: small;
+        position: relative;
+        z-index: 99;
+        cursor: pointer;
+    }
+
+    /*.modal {*/
+        /*!*height: 50%*!*/
+        /*background-color: pink;*/
+        /*display: flex;*/
+  /*flex-direction: column;*/
+  /*min-height: 100vh;*/
+    /*}*/
+
+    .modal-header {
+        /*margin: 0 auto;*/
+        text-align: center;
+        padding-top: 2px;
+    }
+
+    .summary-text {
+        padding: 15px;
+    }
+
+    .additional-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 15px;
     }
 </style>
