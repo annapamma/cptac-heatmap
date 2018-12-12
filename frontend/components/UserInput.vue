@@ -168,21 +168,44 @@
         flex-direction: column;
         width: 30%;
         margin-left: 10px;
+        padding: 0;
+        height: 100vh;
+        /*background-color: lightgray;*/
     }
 
     .user-input textarea {
         border: 1px solid;
         padding: 1%;
         height: 30vh;
+        width: 80%;
+        margin: 20px auto;
     }
 
     .user-input button {
-        margin: 10px;
-        width: 100%;
+        margin: 10px auto;
+        width: 80%;
     }
 
     .description {
         text-align: justify;
         font-weight: bold;
+        margin: 10px auto;
+        padding: 20px;
+        font-family: "Times New Roman", Times, serif;
+    }
+
+    .data-display-container {
+        width: 40%;
+        margin: 0 auto;
+        padding: 10px;
+        background: white;
+    }
+
+    .data-display {
+        text-align: justify;
+        font-weight: bold;
+        margin: 0 auto;
+        padding: 0px;
+        font-family: "Times New Roman", Times, serif;
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <user-input />
+        <user-input class="user-input-main"/>
         <the-heatmap-container />
     </div>
 </template>
@@ -55,4 +55,10 @@ a {
     min-height: 100%;
     overflow: auto;
 }
+
+    .user-input-main {
+        /*background-color: lightgray;*/
+        background: lightgray;
+        height: 100%;
+    }
 </style>
