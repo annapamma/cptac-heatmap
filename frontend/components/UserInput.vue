@@ -262,4 +262,8 @@
         border: solid 1px black;
         cursor: pointer;
     }
+
+    .modal-content {
+        width: 100%;
+    }
 </style>
