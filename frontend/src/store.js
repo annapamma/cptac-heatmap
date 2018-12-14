@@ -25,6 +25,7 @@ const store = new Vuex.Store({
         genomicInstability: [],
         grade: [],
         histology: {},
+        histologyDisplay: {},
         loaded: false,
         loaded_excel: false,
         loading: false,
@@ -154,15 +155,21 @@ const store = new Vuex.Store({
         },
         'UPDATE_DISPLAY_DATA' (state, displayData) {
             state.displayData = displayData;
-        }
+        },
+        'UPDATE_HISTOLOGY_LINKS' (state, sample) {
+            state.histologyDisplay = state.histology[sample]
+        },
     },
     actions: {
         displayData (store, displayData) {
-            console.log(displayData)
             if (displayData.value === null) {
                 displayData.value = 'NaN'
             }
-            store.commit('UPDATE_DISPLAY_DATA', displayData)
+            const sample = displayData.sample;
+
+            store.commit('UPDATE_DISPLAY_DATA', displayData);
+            store.commit('UPDATE_HISTOLOGY_LINKS', sample);
+
         },
         downloadGeneData (store, geneInput) {
             store.commit('START_LOADING_EXCEL');

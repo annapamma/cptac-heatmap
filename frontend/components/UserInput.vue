@@ -8,20 +8,39 @@
             class   = "btn btn-default"
             :data   = "selectGeneData"
             :param = "selectGeneSchema"
-            name    = "CPTAC3-heatmap.xls"
+            name    = "CPTAC3-CCRCC-heatmap.xls"
         >
             <button :disabled="!loadedExcel">Download Excel</button>
         </download-excel>
-        <div class="data-display-container" v-if="loadedExcel">
-            <div class="data-display">
-                <p>Data type: <b>{{ displayData['series'] }}</b></p>
-                <p>Sample: <b>{{ displayData['sample'] }}</b></p>
-                <p>Value: <b>{{ displayData['value'] }}</b></p>
-                <small><i>Click data point to display and enable sorting</i></small>
+
+        <div class="responsive-data-displays" v-if="loadedExcel">
+            <div class="data-display-container">
+                <div class="data-display">
+                    <div class="sample-description">
+                        <p>Sample: <b @click="displaySampleHistologyLinks">{{ displayData['sample'] }}</b></p>
+                        <img @click="displaySampleHistologyLinks"
+                             src="../assets/histology-icon.png"
+                             alt="links for histologic images"
+                             title="links for histologic images"
+                        >
+                    </div>
+                    <p>Data type: <b>{{ displayData['series'] }}</b></p>
+                    <p>Value: <b>{{ displayData['value'] }}</b></p>
+                    <small><i>Click data point to display and enable sorting</i></small>
+                </div>
+                <button @click="sortBySeries(ascending=1)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Ascending</button>
+                <button @click="sortBySeries(ascending=0)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Descending</button>
             </div>
-            <button @click="sortBySeries(ascending=1)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Ascending</button>
-            <button @click="sortBySeries(ascending=0)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Descending</button>
+            <modal :height="'auto'" :scrollable="true" :draggable="true" :name="displayData['sample']">
+                <div class="modal-content">
+                    <histology-display :sample="displayData['sample']"/>
+                    <!--<h3 class="modal-header">{{ gene }}</h3>-->
+                    <!--<div class="summary-text">{{ geneDetails['summary'] }}</div>-->
+                    <!--<div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>-->
+                </div>
+            </modal>
         </div>
+
         <p class="description">Enter up to 30 gene symbols.
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
             The dataset provides data for 22,867 genes. Not all data types will be available for every gene.</p>
@@ -34,8 +53,10 @@
     /* eslint-disable camelcase */
 
     import domtoimage from 'dom-to-image';
+    import HistologyDisplay from './HistologyDisplay.vue';
 
     export default {
+        components: {HistologyDisplay},
         name: 'user-input',
         data () {
             return {
@@ -101,6 +122,12 @@
             }
         },
         methods: {
+            displaySampleHistologyLinks () {
+                this.$modal.show(this.displayData['sample']);
+            },
+            hideSampleHistologyLinks () {
+                this.$modal.hide(this.displayData['sample']);
+            },
             downloadImage () {
                 let node = document.querySelectorAll('.the-heatmap-container')[0];
                 domtoimage.toPng(node, { quality: 0.95, bgcolor: '#FFFFFF' })
@@ -196,11 +223,20 @@
         font-family: "Times New Roman", Times, serif;
     }
 
+    .responsive-data-displays {
+        /*display: inline;*/
+        display: flex;
+        height: 30%;
+        width: 100%;
+        /*flex-direction: row;*/
+    }
+
     .data-display-container {
-        width: 40%;
-        margin: 0 auto;
+        width: 60%;
+        margin: 5px auto;
         padding: 10px;
         background: white;
+        height: 100%;
     }
 
     .data-display {
@@ -209,5 +245,21 @@
         margin: 0 auto;
         padding: 0px;
         font-family: "Times New Roman", Times, serif;
+    }
+
+
+    .sample-description {
+        display: flex;
+        flex-direction: row;
+        /*justify-content: space-evenly;*/
+    }
+
+    .sample-description img {
+        width:1em;
+        height:1em;
+        margin: auto;
+        padding: 2px;
+        border: solid 1px black;
+        cursor: pointer;
     }
 </style>
