@@ -17,8 +17,7 @@
                 <p>Data type: <b>{{ displayData['series'] }}</b></p>
                 <p>Sample: <b>{{ displayData['sample'] }}</b></p>
                 <p>Value: <b>{{ displayData['value'] }}</b></p>
-                <!--<p>Gene: <b>{{ displayData['gene'] }}</b></p>-->
-                <small><i>Click data point to display</i></small>
+                <small><i>Click data point to display and enable sorting</i></small>
             </div>
             <button @click="sortBySeries(ascending=1)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Ascending</button>
             <button @click="sortBySeries(ascending=0)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Descending</button>
@@ -177,6 +176,7 @@
         border: 1px solid;
         padding: 1%;
         height: 30vh;
+        min-height: 30px;
         width: 80%;
         margin: 20px auto;
     }

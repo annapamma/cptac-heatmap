@@ -154,6 +154,10 @@ const store = new Vuex.Store({
     },
     actions: {
         displayData (store, displayData) {
+            console.log(displayData)
+            if (displayData.value === null) {
+                displayData.value = 'NaN'
+            }
             store.commit('UPDATE_DISPLAY_DATA', displayData)
         },
         downloadGeneData (store, geneInput) {
