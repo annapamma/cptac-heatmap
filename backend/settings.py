@@ -122,7 +122,12 @@ WEBPACK_LOADER = {
     }
 }
 
-# Load data as pandas df
+# Load data as pandas dfs
+HISTOLOGY = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'histology.pkl'),
+         'rb')
+)
+
 ALL_GENES = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'all_genes.pkl'),
          'rb')

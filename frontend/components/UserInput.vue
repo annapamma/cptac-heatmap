@@ -25,6 +25,7 @@
         <p class="description">Enter up to 30 gene symbols.
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
             The dataset provides data for 22,867 genes. Not all data types will be available for every gene.</p>
+        <p class="description">Click gene symbol to see more details. Click sample ID for links to histology images.</p>
         <p class="description">For more details, see publication …</p>
     </div>
 </template>
@@ -134,6 +135,7 @@
             },
         },
         mounted () {
+            this.$store.dispatch('loadFirstData');
             enableTabsInTextarea()
         }
     }

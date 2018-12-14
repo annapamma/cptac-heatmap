@@ -24,6 +24,7 @@ const store = new Vuex.Store({
         genes: [],
         genomicInstability: [],
         grade: [],
+        histology: {},
         loaded: false,
         loaded_excel: false,
         loading: false,
@@ -70,6 +71,9 @@ const store = new Vuex.Store({
         },
         'ADD_GRADE' (state, grade) {
             state.grade = grade;
+        },
+        'ADD_HISTOLOGY_DATA' (state, histology) {
+            state.histology = histology;
         },
         'ADD_METHYLATION' (state, methylation) {
             state['Methy'] = methylation;
@@ -184,6 +188,17 @@ const store = new Vuex.Store({
                 );
 
             store.commit('FINISHED_LOADING_EXCEL');
+        },
+        loadFirstData (store) {
+            api.get('load_first_data/')
+                .then(response => {
+                    store.commit('ADD_HISTOLOGY_DATA', JSON.parse(response.body['histology']))
+                })
+                .catch(
+                    error => {
+                        store.commit('API_FAIL', error);
+                    }
+                )
         },
         sortBySeries (store, sortData) {
             store.commit('SORT_BY_SERIES', sortData)

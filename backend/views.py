@@ -81,3 +81,9 @@ def download_data(request):
         'params': params,
         'data': data
     }, safe=False)
+
+
+@csrf_exempt
+def load_first_data(request):
+    histology = settings.HISTOLOGY
+    return JsonResponse({'histology': histology}, safe=False)
