@@ -1,12 +1,16 @@
 <template>
     <div class="heatmap-gene" v-if="series.length">
-        <div class="heatmap-gene-title"><a @click="displayGeneDetails">{{ gene }}</a></div>
-        <apexchart type=heatmap :height="height" :options="chartOptions" :series="series" />
-        <modal :height="'auto'" :scrollable="true" :draggable="true" :name="gene">
-            <h3 class="modal-header"> {{ gene }}</h3>
-            <div class="summary-text">{{ geneDetails['summary'] }}</div>
-            <div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>
-        </modal>
+            <div class="heatmap-gene-title">
+                <a @click="displayGeneDetails">{{ gene }}</a>
+            </div>
+            <apexchart type=heatmap :height="height" :options="chartOptions" :series="series" />
+            <modal :height="'auto'" :scrollable="true" :draggable="true" :name="gene">
+                <div class="modal-content">
+                    <h3 class="modal-header">{{ gene }}</h3>
+                    <div class="summary-text">{{ geneDetails['summary'] }}</div>
+                    <div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>
+                </div>
+            </modal>
     </div>
 </template>
 
@@ -94,12 +98,12 @@
                                     {
                                         from: 2,
                                         to: 2,
-                                        color: '#000066'
+                                        color: '#003366'
                                     },
                                     {
                                         from: 3,
                                         to: 3,
-                                        color: '#000080'
+                                        color: '#004085'
                                     },
                                     {
                                         from: 4,
@@ -156,14 +160,14 @@
                                         to: 14,
                                         color: '#990000'
                                     },
+                                    // {
+                                    //     from: 100,
+                                    //     to: 100,
+                                    //     color: '#003366'
+                                    // },
                                     {
-                                        from: 100,
-                                        to: 100,
-                                        color: '#003366'
-                                    },
-                                    {
-                                        from: -100,
-                                        to: -100,
+                                        from: -1,
+                                        to: -1,
                                         color: '#b4b4b4'
                                     }
                                 ]
@@ -230,22 +234,23 @@
         margin-bottom: -30px;
         margin-top: -20px;
         font-weight: bold;
-        font-size: small;
+        font-size: 1em;
+        color: black;
         position: relative;
         z-index: 99;
         cursor: pointer;
     }
 
-    /*.modal {*/
-        /*!*height: 50%*!*/
-        /*background-color: pink;*/
-        /*display: flex;*/
-  /*flex-direction: column;*/
-  /*min-height: 100vh;*/
-    /*}*/
+    .heatmap-gene-title a {
+        color: black;
+    }
+
+    .heatmap-gene-title a:hover {
+        color: green;
+    }
 
     .modal-header {
-        /*margin: 0 auto;*/
+        margin: 10px auto -5px;
         text-align: center;
         padding-top: 2px;
     }
@@ -259,5 +264,9 @@
         flex-direction: row;
         justify-content: space-evenly;
         padding: 15px;
+    }
+
+    .modal-content {
+        font-family: "Times New Roman", Times, serif;
     }
 </style>
