@@ -1,5 +1,5 @@
 <template>
-    <div class="heatmap-ccrcc-3p">
+    <div class="heatmap-stage-grade-gender">
         <apexchart type=heatmap :height="120" :options="chartOptions" :series="series" />
     </div>
 </template>
@@ -8,7 +8,7 @@
     /* eslint-disable camelcase */
 
     export default {
-        name: 'heatmap-ccrcc-3p',
+        name: 'heatmap-stage-grade-gender',
         props: [],
         data () {
             return {
@@ -80,32 +80,32 @@
                                     {
                                         from: 1,
                                         to: 1,
-                                        color: '#003366'
+                                        color: '#1fc600'
                                     },
                                     {
                                         from: 2,
                                         to: 2,
-                                        color: '#ADD8E6'
+                                        color: '#089000'
                                     },
                                     {
                                         from: 3,
                                         to: 3,
-                                        color: '#b4b4b4'
+                                        color: '#0a5d00'
                                     },
                                     {
                                         from: 4,
                                         to: 4,
-                                        color: '#cc0000'
+                                        color: '#063b00'
                                     },
-                                    {
+                                                                        {
                                         from: 100,
                                         to: 100,
-                                        color: '#003366'
+                                        color: '#cc0000'
                                     },
                                     {
                                         from: -100,
                                         to: -100,
-                                        color: '#b4b4b4'
+                                        color: '#003366'
                                     }
                                 ]
                             }
@@ -119,18 +119,14 @@
                 // data: an array of {x: label, y: value}
                 const blankRow = {name: '', data: []};
                 return [
-                    {name: '14q', data: this.$store.state['14q']},
-                    {name: '7p', data: this.$store.state['7p']},
-                    {name: '5q', data: this.$store.state['5q']},
-                    blankRow,
-                    {name: 'Immune Group', data: this.$store.state['Immune Group']},
-                    blankRow,
-                    {name: '3p', data: this.$store.state['3p']},
-                    {name: 'CCRCC', data: this.$store.state['CCRCC']},
+                    {name: 'Stage', data: this.$store.state['Stage']},
+                    {name: 'Grade', data: this.$store.state['Grade']},
+                    {name: 'Gender', data: this.$store.state['Gender']},
                 ]
             }
         },
     }
+
 </script>
 
 <style scoped>

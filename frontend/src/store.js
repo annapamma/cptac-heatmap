@@ -20,13 +20,14 @@ const store = new Vuex.Store({
         },
         '5q': [],
         '14q': [],
+        'Gender': [],
         geneDetails: {},
         genes: [],
         genomicInstability: [],
-        grade: [],
+        'Grade': [],
         histology: {},
         histologyDisplay: {},
-        immuneGroup: [],
+        'Immune Group': [],
         loaded: false,
         loaded_excel: false,
         loading: false,
@@ -40,7 +41,7 @@ const store = new Vuex.Store({
             'params': {}
         },
         '7p': [],
-        stage: [],
+        'Stage': [],
         '3p': [],
     },
     mutations: {
@@ -62,6 +63,9 @@ const store = new Vuex.Store({
         'ADD_FOURTEEN_Q' (state, fourteenQ) {
             state['14q'] = fourteenQ;
         },
+        'ADD_GENDER' (state, gender) {
+            state['Gender'] = gender;
+        },
         'ADD_GENE_DETAILS' (state, geneDetails) {
             state.geneDetails = geneDetails
         },
@@ -72,13 +76,13 @@ const store = new Vuex.Store({
             state.genomicInstability = genomicInstability
         },
         'ADD_GRADE' (state, grade) {
-            state.grade = grade;
+            state['Grade'] = grade;
         },
         'ADD_HISTOLOGY_DATA' (state, histology) {
             state.histology = histology;
         },
         'ADD_IMMUNE_GROUP' (state, immuneGroup) {
-            state.immuneGroup = immuneGroup;
+            state['Immune Group'] = immuneGroup;
         },
         'ADD_METHYLATION' (state, methylation) {
             state['Methy'] = methylation;
@@ -102,7 +106,7 @@ const store = new Vuex.Store({
             state['7p'] = sevenP;
         },
         'ADD_STAGE' (state, stage) {
-            state.stage = stage;
+            state['Stage'] = stage;
         },
         'ADD_THREE_P' (state, threeP) {
             state['3p'] = threeP;
@@ -125,10 +129,10 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q'];
+            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
-
+            console.log(series)
             // pull gene from series name (eg VHL Mut)
             let gene = '';
 
@@ -242,12 +246,14 @@ const store = new Vuex.Store({
                         const genomic_instability = orderBackendData(sampleData['genomically unstable']);
                         const cimp = orderBackendData(sampleData['cimp']);
                         const immune_group = orderBackendData(sampleData['immune_group']);
+                        const gender = orderBackendData(sampleData['Gender']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
 
                         store.commit('ADD_GRADE', grade);
                         store.commit('ADD_STAGE', stage);
+                        store.commit('ADD_GENDER', gender);
                         store.commit('ADD_CIMP', cimp);
                         store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
