@@ -69,7 +69,7 @@ def download_data(request):
     gene_data = json.loads(select_gene_data.to_json(orient='table'))
     sample_data = json.loads(sample_data.to_json(orient='table'))
     data = sample_data['data'] + gene_data['data']
-
+    # print(data)
     params = {}
     fields = gene_data['schema']['fields']
     for field in fields:

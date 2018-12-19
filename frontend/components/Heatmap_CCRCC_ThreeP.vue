@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap :height="100" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="120" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -32,6 +32,7 @@
                                 const sample = this.series[series_i]['data'][sample_i]['x'];
                                 const values = this.$store.state['selectGeneData']['data'];
                                 const found = values.find((obj) => {
+                                    series = series === 'Immune Group Label' ? 'Immune Group' : series;
                                     return obj['Index'] === series
                                 });
                                 const value = found[sample];
@@ -60,7 +61,7 @@
                     },
                     yaxis: {
                         labels: {
-                            minWidth: 80
+                            minWidth: 40
                         }
                     },
                     tooltip: {
@@ -121,6 +122,8 @@
                     {name: '14q', data: this.$store.state['14q']},
                     {name: '7p', data: this.$store.state['7p']},
                     {name: '5q', data: this.$store.state['5q']},
+                    blankRow,
+                    {name: 'Immune Group', data: this.$store.state['immuneGroup']},
                     blankRow,
                     {name: '3p', data: this.$store.state['3p']},
                     {name: 'CCRCC', data: this.$store.state['CCRCC']},

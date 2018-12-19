@@ -74,7 +74,7 @@
                     },
                     yaxis: {
                         labels: {
-                            minWidth: 80,
+                            minWidth: 98,
                         },
                     },
                     tooltip: {

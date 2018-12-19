@@ -26,6 +26,7 @@ const store = new Vuex.Store({
         grade: [],
         histology: {},
         histologyDisplay: {},
+        immuneGroup: [],
         loaded: false,
         loaded_excel: false,
         loading: false,
@@ -75,6 +76,9 @@ const store = new Vuex.Store({
         },
         'ADD_HISTOLOGY_DATA' (state, histology) {
             state.histology = histology;
+        },
+        'ADD_IMMUNE_GROUP' (state, immuneGroup) {
+            state.immuneGroup = immuneGroup;
         },
         'ADD_METHYLATION' (state, methylation) {
             state['Methy'] = methylation;
@@ -171,7 +175,7 @@ const store = new Vuex.Store({
             store.commit('UPDATE_HISTOLOGY_LINKS', sample);
 
         },
-        downloadGeneData (store, geneInput) {
+        downloadGeneData (store, geneInput) { // actual data for display and excel download
             store.commit('START_LOADING_EXCEL');
             const { genes } = geneInput;
 
@@ -237,6 +241,7 @@ const store = new Vuex.Store({
                         const grade = orderBackendData(sampleData['grade']);
                         const genomic_instability = orderBackendData(sampleData['genomically unstable']);
                         const cimp = orderBackendData(sampleData['cimp']);
+                        const immune_group = orderBackendData(sampleData['immune_group']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
@@ -245,6 +250,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_STAGE', stage);
                         store.commit('ADD_CIMP', cimp);
                         store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
+                        store.commit('ADD_IMMUNE_GROUP', immune_group);
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);
