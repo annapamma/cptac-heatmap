@@ -123,6 +123,7 @@
                     {name: 'Stage', data: this.$store.state['Stage']},
                     {name: 'Grade', data: this.$store.state['Grade']},
                     {name: 'Gender', data: this.$store.state['Gender']},
+                    {name: 'Genome Instability', data: this.$store.state['Genome Instability']},
                 ]
             }
         },

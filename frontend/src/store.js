@@ -23,7 +23,7 @@ const store = new Vuex.Store({
         'Gender': [],
         geneDetails: {},
         genes: [],
-        genomicInstability: [],
+        'Genome Instability': [],
         'Grade': [],
         histology: {},
         histologyDisplay: {},
@@ -73,7 +73,7 @@ const store = new Vuex.Store({
             state.genes = genes
         },
         'ADD_GENOMIC_INSTABILITY' (state, genomicInstability) {
-            state.genomicInstability = genomicInstability
+            state['Genome Instability'] = genomicInstability
         },
         'ADD_GRADE' (state, grade) {
             state['Grade'] = grade;
@@ -129,7 +129,7 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP'];
+            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             console.log(series)
