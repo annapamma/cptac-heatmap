@@ -10,6 +10,7 @@ Vue.use(Vuex); // only required if you're using modules.
 const store = new Vuex.Store({
     state: {
         'CCRCC': [],
+        'Chromosome 2 and 3 translocation': [],
         'CIMP': [],
         'CNV (baf)': {},
         'CNV (lr)': {},
@@ -111,6 +112,9 @@ const store = new Vuex.Store({
         'ADD_THREE_P' (state, threeP) {
             state['3p'] = threeP;
         },
+        'ADD_TRANSLOCATION' (state, translocation) {
+            state['Chromosome 2 and 3 translocation'] = translocation
+        },
         'API_FAIL' (state, error) {
             console.error(error)
         },
@@ -129,7 +133,7 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability'];
+            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 'Chromosome 2 and 3 translocation'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             console.log(series)
@@ -246,6 +250,7 @@ const store = new Vuex.Store({
                         const cimp = orderBackendData(sampleData['cimp']);
                         const immune_group = orderBackendData(sampleData['immune_group']);
                         const gender = orderBackendData(sampleData['Gender']);
+                        const translocation = orderBackendData(sampleData['Chromosome 2 and 3 translocation']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
@@ -256,6 +261,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_CIMP', cimp);
                         store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
+                        store.commit('ADD_TRANSLOCATION', translocation);
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);

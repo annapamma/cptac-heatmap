@@ -105,7 +105,7 @@
                                     {
                                         from: -100,
                                         to: -100,
-                                        color: '#003366'
+                                        color: '#b4b4b4'
                                     }
                                 ]
                             }
@@ -124,6 +124,7 @@
                     {name: 'Grade', data: this.$store.state['Grade']},
                     {name: 'Gender', data: this.$store.state['Gender']},
                     {name: 'Genome Instability', data: this.$store.state['Genome Instability']},
+                    {name: 'Chr 2 & 3 translocation', data: this.$store.state['Chromosome 2 and 3 translocation']},
                 ]
             }
         },
