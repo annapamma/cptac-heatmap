@@ -1,5 +1,5 @@
 <template>
-    <div class="heatmap-stage-grade-gender">
+    <div class="heatmap-other-chromosomes">
         <apexchart type=heatmap :height="120" :options="chartOptions" :series="series" />
     </div>
 </template>
@@ -8,7 +8,7 @@
     /* eslint-disable camelcase */
 
     export default {
-        name: 'heatmap-stage-grade-gender',
+        name: 'heatmap-other-chromosomes',
         props: [],
         data () {
             return {
@@ -32,7 +32,6 @@
                                 const sample = this.series[series_i]['data'][sample_i]['x'];
                                 const values = this.$store.state['selectGeneData']['data'];
                                 const found = values.find((obj) => {
-                                    series = series === 'Immune Group Label' ? 'Immune Group' : series;
                                     return obj['Index'] === series
                                 });
                                 const value = found[sample];
@@ -80,32 +79,32 @@
                                     {
                                         from: 1,
                                         to: 1,
-                                        color: '#1fc600'
+                                        color: '#003366'
                                     },
                                     {
                                         from: 2,
                                         to: 2,
-                                        color: '#089000'
+                                        color: '#ADD8E6'
                                     },
                                     {
                                         from: 3,
                                         to: 3,
-                                        color: '#0a5d00'
+                                        color: '#b4b4b4'
                                     },
                                     {
                                         from: 4,
                                         to: 4,
-                                        color: '#063b00'
+                                        color: '#cc0000'
                                     },
                                     {
                                         from: 100,
                                         to: 100,
-                                        color: '#cc0000'
+                                        color: '#003366'
                                     },
                                     {
                                         from: -100,
                                         to: -100,
-                                        color: '#003366'
+                                        color: '#b4b4b4'
                                     }
                                 ]
                             }
@@ -119,15 +118,13 @@
                 // data: an array of {x: label, y: value}
                 const blankRow = {name: '', data: []};
                 return [
-                    {name: 'CIMP', data: this.$store.state['CIMP']},
-                    {name: 'Stage', data: this.$store.state['Stage']},
-                    {name: 'Grade', data: this.$store.state['Grade']},
-                    {name: 'Gender', data: this.$store.state['Gender']},
+                    {name: '14q', data: this.$store.state['14q']},
+                    {name: '7p', data: this.$store.state['7p']},
+                    {name: '5q', data: this.$store.state['5q']},
                 ]
             }
         },
     }
-
 </script>
 
 <style scoped>

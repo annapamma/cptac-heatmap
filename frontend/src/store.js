@@ -10,7 +10,7 @@ Vue.use(Vuex); // only required if you're using modules.
 const store = new Vuex.Store({
     state: {
         'CCRCC': [],
-        cimp: [],
+        'CIMP': [],
         'CNV (baf)': {},
         'CNV (lr)': {},
         displayData: {
@@ -49,7 +49,7 @@ const store = new Vuex.Store({
             state['CCRCC'] = ccrcc;
         },
         'ADD_CIMP' (state, cimp) {
-            state.cimp = cimp;
+            state['CIMP'] = cimp;
         },
         'ADD_CNV_BAF' (state, cnv_baf) {
             state['CNV (baf)'] = cnv_baf;
@@ -129,7 +129,7 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender'];
+            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             console.log(series)
@@ -240,7 +240,6 @@ const store = new Vuex.Store({
                         const fiveQ = orderBackendData(sampleData['5q']);
                         const sevenP = orderBackendData(sampleData['7p']);
                         const fourteenQ = orderBackendData(sampleData['14q']);
-
                         const stage = orderBackendData(sampleData['stage']);
                         const grade = orderBackendData(sampleData['grade']);
                         const genomic_instability = orderBackendData(sampleData['genomically unstable']);

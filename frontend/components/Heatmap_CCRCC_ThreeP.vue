@@ -116,16 +116,15 @@
         },
         computed: {
             series () {
-                // data: an array of {x: label, y: value}
                 const blankRow = {name: '', data: []};
                 return [
-                    {name: '14q', data: this.$store.state['14q']},
-                    {name: '7p', data: this.$store.state['7p']},
-                    {name: '5q', data: this.$store.state['5q']},
+                    {name: '14q-CNV', data: this.$store.state['14q']},
+                    {name: '7p-CNV', data: this.$store.state['7p']},
+                    {name: '5q-CNV', data: this.$store.state['5q']},
                     blankRow,
                     {name: 'Immune Group', data: this.$store.state['Immune Group']},
                     blankRow,
-                    {name: '3p', data: this.$store.state['3p']},
+                    {name: '3p-CNV', data: this.$store.state['3p']},
                     {name: 'CCRCC', data: this.$store.state['CCRCC']},
                 ]
             }
