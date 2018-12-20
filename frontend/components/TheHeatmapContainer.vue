@@ -4,7 +4,6 @@
             <heatmap-ccrcc-3p />
             <heatmap-gene v-for="gene in genes" :key="gene.id" :gene="gene"/>
             <heatmap-stage-grade-gender />
-            <!--<heatmap-other-chromosomes />-->
         </div>
         <div v-if="!loaded && loading">
             <spinner></spinner>
@@ -16,12 +15,10 @@
     import HeatmapCcrcc3p from './Heatmap_CCRCC_ThreeP.vue';
     import HeatmapGene from './HeatmapGene.vue';
     import HeatmapStageGradeGender from './Heatmap_Stage_Grade_Gender.vue';
-    import HeatmapOtherChromosomes from './Heatmap_Other_Chromosomes.vue';
 
     export default {
         components: {
             HeatmapStageGradeGender,
-            HeatmapOtherChromosomes,
             HeatmapGene,
             HeatmapCcrcc3p
         },
