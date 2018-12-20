@@ -10,7 +10,7 @@ Vue.use(Vuex); // only required if you're using modules.
 const store = new Vuex.Store({
     state: {
         'CCRCC': [],
-        'Chromosome 2 and 3 translocation': [],
+        'Chr 2 and 3 translocation': [],
         'CIMP': [],
         'CNV (baf)': {},
         'CNV (lr)': {},
@@ -113,7 +113,7 @@ const store = new Vuex.Store({
             state['3p'] = threeP;
         },
         'ADD_TRANSLOCATION' (state, translocation) {
-            state['Chromosome 2 and 3 translocation'] = translocation
+            state['Chr 2 and 3 translocation'] = translocation
         },
         'API_FAIL' (state, error) {
             console.error(error)
@@ -133,7 +133,7 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 'Chromosome 2 and 3 translocation'];
+            const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 'Chr 2 and 3 translocation'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             console.log(series)

@@ -119,12 +119,12 @@
                 // data: an array of {x: label, y: value}
                 const blankRow = {name: '', data: []};
                 return [
-                    {name: 'CIMP', data: this.$store.state['CIMP']},
                     {name: 'Stage', data: this.$store.state['Stage']},
                     {name: 'Grade', data: this.$store.state['Grade']},
                     {name: 'Gender', data: this.$store.state['Gender']},
+                    {name: 'CIMP', data: this.$store.state['CIMP']},
+                    {name: 'Chr 2 and 3 translocation', data: this.$store.state['Chr 2 and 3 translocation']},
                     {name: 'Genome Instability', data: this.$store.state['Genome Instability']},
-                    {name: 'Chr 2 & 3 translocation', data: this.$store.state['Chromosome 2 and 3 translocation']},
                 ]
             }
         },
