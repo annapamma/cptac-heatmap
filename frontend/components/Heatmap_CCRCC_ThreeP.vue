@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap :height="120" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="89" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -61,7 +61,7 @@
                     },
                     yaxis: {
                         labels: {
-                            minWidth: 40
+                            minWidth: 500
                         }
                     },
                     tooltip: {
@@ -118,10 +118,6 @@
             series () {
                 const blankRow = {name: '', data: []};
                 return [
-                    {name: '14q-CNV', data: this.$store.state['14q']},
-                    {name: '7p-CNV', data: this.$store.state['7p']},
-                    {name: '5q-CNV', data: this.$store.state['5q']},
-                    blankRow,
                     {name: 'Immune Group', data: this.$store.state['Immune Group']},
                     blankRow,
                     {name: '3p-CNV', data: this.$store.state['3p']},

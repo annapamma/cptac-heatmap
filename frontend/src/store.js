@@ -28,6 +28,7 @@ const store = new Vuex.Store({
         'Grade': [],
         histology: {},
         histologyDisplay: {},
+        emptyForShade: [],
         'Immune Group': [],
         loaded: false,
         loaded_excel: false,
@@ -117,6 +118,14 @@ const store = new Vuex.Store({
         },
         'API_FAIL' (state, error) {
             console.error(error)
+        },
+        'EMPTY_FOR_SHADE' (state) {
+            let meaningless_arr = [];
+            for (let i = 1; i <= 55; i++) {
+                meaningless_arr.push({'x': 'a', 'y': 100});
+                meaningless_arr.push({'x': 'b', 'y': -100})
+            }
+            state.emptyForShade = meaningless_arr;
         },
         'FINISHED_LOADING' (state) {
             state.loading = false;
@@ -209,6 +218,8 @@ const store = new Vuex.Store({
             store.commit('FINISHED_LOADING_EXCEL');
         },
         loadFirstData (store) {
+            store.commit('EMPTY_FOR_SHADE');
+
             api.get('load_first_data/')
                 .then(response => {
                     store.commit('ADD_HISTOLOGY_DATA', JSON.parse(response.body['histology']))

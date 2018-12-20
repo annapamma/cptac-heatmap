@@ -1,5 +1,5 @@
 <template>
-    <div class="heatmap-gene" v-if="series.length">
+    <div class="heatmap-gene" v-if="series.length > 1">
             <div class="heatmap-gene-title">
                 <a @click="displayGeneDetails">{{ gene }}</a>
             </div>
@@ -7,8 +7,8 @@
             <modal :height="'auto'" :scrollable="true" :draggable="true" :name="gene">
                 <div class="modal-content">
                     <h3 class="modal-header">{{ gene }}</h3>
-                    <div class="summary-text">{{ geneDetails['summary'] }}</div>
-                    <div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>
+                    <div class="summary-text">{{ geneDetails ? geneDetails['summary'] : ''}}</div>
+                    <div class="additional-links"><a :href="geneDetails ? geneDetails['url'] : ''" target="_blank">More at NCBI</a></div>
                 </div>
             </modal>
     </div>
@@ -74,7 +74,7 @@
                     },
                     yaxis: {
                         labels: {
-                            minWidth: 98,
+                            minWidth: 200,
                         },
                     },
                     tooltip: {
@@ -83,6 +83,7 @@
                     plotOptions: {
                         heatmap: {
                             enableShades: true,
+                            shadeIntensity: 0,
                             colorScale: {
                                 ranges: [
                                     {
@@ -164,12 +165,22 @@
                                         from: -1,
                                         to: -1,
                                         color: '#b4b4b4'
+                                    },
+                                    {
+                                        from: 100,
+                                        to: 100,
+                                        color: '#ffffff'
+                                    },
+                                    {
+                                        from: -100,
+                                        to: -100,
+                                        color: '#ffffff'
                                     }
                                 ]
                             }
                         }
                     },
-                }
+                },
             }
         },
         computed: {
@@ -179,19 +190,20 @@
             height () {
                 const series = this.series.length;
                 const calcHeights = {
-                    7: 110,
-                    6: 100,
-                    5: 90,
-                    4: 80,
-                    3: 72,
-                    2: 62,
-                    1: 54
+                    8: 145,
+                    7: 125,
+                    6: 115,
+                    5: 105,
+                    4: 93,
+                    3: 83,
+                    2: 68,
+                    1: 58
                 };
                 return calcHeights[series]
             },
             series () {
                 const dataTypes = ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut'];
-                let allData = [];
+                let allData = [{name: '', data: this.$store.state['emptyForShade']}];
                 dataTypes.forEach((dataType) => {
                     let data = this.$store.state[dataType][this.gene];
                     if (data) {
@@ -214,6 +226,12 @@
                 this.$modal.hide(this.gene);
             }
         },
+        watch: {
+            series () {
+                console.log('im changing the series')
+
+            }
+        }
     }
 
 </script>

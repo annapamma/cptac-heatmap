@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-stage-grade-gender">
-        <apexchart type=heatmap :height="120" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="145" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -61,7 +61,7 @@
                     },
                     yaxis: {
                         labels: {
-                            minWidth: 40
+                            minWidth: 190
                         }
                     },
                     tooltip: {
@@ -98,6 +98,26 @@
                                         color: '#063b00'
                                     },
                                     {
+                                        from: 10,
+                                        to: 10,
+                                        color: '#003366'
+                                    },
+                                    {
+                                        from: 20,
+                                        to: 20,
+                                        color: '#ADD8E6'
+                                    },
+                                    {
+                                        from: 30,
+                                        to: 30,
+                                        color: '#b4b4b4'
+                                    },
+                                    {
+                                        from: 40,
+                                        to: 40,
+                                        color: '#cc0000'
+                                    },
+                                    {
                                         from: 100,
                                         to: 100,
                                         color: '#cc0000'
@@ -125,6 +145,9 @@
                     {name: 'CIMP', data: this.$store.state['CIMP']},
                     {name: 'Chr 2 and 3 translocation', data: this.$store.state['Chr 2 and 3 translocation']},
                     {name: 'Genome Instability', data: this.$store.state['Genome Instability']},
+                    {name: '14q-CNV', data: this.$store.state['14q']},
+                    {name: '7p-CNV', data: this.$store.state['7p']},
+                    {name: '5q-CNV', data: this.$store.state['5q']},
                 ]
             }
         },
@@ -133,5 +156,8 @@
 </script>
 
 <style scoped>
-
+.heatmap-stage-grade-gender {
+    margin-top: -35px;
+    /*background-color: pink;*/
+}
 </style>
