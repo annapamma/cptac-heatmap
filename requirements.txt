@@ -1,2 +1,10 @@
-Django
-django-webpack-loader
+Django==2.1.4
+django-debug-toolbar==1.11
+django-webpack-loader==0.6.0
+numpy==1.15.4
+pandas==0.23.4
+python-dateutil==2.7.5
+pytz==2018.7
+six==1.11.0
+sqlparse==0.2.4
+XlsxWriter==1.1.2
