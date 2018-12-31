@@ -7,8 +7,8 @@
             <modal :height="'auto'" :scrollable="true" :draggable="true" :name="gene">
                 <div class="modal-content">
                     <h3 class="modal-header">{{ gene }}</h3>
-                    <div class="summary-text">{{ geneDetails ? geneDetails['summary'] : ''}}</div>
-                    <div class="additional-links"><a :href="geneDetails ? geneDetails['url'] : ''" target="_blank">More at NCBI</a></div>
+                    <div class="summary-text">{{ geneDetails ? geneDetails['summary'] : 'No information found'}}</div>
+                    <div class="additional-links" v-if="geneDetails"><a :href="geneDetails ? geneDetails['url'] : ''" target="_blank">More at NCBI</a></div>
                 </div>
             </modal>
     </div>

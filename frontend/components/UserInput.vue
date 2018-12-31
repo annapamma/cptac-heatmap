@@ -197,14 +197,15 @@
         width: 30%;
         margin-left: 10px;
         padding: 0;
-        height: 100vh;
+        height: 100%;
+        min-height: 1000px;
         /*background-color: lightgray;*/
     }
 
     .user-input textarea {
         border: 1px solid;
         padding: 1%;
-        height: 30vh;
+        height: 300px;
         min-height: 30px;
         width: 80%;
         margin: 20px auto;
