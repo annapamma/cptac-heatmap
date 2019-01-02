@@ -2,15 +2,18 @@
     <div id="app">
         <user-input class="user-input-main"/>
         <the-heatmap-container />
+        <the-legend-container />
     </div>
 </template>
 
 <script>
 import TheHeatmapContainer from '././components/TheHeatmapContainer.vue';
 import UserInput from '././components/UserInput.vue'
+import TheLegendContainer from './components/TheLegendContainer.vue';
 
 export default {
     components: {
+        TheLegendContainer,
         UserInput,
         TheHeatmapContainer},
     name: 'app',

@@ -1,13 +1,97 @@
 <template>
-
+    <div class="the-legend-container">
+        <!--<h3>IM IN  HERE</h3>-->
+        <ul id="legend-categories" class="legend-categories">
+          <li v-for="(elements, category) in categories">
+            <legend-category :category="category" :elements="elements"/>
+          </li>
+        </ul>
+    </div>
 </template>
 
 <script>
+    import LegendCategory from './LegendCategory.vue';
+
     export default {
-        name: "TheLegendContainer"
+        name: 'the-legend-container',
+        components: {LegendCategory},
+        data () {
+            return {
+                categories: {
+                    'Z-Score': [
+                        ['3', '#990000'],
+                        ['2', '#ff4d4d'],
+                        ['1', '#ff8080'],
+                        ['0', '#E8E8E8'],
+                        ['-1', '#b3ccff'],
+                        ['-2', '#4d88ff'],
+                        ['-3', '#003366'],
+                    ],
+                    'CNV': [
+                        ['(-Inf, -0.5)', '#003366'],
+                        ['(-0.5, -0.2]', '#80aaff'],
+                        ['(-0.2, 0.2]', '#E8E8E8'],
+                        ['(0.2, 0.5]', '#ff8080'],
+                        ['(0.5, +Inf)', '#990000'],
+                    ],
+                    'Mutation': [
+                        ['Yes', '#00004d'],
+                        ['No', '#ffffff'],
+                    ],
+                    'CCRCC': [
+                        ['Yes', '#00004d'],
+                        ['No', '#ececec'],
+                    ],
+                    'Genome Instability': [
+                        ['Yes', '#d94040'],
+                        ['No', '#ececec'],
+                    ],
+                    'Gender': [
+                        ['Male', '#57d440'],
+                        ['Female', '#446c40'],
+                    ],
+                    'CIMP': [
+                        ['Positive', '#cc0000'],
+                        ['Negative', '#ececec'],
+                    ],
+                    'Stage/Grade': [
+                        ['I', '#1fc600'],
+                        ['II', '#089000'],
+                        ['III', '#0a5d00'],
+                        ['IV', '#063b00'],
+                    ],
+                    '3p/5q/7p/14q-CNV': [
+                        ['Loss', '#003366'],
+                        ['Neutral LOH', '#c2e2ec'],
+                        ['Neutral', '#E8E8E8'],
+                        ['Amplification', '#d94040'],
+                    ],
+                    // 'Z-Score': {
+                    //     '3': 'red',
+                    //     '2': 'yellow',
+                    //     '1': 'blue',
+                    //     '0': 'white',
+                    //     '-1': 'yellow',
+                    //     '-2': 'pink',
+                    //     '-3':
+                    // },
+                    // 'SECONDTEST': {
+                    //     1: 'red',
+                    //     2: 'yellow',
+                    //     3: 'blue'
+                    // },
+                }
+            }
+        },
     }
 </script>
 
 <style scoped>
-
+.the-legend-container {
+    width: 15%;
+    height: 15%;
+    /*background-color: pink;*
+    display: flex;
+    /*flex-direction: column;*/
+}
 </style>

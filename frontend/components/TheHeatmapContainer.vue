@@ -6,8 +6,9 @@
             <heatmap-stage-grade-gender />
         </div>
         <div v-if="!loaded && loading">
-            <spinner></spinner>
+            <spinner />
         </div>
+
     </div>
 </template>
 
@@ -15,9 +16,11 @@
     import HeatmapCcrcc3p from './Heatmap_CCRCC_ThreeP.vue';
     import HeatmapGene from './HeatmapGene.vue';
     import HeatmapStageGradeGender from './Heatmap_Stage_Grade_Gender.vue';
+    import TheLegendContainer from './TheLegendContainer.vue';
 
     export default {
         components: {
+            TheLegendContainer,
             HeatmapStageGradeGender,
             HeatmapGene,
             HeatmapCcrcc3p
@@ -43,5 +46,6 @@
         width: 95%;
         min-height: 100vh;
         overflow: auto;
+        /*display: flex;*/
     }
 </style>

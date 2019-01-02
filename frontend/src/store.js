@@ -145,7 +145,6 @@ const store = new Vuex.Store({
             const dataTypesSamples = ['CCRCC', '3p', '5q', '7p', '14q', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 'Chr 2 and 3 translocation'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
-            console.log(series)
             // pull gene from series name (eg VHL Mut)
             let gene = '';
 
@@ -249,6 +248,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_GENE_DETAILS', geneDetails);
 
                         const sampleData = JSON.parse(res['sample_data']);
+
                         // add sample data
                         const ccrcc = orderBackendData(sampleData['ccrcc']);
                         const threeP = orderBackendData(sampleData['3p']);

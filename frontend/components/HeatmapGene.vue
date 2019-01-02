@@ -89,7 +89,7 @@
                                     {
                                         from: 0,
                                         to: 0.1,
-                                        color: '#FFFFFF'
+                                        color: '#E8E8E8'
                                     },
                                     {
                                         from: 1,
@@ -162,7 +162,7 @@
                                         color: '#990000'
                                     },
                                     {
-                                        from: -1,
+                                        from: -2,
                                         to: -1,
                                         color: '#b4b4b4'
                                     },
@@ -174,7 +174,7 @@
                                     {
                                         from: -100,
                                         to: -100,
-                                        color: '#ffffff'
+                                        color: '#000000'
                                     }
                                 ]
                             }
