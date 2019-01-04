@@ -174,7 +174,7 @@
                                     {
                                         from: -100,
                                         to: -100,
-                                        color: '#000000'
+                                        color: '#ffffff'
                                     }
                                 ]
                             }

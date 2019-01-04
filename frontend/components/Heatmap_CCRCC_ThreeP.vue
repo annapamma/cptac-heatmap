@@ -120,7 +120,7 @@
                 return [
                     {name: 'Immune Group', data: this.$store.state['Immune Group']},
                     blankRow,
-                    {name: '3p-CNV', data: this.$store.state['3p']},
+                    {name: '3p-CNV', data: this.$store.state['3p-CNV']},
                     {name: 'CCRCC', data: this.$store.state['CCRCC']},
                 ]
             }

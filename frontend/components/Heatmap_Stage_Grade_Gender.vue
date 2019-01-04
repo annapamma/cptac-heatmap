@@ -145,9 +145,9 @@
                     {name: 'CIMP', data: this.$store.state['CIMP']},
                     {name: 'Chr 2 and 3 translocation', data: this.$store.state['Chr 2 and 3 translocation']},
                     {name: 'Genome Instability', data: this.$store.state['Genome Instability']},
-                    {name: '14q-CNV', data: this.$store.state['14q']},
-                    {name: '7p-CNV', data: this.$store.state['7p']},
-                    {name: '5q-CNV', data: this.$store.state['5q']},
+                    {name: '14q-CNV', data: this.$store.state['14q-CNV']},
+                    {name: '7p-CNV', data: this.$store.state['7p-CNV']},
+                    {name: '5q-CNV', data: this.$store.state['5q-CNV']},
                 ]
             }
         },
