@@ -1,11 +1,12 @@
 <template>
     <div class="the-legend-container">
-        <!--<h3>IM IN  HERE</h3>-->
-        <ul id="legend-categories" class="legend-categories">
-          <li v-for="(elements, category) in categories">
-            <legend-category :category="category" :elements="elements"/>
-          </li>
-        </ul>
+        <div v-if="loaded">
+            <ul id="legend-categories" class="legend-categories">
+              <li v-for="(elements, category) in categories">
+                <legend-category :category="category" :elements="elements"/>
+            </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -65,24 +66,18 @@
                         ['Neutral LOH', '#c2e2ec'],
                         ['Neutral', '#E8E8E8'],
                         ['Amplification', '#d94040'],
-                    ],
-                    // 'Z-Score': {
-                    //     '3': 'red',
-                    //     '2': 'yellow',
-                    //     '1': 'blue',
-                    //     '0': 'white',
-                    //     '-1': 'yellow',
-                    //     '-2': 'pink',
-                    //     '-3':
-                    // },
-                    // 'SECONDTEST': {
-                    //     1: 'red',
-                    //     2: 'yellow',
-                    //     3: 'blue'
-                    // },
-                }
+                    ]
+                },
             }
         },
+        computed: {
+            loaded () {
+                return this.$store.state.loaded;
+            },
+            loading () {
+                return this.$store.state.loading;
+            },
+        }
     }
 </script>
 
