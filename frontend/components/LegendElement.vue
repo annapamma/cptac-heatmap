@@ -17,7 +17,8 @@
         display: flex;
         flex-direction: row;
         justify-content: left;
-        margin: -1.5px;
+        margin: -1px;
+        /*margin: 0px;*/
     }
 
     .legend-element label {
