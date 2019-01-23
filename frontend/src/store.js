@@ -10,7 +10,6 @@ Vue.use(Vuex); // only required if you're using modules.
 const store = new Vuex.Store({
     state: {
         'CCRCC': [],
-        'Chr 2 and 3 translocation': [],
         'CIMP': [],
         'CNV (baf)': {},
         'CNV (lr)': {},
@@ -19,13 +18,14 @@ const store = new Vuex.Store({
             sample: '',
             value: ''
         },
+        '3p-CNV': [],
         '5q-CNV': [],
+        '7p-CNV': [],
         '14q-CNV': [],
         'Gender': [],
         geneData: {},
         geneDetails: {},
         genes: [],
-        'Genome Instability': [],
         'Grade': [],
         histology: {},
         histologyDisplay: {},
@@ -43,9 +43,8 @@ const store = new Vuex.Store({
             'data': [],
             'params': {}
         },
-        '7p-CNV': [],
         'Stage': [],
-        '3p-CNV': [],
+        't(3;2)': [],
     },
     mutations: {
         'ADD_CCRCC' (state, ccrcc) {
@@ -74,9 +73,6 @@ const store = new Vuex.Store({
         },
         'ADD_GENE_LIST' (state, genes) {
             state.genes = genes
-        },
-        'ADD_GENOMIC_INSTABILITY' (state, genomicInstability) {
-            state['Genome Instability'] = genomicInstability
         },
         'ADD_GRADE' (state, grade) {
             state['Grade'] = grade;
@@ -114,8 +110,8 @@ const store = new Vuex.Store({
         'ADD_THREE_P' (state, threeP) {
             state['3p-CNV'] = threeP;
         },
-        'ADD_TRANSLOCATION' (state, translocation) {
-            state['Chr 2 and 3 translocation'] = translocation
+        'ADD_TRANSLOCATION_3_2' (state, translocation_3_2) {
+            state['t(3;2)'] = translocation_3_2
         },
         'API_FAIL' (state, error) {
             console.error(error)
@@ -149,7 +145,7 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p-CNV', '5q-CNV', '7p-CNV', '14q-CNV', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 'Chr 2 and 3 translocation'];
+            const dataTypesSamples = ['CCRCC', '3p-CNV', '5q-CNV', '7p-CNV', '14q-CNV', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 't(3;2)'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             // pull gene from series name (eg VHL Mut)
@@ -174,11 +170,10 @@ const store = new Vuex.Store({
             const fourteenQ = orderData(order, state['sampleData']['14q-CNV']);
             const stage = orderData(order, state['sampleData']['Stage']);
             const grade = orderData(order, state['sampleData']['Grade']);
-            const genomic_instability = orderData(order, state['sampleData']['Genome Instability']);
             const cimp = orderData(order, state['sampleData']['CIMP']);
             const immune_group = orderData(order, state['sampleData']['Immune Group']);
             const gender = orderData(order, state['sampleData']['Gender']);
-            const translocation = orderData(order, state['sampleData']['Chr 2 and 3 translocation']);
+            const translocation_3_2 = orderData(order, state['sampleData']['t(3;2)']);
 
             store.commit('ADD_CCRCC', ccrcc);
             store.commit('ADD_THREE_P', threeP);
@@ -187,9 +182,8 @@ const store = new Vuex.Store({
             store.commit('ADD_STAGE', stage);
             store.commit('ADD_GENDER', gender);
             store.commit('ADD_CIMP', cimp);
-            store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
             store.commit('ADD_IMMUNE_GROUP', immune_group);
-            store.commit('ADD_TRANSLOCATION', translocation);
+            store.commit('ADD_TRANSLOCATION_3_2', translocation_3_2);
 
             store.commit('ADD_FIVE_Q', fiveQ);
             store.commit('ADD_SEVEN_P', sevenP);
@@ -304,7 +298,7 @@ const store = new Vuex.Store({
                         }
 
                         const originalOrder =
-                            ['CPT0014450004', 'CPT0024670003', 'CPT0009000003', 'CPT0014370004', 'CPT0019130003', 'CPT0025110003', 'CPT0012900004', 'CPT0079480003', 'CPT0012370003', 'CPT0026410003', 'CPT0065810003', 'CPT0077490003', 'CPT0006630003', 'CPT0079270003', 'CPT0009060003', 'CPT0025230003', 'CPT0064370003', 'CPT0085670003', 'CPT0019990003', 'CPT0007860003', 'CPT0088630003', 'CPT0088900003', 'CPT0086870003', 'CPT0081600003', 'CPT0001540009', 'CPT0092290003', 'CPT0092790003', 'CPT0025880003', 'CPT0011240003', 'CPT0021240003', 'CPT0092160003', 'CPT0012670003', 'CPT0075720003', 'CPT0065690003', 'CPT0001340003', 'CPT0086820003', 'CPT0015730003', 'CPT0007320003', 'CPT0075130003', 'CPT0015810003', 'CPT0012280003', 'CPT0065430003', 'CPT0079410003', 'CPT0075560003', 'CPT0006440003', 'CPT0025580004', 'CPT0077310003', 'CPT0006900003', 'CPT0001500009', 'CPT0078830003', 'CPT0010160003', 'CPT0000780007', 'CPT0086030003', 'CPT0000640003', 'CPT0078930003', 'CPT0078990003', 'CPT0078510003', 'CPT0087040003', 'CPT0001180009', 'CPT0014160003', 'CPT0069000003', 'CPT0017410003', 'CPT0063320003', 'CPT0000870016', 'CPT0025290003', 'CPT0001220008', 'CPT0025350003', 'CPT0088690003', 'CPT0023690003', 'CPT0065870003', 'CPT0002350011', 'CPT0020120003', 'CPT0012180003', 'CPT0086360003', 'CPT0063630003', 'CPT0077110003', 'CPT0066470004', 'CPT0012080003', 'CPT0065750003', 'CPT0081990003', 'CPT0088480003', 'CPT0079380003', 'CPT0066480003', 'CPT0025170003', 'CPT0089020003', 'CPT0071150004', 'CPT0089460004', 'CPT0025050003', 'CPT0015910003', 'CPT0076330003', 'CPT0092730003', 'CPT0010110003', 'CPT0001260009', 'CPT0081880003', 'CPT0084560003', 'CPT0012550003', 'CPT0079230003', 'CPT0065930003', 'CPT0088760003', 'CPT0023350003', 'CPT0086950003', 'CPT0069160003', 'CPT0088550004', 'CPT0017850003', 'CPT0078800003', 'CPT0078660003', 'CPT0002270011', 'CPT0079180003', 'CPT0088970003', 'CPT0011410003']
+                            ['CPT0014450004', 'CPT0001260009', 'CPT0024670003', 'CPT0009000003', 'CPT0014370004', 'CPT0019130003', 'CPT0025110003', 'CPT0012900004', 'CPT0079480003', 'CPT0012370003', 'CPT0081880003', 'CPT0026410003', 'CPT0065810003', 'CPT0077490003', 'CPT0006630003', 'CPT0079270003', 'CPT0009060003', 'CPT0025230003', 'CPT0064370003', 'CPT0085670003', 'CPT0019990003', 'CPT0007860003', 'CPT0088630003', 'CPT0088900003', 'CPT0086870003', 'CPT0081600003', 'CPT0001540009', 'CPT0092290003', 'CPT0092790003', 'CPT0025880003', 'CPT0011240003', 'CPT0021240003', 'CPT0092160003', 'CPT0012670003', 'CPT0075720003', 'CPT0065690003', 'CPT0001340003', 'CPT0086820003', 'CPT0015730003', 'CPT0007320003', 'CPT0075130003', 'CPT0015810003', 'CPT0012280003', 'CPT0065430003', 'CPT0079410003', 'CPT0075560003', 'CPT0006440003', 'CPT0025580004', 'CPT0077310003', 'CPT0006900003', 'CPT0001500009', 'CPT0078830003', 'CPT0010160003', 'CPT0000780007', 'CPT0086030003', 'CPT0000640003', 'CPT0078930003', 'CPT0078990003', 'CPT0023350003', 'CPT0078510003', 'CPT0087040003', 'CPT0001180009', 'CPT0014160003', 'CPT0069000003', 'CPT0017410003', 'CPT0063320003', 'CPT0000870016', 'CPT0025290003', 'CPT0001220008', 'CPT0025350003', 'CPT0088690003', 'CPT0023690003', 'CPT0065870003', 'CPT0002350011', 'CPT0020120003', 'CPT0012180003', 'CPT0086360003', 'CPT0063630003', 'CPT0077110003', 'CPT0066470004', 'CPT0012080003', 'CPT0065750003', 'CPT0081990003', 'CPT0088480003', 'CPT0079380003', 'CPT0066480003', 'CPT0025170003', 'CPT0089020003', 'CPT0071150004', 'CPT0089460004', 'CPT0025050003', 'CPT0015910003', 'CPT0076330003', 'CPT0092730003', 'CPT0010110003', 'CPT0084560003', 'CPT0012550003', 'CPT0079230003', 'CPT0065930003', 'CPT0088760003', 'CPT0086950003', 'CPT0069160003', 'CPT0088550004', 'CPT0017850003', 'CPT0078800003', 'CPT0078660003', 'CPT0002270011', 'CPT0079180003', 'CPT0088970003', 'CPT0011410003']
 
                         const geneDetails = parsed_res['gene_details'];
                         store.commit('ADD_GENE_DETAILS', geneDetails);
@@ -317,11 +311,10 @@ const store = new Vuex.Store({
                         const fourteenQ = orderData(originalOrder, sampleData['14q-CNV']);
                         const stage = orderData(originalOrder, sampleData['Stage']);
                         const grade = orderData(originalOrder, sampleData['Grade']);
-                        // const genomic_instability = orderData(originalOrder, sampleData['Genome Instability']);
                         const cimp = orderData(originalOrder, sampleData['CIMP']);
                         const immune_group = orderData(originalOrder, sampleData['Immune Group']);
                         const gender = orderData(originalOrder, sampleData['Gender']);
-                        // const translocation = orderData(originalOrder, sampleData['Chr 2 and 3 translocation']);
+                        const translocation_3_2 = orderData(originalOrder, sampleData['t(3;2)']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
@@ -330,9 +323,8 @@ const store = new Vuex.Store({
                         store.commit('ADD_STAGE', stage);
                         store.commit('ADD_GENDER', gender);
                         store.commit('ADD_CIMP', cimp);
-                        // store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
-                        // store.commit('ADD_TRANSLOCATION', translocation);
+                        store.commit('ADD_TRANSLOCATION_3_2', translocation_3_2);
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);
@@ -398,11 +390,6 @@ function sortBySample (sortOrder) {
 }
 
 function orderData (order, obj, gene_type = false) {
-    if (!obj) {
-        console.log('HERE')
-    } else {
-        console.log(obj)
-    }
     if (gene_type) {
         let gene_data = {};
         for (let gene in obj) {
