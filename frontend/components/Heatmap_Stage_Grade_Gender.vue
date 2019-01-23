@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-stage-grade-gender">
-        <apexchart type=heatmap :height="145" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="60" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -18,7 +18,7 @@
                     },
                     grid: {
                         padding: {
-                            top: -50
+                            top: -30
                         }
                     },
                     chart: {

@@ -1,6 +1,11 @@
 <template>
     <div class="the-legend-container">
         <div v-if="loaded">
+            <ul id="legend-categories-horizontal" class="legend-categories">
+              <li v-for="(elements, category) in categoriesHorizontal">
+                <legend-category-horizontal :category="category" :elements="elements"/>
+                </li>
+            </ul>
             <ul id="legend-categories" class="legend-categories">
               <li v-for="(elements, category) in categories">
                 <legend-category :category="category" :elements="elements"/>
@@ -12,13 +17,17 @@
 
 <script>
     import LegendCategory from './LegendCategory.vue';
+    import LegendCategoryHorizontal from './LegendCategoryHorizontal.vue';
 
     export default {
         name: 'the-legend-container',
-        components: {LegendCategory},
+        components: {
+            LegendCategory,
+            LegendCategoryHorizontal
+        },
         data () {
             return {
-                categories: {
+                categoriesHorizontal: {
                     'Z-Score': [
                         ['3', '#990000'],
                         ['2', '#ff4d4d'],
@@ -28,6 +37,17 @@
                         ['-2', '#4d88ff'],
                         ['-3', '#003366'],
                     ],
+                },
+                categories: {
+                    // 'Z-Score': [
+                    //     ['3', '#990000'],
+                    //     ['2', '#ff4d4d'],
+                    //     ['1', '#ff8080'],
+                    //     ['0', '#E8E8E8'],
+                    //     ['-1', '#b3ccff'],
+                    //     ['-2', '#4d88ff'],
+                    //     ['-3', '#003366'],
+                    // ],
                     'CNV': [
                         ['(-Inf, -0.5)', '#003366'],
                         ['(-0.5, -0.2]', '#80aaff'],

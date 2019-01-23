@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-chromosome">
-        <apexchart type=heatmap :height="145" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="94" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -19,6 +19,7 @@
                     grid: {
                         padding: {
                             top: -30,
+                            // bottom: -20,
                         }
                     },
                     chart: {
@@ -146,8 +147,8 @@
                 return [
                     {name: 'CNV subtype', data: this.$store.state['CNV subtype']},
                     {name: 'CIMP', data: this.$store.state['CIMP']},
-                    {name: 't(3;2)', data: this.$store.state['t(3;2)']},
                     {name: 't(3;5)', data: this.$store.state['t(3;5)']},
+                    {name: 't(3;2)', data: this.$store.state['t(3;2)']},
                     {name: '14q-CNV', data: this.$store.state['14q-CNV']},
                     {name: '7p-CNV', data: this.$store.state['7p-CNV']},
                     {name: '5q-CNV', data: this.$store.state['5q-CNV']},
