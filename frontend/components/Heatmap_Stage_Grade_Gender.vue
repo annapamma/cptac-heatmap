@@ -156,7 +156,7 @@
 
 <style scoped>
 .heatmap-stage-grade-gender {
-    margin-top: -35px;
+    margin-top: -30px;
     /*background-color: pink;*/
 }
 </style>
