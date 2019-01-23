@@ -45,6 +45,7 @@ const store = new Vuex.Store({
         },
         'Stage': [],
         't(3;2)': [],
+        't(3;5)': [],
     },
     mutations: {
         'ADD_CCRCC' (state, ccrcc) {
@@ -112,6 +113,9 @@ const store = new Vuex.Store({
         },
         'ADD_TRANSLOCATION_3_2' (state, translocation_3_2) {
             state['t(3;2)'] = translocation_3_2
+        },
+        'ADD_TRANSLOCATION_3_5' (state, translocation_3_5) {
+            state['t(3;5)'] = translocation_3_5
         },
         'API_FAIL' (state, error) {
             console.error(error)
@@ -291,7 +295,6 @@ const store = new Vuex.Store({
                 .then(
                     response => {
                         const res = JSON.parse(response.bodyText);
-                        console.log(res)
                         let parsed_res = {};
                         for (let dataType in res) {
                             parsed_res[dataType] = JSON.parse(res[dataType])
@@ -315,6 +318,7 @@ const store = new Vuex.Store({
                         const immune_group = orderData(originalOrder, sampleData['Immune Group']);
                         const gender = orderData(originalOrder, sampleData['Gender']);
                         const translocation_3_2 = orderData(originalOrder, sampleData['t(3;2)']);
+                        const translocation_3_5 = orderData(originalOrder, sampleData['t(3;5)']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
@@ -325,6 +329,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_CIMP', cimp);
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
                         store.commit('ADD_TRANSLOCATION_3_2', translocation_3_2);
+                        store.commit('ADD_TRANSLOCATION_3_5', translocation_3_5);
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);

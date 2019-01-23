@@ -1,5 +1,5 @@
 <template>
-    <div class="heatmap-stage-grade-gender">
+    <div class="heatmap-chromosome">
         <apexchart type=heatmap :height="145" :options="chartOptions" :series="series" />
     </div>
 </template>
@@ -8,7 +8,7 @@
     /* eslint-disable camelcase */
 
     export default {
-        name: 'heatmap-stage-grade-gender',
+        name: 'heatmap-chromosome',
         props: [],
         data () {
             return {
@@ -18,7 +18,7 @@
                     },
                     grid: {
                         padding: {
-                            top: -50
+                            top: -30,
                         }
                     },
                     chart: {
@@ -102,35 +102,35 @@
                                         to: 4,
                                         color: '#063b00'
                                     },
-                                    // {
-                                    //     from: 10,
-                                    //     to: 10,
-                                    //     color: '#003366'
-                                    // },
-                                    // {
-                                    //     from: 20,
-                                    //     to: 20,
-                                    //     color: '#ADD8E6'
-                                    // },
-                                    // {
-                                    //     from: 30,
-                                    //     to: 30,
-                                    //     color: '#b4b4b4'
-                                    // },
-                                    // {
-                                    //     from: 40,
-                                    //     to: 40,
-                                    //     color: '#cc0000'
-                                    // },
+                                    {
+                                        from: 10,
+                                        to: 10,
+                                        color: '#003366'
+                                    },
+                                    {
+                                        from: 20,
+                                        to: 20,
+                                        color: '#ADD8E6'
+                                    },
+                                    {
+                                        from: 30,
+                                        to: 30,
+                                        color: '#b4b4b4'
+                                    },
+                                    {
+                                        from: 40,
+                                        to: 40,
+                                        color: '#cc0000'
+                                    },
                                     {
                                         from: 100,
                                         to: 100,
-                                        color: '#ffffff'
+                                        color: '#cc0000'
                                     },
                                     {
                                         from: -100,
                                         to: -100,
-                                        color: '#ffffff'
+                                        color: '#b4b4b4'
                                     }
                                 ]
                             }
@@ -143,10 +143,12 @@
             series () {
                 // data: an array of {x: label, y: value}
                 return [
-                    {name: 'Stage', data: this.$store.state['Stage']},
-                    {name: 'Grade', data: this.$store.state['Grade']},
-                    {name: 'Gender', data: this.$store.state['Gender']},
-                    {name: '', data: this.$store.state['emptyForShade']}
+                    {name: 'CIMP', data: this.$store.state['CIMP']},
+                    {name: 't(3;2)', data: this.$store.state['t(3;2)']},
+                    {name: 't(3;5)', data: this.$store.state['t(3;5)']},
+                    {name: '14q-CNV', data: this.$store.state['14q-CNV']},
+                    {name: '7p-CNV', data: this.$store.state['7p-CNV']},
+                    {name: '5q-CNV', data: this.$store.state['5q-CNV']},
                 ]
             }
         },
@@ -155,7 +157,7 @@
 </script>
 
 <style scoped>
-.heatmap-stage-grade-gender {
+.heatmap-chromosome {
     /*margin-top: -30px;*/
     /*background-color: pink;*/
 }
