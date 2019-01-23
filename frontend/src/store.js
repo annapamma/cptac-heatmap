@@ -13,6 +13,7 @@ const store = new Vuex.Store({
         'CIMP': [],
         'CNV (baf)': {},
         'CNV (lr)': {},
+        'CNV subtype': [],
         displayData: {
             series: '',
             sample: '',
@@ -59,6 +60,9 @@ const store = new Vuex.Store({
         },
         'ADD_CNV_LR' (state, cnv_lr) {
             state['CNV (lr)'] = cnv_lr;
+        },
+        'ADD_CNV_SUBTYPE' (state, cnv_subtype) {
+            state['CNV subtype'] = cnv_subtype
         },
         'ADD_FIVE_Q' (state, fiveQ) {
             state['5q-CNV'] = fiveQ;
@@ -149,7 +153,7 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p-CNV', '5q-CNV', '7p-CNV', '14q-CNV', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'Genome Instability', 't(3;2)'];
+            const dataTypesSamples = ['CCRCC', '3p-CNV', '5q-CNV', '7p-CNV', '14q-CNV', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'CNV subtype', 't(3;2)', 't(3;5)'];
             const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             // pull gene from series name (eg VHL Mut)
@@ -178,6 +182,8 @@ const store = new Vuex.Store({
             const immune_group = orderData(order, state['sampleData']['Immune Group']);
             const gender = orderData(order, state['sampleData']['Gender']);
             const translocation_3_2 = orderData(order, state['sampleData']['t(3;2)']);
+            const translocation_3_5 = orderData(order, state['sampleData']['t(3;5)']);
+            const cnv_subtype = orderData(order, state['sampleData']['CNV subtype']);
 
             store.commit('ADD_CCRCC', ccrcc);
             store.commit('ADD_THREE_P', threeP);
@@ -188,6 +194,8 @@ const store = new Vuex.Store({
             store.commit('ADD_CIMP', cimp);
             store.commit('ADD_IMMUNE_GROUP', immune_group);
             store.commit('ADD_TRANSLOCATION_3_2', translocation_3_2);
+            store.commit('ADD_TRANSLOCATION_3_5', translocation_3_5);
+            store.commit('ADD_CNV_SUBTYPE', cnv_subtype);
 
             store.commit('ADD_FIVE_Q', fiveQ);
             store.commit('ADD_SEVEN_P', sevenP);
@@ -319,6 +327,7 @@ const store = new Vuex.Store({
                         const gender = orderData(originalOrder, sampleData['Gender']);
                         const translocation_3_2 = orderData(originalOrder, sampleData['t(3;2)']);
                         const translocation_3_5 = orderData(originalOrder, sampleData['t(3;5)']);
+                        const cnv_subtype = orderData(originalOrder, sampleData['CNV subtype']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
@@ -330,6 +339,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
                         store.commit('ADD_TRANSLOCATION_3_2', translocation_3_2);
                         store.commit('ADD_TRANSLOCATION_3_5', translocation_3_5);
+                        store.commit('ADD_CNV_SUBTYPE', cnv_subtype);
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);

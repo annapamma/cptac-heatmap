@@ -32,6 +32,7 @@
                             click: (event, chartContext, config) => {
                                 const series_i = event.target.getAttribute('i');
                                 const sample_i = event.target.getAttribute('j');
+                                // console.log(this.series[series_i])
                                 let series = this.series[series_i]['name'];
 
                                 const sample = this.series[series_i]['data'][sample_i]['x'];
@@ -85,22 +86,22 @@
                                     {
                                         from: 1,
                                         to: 1,
-                                        color: '#1fc600'
+                                        color: '#87c0e2'
                                     },
                                     {
                                         from: 2,
                                         to: 2,
-                                        color: '#089000'
+                                        color: '#128c24'
                                     },
                                     {
                                         from: 3,
                                         to: 3,
-                                        color: '#0a5d00'
+                                        color: '#fffe56'
                                     },
                                     {
                                         from: 4,
                                         to: 4,
-                                        color: '#063b00'
+                                        color: '#e73225'
                                     },
                                     {
                                         from: 10,
@@ -143,6 +144,7 @@
             series () {
                 // data: an array of {x: label, y: value}
                 return [
+                    {name: 'CNV subtype', data: this.$store.state['CNV subtype']},
                     {name: 'CIMP', data: this.$store.state['CIMP']},
                     {name: 't(3;2)', data: this.$store.state['t(3;2)']},
                     {name: 't(3;5)', data: this.$store.state['t(3;5)']},
