@@ -297,6 +297,7 @@ const store = new Vuex.Store({
                 .then(
                     response => {
                         const res = JSON.parse(response.bodyText);
+                        console.log(res)
                         let parsed_res = {};
                         for (let dataType in res) {
                             parsed_res[dataType] = JSON.parse(res[dataType])
@@ -316,11 +317,11 @@ const store = new Vuex.Store({
                         const fourteenQ = orderData(originalOrder, sampleData['14q-CNV']);
                         const stage = orderData(originalOrder, sampleData['Stage']);
                         const grade = orderData(originalOrder, sampleData['Grade']);
-                        const genomic_instability = orderData(originalOrder, sampleData['Genome Instability']);
+                        // const genomic_instability = orderData(originalOrder, sampleData['Genome Instability']);
                         const cimp = orderData(originalOrder, sampleData['CIMP']);
                         const immune_group = orderData(originalOrder, sampleData['Immune Group']);
                         const gender = orderData(originalOrder, sampleData['Gender']);
-                        const translocation = orderData(originalOrder, sampleData['Chr 2 and 3 translocation']);
+                        // const translocation = orderData(originalOrder, sampleData['Chr 2 and 3 translocation']);
 
                         store.commit('ADD_CCRCC', ccrcc);
                         store.commit('ADD_THREE_P', threeP);
@@ -329,9 +330,9 @@ const store = new Vuex.Store({
                         store.commit('ADD_STAGE', stage);
                         store.commit('ADD_GENDER', gender);
                         store.commit('ADD_CIMP', cimp);
-                        store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
+                        // store.commit('ADD_GENOMIC_INSTABILITY', genomic_instability);
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
-                        store.commit('ADD_TRANSLOCATION', translocation);
+                        // store.commit('ADD_TRANSLOCATION', translocation);
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);
@@ -397,6 +398,11 @@ function sortBySample (sortOrder) {
 }
 
 function orderData (order, obj, gene_type = false) {
+    if (!obj) {
+        console.log('HERE')
+    } else {
+        console.log(obj)
+    }
     if (gene_type) {
         let gene_data = {};
         for (let gene in obj) {

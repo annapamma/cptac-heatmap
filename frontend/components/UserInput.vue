@@ -219,8 +219,8 @@
     .description {
         text-align: justify;
         font-weight: bold;
-        margin: 10px auto;
-        padding: 20px;
+        margin: 5px auto;
+        padding: 10px;
         font-family: "Times New Roman", Times, serif;
     }
 
