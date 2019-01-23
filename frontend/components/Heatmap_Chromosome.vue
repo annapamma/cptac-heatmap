@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-chromosome">
-        <apexchart type=heatmap :height="94" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="98" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -18,7 +18,7 @@
                     },
                     grid: {
                         padding: {
-                            top: -30,
+                            top: -20,
                             // bottom: -20,
                         }
                     },
