@@ -147,6 +147,10 @@
                     })
             },
             submitGenes () {
+                if (this.genes.length > 30) {
+                    alert("Please limit to 30 genes");
+                    return;
+                }
                 this.$store.dispatch(
                     'submitGenes',
                     {
