@@ -60,7 +60,7 @@
         name: 'user-input',
         data () {
             return {
-                geneInput: '',
+                geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
             }
         },
         computed: {
@@ -167,6 +167,18 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
+            this.$store.dispatch(
+                'submitGenes',
+                {
+                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
+                }
+            );
+            this.$store.dispatch(
+                'downloadGeneData',
+                {
+                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
+                }
+            );
             enableTabsInTextarea()
         }
     }

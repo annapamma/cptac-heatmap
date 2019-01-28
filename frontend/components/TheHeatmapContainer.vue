@@ -9,7 +9,6 @@
         <div v-if="!loaded && loading">
             <spinner />
         </div>
-
     </div>
 </template>
 

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import api from './api.js'
+import initialStore from './initialStore.js'
 
 Vue.use(Vuex); // only required if you're using modules.
               // We're using modules, so there you go.
@@ -124,6 +125,11 @@ const store = new Vuex.Store({
         'API_FAIL' (state, error) {
             console.error(error)
         },
+        'ASSIGN_INITIAL_STORE' (state, error) {
+            Object.assign(state, initialStore);
+
+            console.log(initialStore)
+        },
         'EMPTY_FOR_SHADE' (state) {
             let meaningless_arr = [];
             for (let i = 1; i <= 55; i++) {
@@ -242,6 +248,9 @@ const store = new Vuex.Store({
         },
     },
     actions: {
+        assignInitialStore (store) {
+            store.commit('ASSIGN_INITIAL_STORE');
+        },
         displayData (store, displayData) {
             if (displayData.value === null) {
                 displayData.value = 'NaN'
