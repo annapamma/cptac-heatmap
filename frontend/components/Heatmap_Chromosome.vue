@@ -19,7 +19,6 @@
                     grid: {
                         padding: {
                             top: -20,
-                            // bottom: -20,
                         }
                     },
                     chart: {
@@ -33,7 +32,7 @@
                             click: (event, chartContext, config) => {
                                 const series_i = event.target.getAttribute('i');
                                 const sample_i = event.target.getAttribute('j');
-                                // console.log(this.series[series_i])
+
                                 let series = this.series[series_i]['name'];
 
                                 const sample = this.series[series_i]['data'][sample_i]['x'];
