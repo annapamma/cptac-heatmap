@@ -4,14 +4,16 @@
         <button @click="submitGenes">Visualize</button>
         <button @click="downloadImage">Download Image</button>
 
-        <download-excel
-            class   = "btn btn-default"
-            :data   = "selectGeneData"
-            :param = "selectGeneSchema"
-            name    = "CPTAC3-CCRCC-heatmap.xls"
-        >
-            <button :disabled="!loadedExcel">Download Excel</button>
-        </download-excel>
+        <button :disabled="!loadedExcel" @click="downloadExcelFile">Download Excel</button>
+
+        <!--<download-excel-->
+            <!--class   = "btn btn-default"-->
+            <!--:data   = "selectGeneData"-->
+            <!--:param = "selectGeneSchema"-->
+            <!--name    = "CPTAC3-CCRCC-heatmap.xls"-->
+        <!--&gt;-->
+            <!--<button :disabled="!loadedExcel">Download Excel</button>-->
+        <!--</download-excel>-->
 
         <div class="responsive-data-displays" v-if="loadedExcel">
             <div class="data-display-container">
@@ -54,13 +56,15 @@
 
     import domtoimage from 'dom-to-image';
     import HistologyDisplay from './HistologyDisplay.vue';
+    import { utils, writeFile } from 'xlsx'
 
     export default {
         components: {HistologyDisplay},
         name: 'user-input',
         data () {
             return {
-                geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
+                // geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
+                geneInput: 'VHL',
             }
         },
         computed: {
@@ -117,9 +121,9 @@
             selectGeneData () {
                 return this.$store.state.selectGeneData['data'];
             },
-            selectGeneSchema () {
-                return this.$store.state.selectGeneData['params'];
-            }
+            // selectGeneSchema () {
+            //     return this.$store.state.selectGeneData['params'];
+            // }
         },
         methods: {
             displaySampleHistologyLinks () {
@@ -127,6 +131,13 @@
             },
             hideSampleHistologyLinks () {
                 this.$modal.hide(this.displayData['sample']);
+            },
+            downloadExcelFile: function () {
+                let excelHeaders = ['Index', 'Data type', 'Gene symbol', ...this.$store.state.sortOrder];
+                const ws = utils.json_to_sheet(this.selectGeneData, {header: excelHeaders});
+                let wb = utils.book_new();
+                utils.book_append_sheet(wb, ws);
+                writeFile(wb, 'CPTAC-CCRCC.xls');
             },
             downloadImage () {
                 let node = document.querySelectorAll('.the-heatmap-container')[0];
@@ -170,13 +181,14 @@
             this.$store.dispatch(
                 'submitGenes',
                 {
-                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
+                    // genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
+                    genes: ['VHL'],
                 }
             );
             this.$store.dispatch(
                 'downloadGeneData',
                 {
-                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
+                    genes: ['VHL'],
                 }
             );
             enableTabsInTextarea()
@@ -203,6 +215,24 @@
                 }
             })
     }
+    //
+    // function orderExcelData (order, obj) {
+    //     let sortedObj = []
+    //
+    //     for (let dataType in obj) {
+    //         let map = new Map();
+    //         let objKeys = Array.from(Object.keys(obj[dataType]));
+    //         let excelKeys = [...order, ...objKeys];
+    //         excelKeys.forEach(key => {
+    //             map.set(key, obj[dataType][key]);
+    //         });
+    //         // console.log()
+    //         sortedObj.push(JSON.stringify([...map]))
+    //     }
+    //     console.log(sortedObj)
+    //     return sortedObj;
+    //     // console.log(map)
+    // }
 
 </script>
 

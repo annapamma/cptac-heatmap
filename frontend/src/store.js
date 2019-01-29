@@ -3,7 +3,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import api from './api.js'
-import initialStore from './initialStore.js'
 
 Vue.use(Vuex); // only required if you're using modules.
               // We're using modules, so there you go.
@@ -45,6 +44,7 @@ const store = new Vuex.Store({
             'data': [],
             'params': {}
         },
+        sortOrder: ['C3N-00242', 'C3L-00079', 'C3N-00852', 'C3N-00310', 'C3N-00244', 'C3L-00583', 'C3L-00610', 'C3N-00494', 'C3L-01281', 'C3N-00320', 'C3N-00154', 'C3L-00791', 'C3L-00814', 'C3N-01261', 'C3L-00418', 'C3L-00606', 'C3N-00312', 'C3L-00799', 'C3L-00907', 'C3L-01557', 'C3N-00168', 'C3L-00910', 'C3N-01649', 'C3N-01179', 'C3L-01836', 'C3N-00148', 'C3L-00004', 'C3L-01861', 'C3L-01885', 'C3N-00733', 'C3N-00305', 'C3N-00380', 'C3L-01607', 'C3N-00491', 'C3N-01213', 'C3L-00790', 'C3L-00011', 'C3L-01313', 'C3L-00792', 'C3L-00581', 'C3N-01200', 'C3L-00813', 'C3N-00317', 'C3N-00953', 'C3L-01287', 'C3N-01214', 'C3L-00369', 'C3N-00246', 'C3N-01524', 'C3L-00447', 'C3L-00026', 'C3N-00834', 'C3L-00448', 'C3L-00097', 'C3L-01560', 'C3L-00103', 'C3N-01176', 'C3N-01178', 'C3L-00561', 'C3N-00495', 'C3L-01603', 'C3L-00096', 'C3N-00194', 'C3N-00573', 'C3N-00390', 'C3L-00902', 'C3L-00088', 'C3L-00800', 'C3L-00010', 'C3L-00812', 'C3N-01651', 'C3L-00917', 'C3L-00817', 'C3L-00360', 'C3N-00177', 'C3N-00315', 'C3L-00908', 'C3L-01302', 'C3N-01522', 'C3L-00183', 'C3N-00314', 'C3L-00796', 'C3N-00646', 'C3N-01646', 'C3L-01283', 'C3N-00150', 'C3L-00766', 'C3N-00831', 'C3L-01352', 'C3N-01808', 'C3L-00607', 'C3L-00765', 'C3N-01220', 'C3L-01882', 'C3L-00416', 'C3N-00149', 'C3N-00437', 'C3L-01288', 'C3L-01553', 'C3N-01361', 'C3L-01286', 'C3N-00577', 'C3N-01648', 'C3N-00435', 'C3N-00832', 'C3N-01175', 'C3L-00359', 'C3N-00492', 'C3N-01180', 'C3N-00313'],
         'Stage': [],
         't(3;2)': [],
         't(3;5)': [],
@@ -125,11 +125,6 @@ const store = new Vuex.Store({
         'API_FAIL' (state, error) {
             console.error(error)
         },
-        'ASSIGN_INITIAL_STORE' (state, error) {
-            Object.assign(state, initialStore);
-
-            console.log(initialStore)
-        },
         'EMPTY_FOR_SHADE' (state) {
             let meaningless_arr = [];
             for (let i = 1; i <= 55; i++) {
@@ -176,6 +171,9 @@ const store = new Vuex.Store({
 
             const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
             const order = sortedSeries.map(el => { return el.x });
+
+            store.commit('UPDATE_SORT_ORDER', order);
+
              // add sample data
             const ccrcc = orderData(order, state['sampleData']['CCRCC']);
             const threeP = orderData(order, state['sampleData']['3p-CNV']);
@@ -227,18 +225,6 @@ const store = new Vuex.Store({
 
             const phospho = orderData(order, state['geneData']['phospho'], true);
             store.commit('ADD_PHOSPHO', phospho);
-            // dataTypesSamples.forEach((dt) => {
-            //     let sampleSortedData = state[dt].slice().sort(sortBySample(order));
-            //     Vue.set(state, dt, sampleSortedData);
-            // });
-            //
-            // // sort gene data
-            // dataTypesGenes.forEach((dt) => {
-            //     for (let gene in state[dt]) {
-            //         let geneSortedData = state[dt][gene].slice().sort(sortBySample(order));
-            //         Vue.set(state[dt], gene, geneSortedData);
-            //     }
-            // });
         },
         'UPDATE_DISPLAY_DATA' (state, displayData) {
             state.displayData = displayData;
@@ -246,11 +232,11 @@ const store = new Vuex.Store({
         'UPDATE_HISTOLOGY_LINKS' (state, sample) {
             state.histologyDisplay = state.histology[sample]
         },
+        'UPDATE_SORT_ORDER' (state, order) {
+            state.sortOrder = order;
+        }
     },
     actions: {
-        assignInitialStore (store) {
-            store.commit('ASSIGN_INITIAL_STORE');
-        },
         displayData (store, displayData) {
             if (displayData.value === null) {
                 displayData.value = 'NaN'
