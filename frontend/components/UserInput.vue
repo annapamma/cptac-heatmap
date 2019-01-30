@@ -27,9 +27,6 @@
             <modal :height="'auto'" :scrollable="true" :draggable="true" :name="displayData['sample']">
                 <div class="modal-content">
                     <histology-display :sample="displayData['sample']"/>
-                    <!--<h3 class="modal-header">{{ gene }}</h3>-->
-                    <!--<div class="summary-text">{{ geneDetails['summary'] }}</div>-->
-                    <!--<div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>-->
                 </div>
             </modal>
             <div class="track-selector-container">
@@ -222,7 +219,6 @@
         padding: 0;
         height: 100%;
         min-height: 1000px;
-        /*background-color: lightgray;*/
     }
 
     .user-input textarea {
