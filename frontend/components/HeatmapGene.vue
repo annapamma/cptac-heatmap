@@ -55,7 +55,7 @@
                                     sample,
                                     value
                                 })
-                            }
+                            },
                         },
                     },
                     dataLabels: {
@@ -75,6 +75,18 @@
                     yaxis: {
                         labels: {
                             minWidth: 200,
+                        },
+                    },
+                    grid: {
+                        xaxis: {
+                          lines: {
+                            show: false,
+                          }
+                        },
+                        yaxis: {
+                          lines: {
+                            show: false,
+                          }
                         },
                     },
                     tooltip: {
@@ -202,9 +214,14 @@
                 return calcHeights[series]
             },
             series () {
-                const dataTypes = ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut'];
+                // this.$store.dispatch('startLoading')
+                const dataTypes = this.$store.state.displayDataTypes;
                 let allData = [{name: '', data: this.$store.state['emptyForShade']}];
-                dataTypes.forEach((dataType) => {
+                // dataTypes.forEach((dataType) => {
+                for (let dataType in dataTypes) {
+                    if (!dataTypes[dataType]) {
+                        continue;
+                    }
                     let data = this.$store.state[dataType][this.gene];
                     if (data) {
                         allData.push(
@@ -213,8 +230,11 @@
                                 data: data
                             }
                         )
-                    }
-                });
+                    };
+                }
+                console.log('loadeddd')
+                // this.$store.dispatch('finishLoading')
+
                 return allData;
             }
         },
@@ -229,7 +249,6 @@
         watch: {
             series () {
                 console.log('im changing the series')
-
             }
         }
     }

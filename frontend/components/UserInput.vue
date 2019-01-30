@@ -32,6 +32,9 @@
                     <!--<div class="additional-links"><a :href="geneDetails['url']" target="_blank">More at NCBI</a></div>-->
                 </div>
             </modal>
+            <div class="track-selector-container">
+                <track-selector />
+            </div>
         </div>
 
         <p class="description">Enter up to 30 gene symbols.
@@ -44,18 +47,21 @@
 
 <script>
     /* eslint-disable camelcase */
+    import { utils, writeFile } from 'xlsx'
 
     import domtoimage from 'dom-to-image';
     import HistologyDisplay from './HistologyDisplay.vue';
-    import { utils, writeFile } from 'xlsx'
+    import TrackSelector from './TrackSelector.vue';
 
     export default {
-        components: {HistologyDisplay},
+        components: {
+            TrackSelector,
+            HistologyDisplay},
         name: 'user-input',
         data () {
             return {
-                geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
-                // geneInput: 'VHL',
+                // geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
+                geneInput: 'VHL',
             }
         },
         computed: {
@@ -169,15 +175,15 @@
             this.$store.dispatch(
                 'submitGenes',
                 {
-                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
-                    // genes: ['VHL'],
+                    // genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
+                    genes: ['VHL'],
                 }
             );
             this.$store.dispatch(
                 'downloadGeneData',
                 {
-                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
-                    // genes: ['VHL'],
+                    // genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
+                    genes: ['VHL'],
                 }
             );
             enableTabsInTextarea()
@@ -244,14 +250,16 @@
     .responsive-data-displays {
         /*display: inline;*/
         display: flex;
+        flex-direction: row;
+        justify-content: center;
         height: 30%;
         width: 100%;
         /*flex-direction: row;*/
     }
 
     .data-display-container {
-        width: 60%;
-        margin: 5px auto;
+        width: 50%;
+        margin: 5px;
         padding: 10px;
         background: white;
         height: 100%;
@@ -283,5 +291,15 @@
 
     .modal-content {
         width: 100%;
+    }
+
+    .track-selector-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 40%;
+        margin: 5px;
+        padding: 10px;
+        background: white;
     }
 </style>
