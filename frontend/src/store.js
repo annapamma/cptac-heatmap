@@ -177,6 +177,7 @@ const store = new Vuex.Store({
             }
 
             // pull series data
+            // TODO: make this from sample data
             let seriesToSortBy = type === 'sample' ? state[series].slice() : state[series][gene].slice();
 
             const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);

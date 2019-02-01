@@ -117,6 +117,7 @@
         },
         computed: {
             series () {
+                // this.chartOptions.plotOptions.heatmap.enableShades = false;
                 const blankRow = {name: '', data: []};
                 return [
                     {name: 'Immune Group', data: this.$store.state['Immune Group']},
