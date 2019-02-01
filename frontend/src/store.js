@@ -168,21 +168,23 @@ const store = new Vuex.Store({
             state.loaded_excel = false;
         },
         'SORT_BY_SERIES' (state, { series, ascending }) {
-            const dataTypesSamples = ['CCRCC', '3p-CNV', '5q-CNV', '7p-CNV', '14q-CNV', 'Immune Group', 'Grade', 'Stage', 'Gender', 'CIMP', 'CNV subtype', 't(3;2)', 't(3;5)'];
-            const dataTypesGenes = ['Methy', 'Mut', 'CNV (lr)', 'CNV (baf)', 'mRNA', 'Protein', 'Phospho'];
+            const dataTypesSamples = [
+                'CCRCC',
+                '3p-CNV',
+                '5q-CNV',
+                '7p-CNV',
+                '14q-CNV',
+                'Immune Group',
+                'Grade',
+                'Stage',
+                'Gender',
+                'CIMP',
+                'CNV subtype',
+                't(3;2)',
+                't(3;5)'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
-            // pull gene from series name (eg VHL Mut)
-            let gene = '';
-            //
-            // if (type === 'gene') {
-            //     let dat = series.split(' ');
-            //     gene = dat[0];
-            //     series = dat.slice(1,).join(' ');
-            // }
-            //
-            // // pull series data
-            // // TODO: make this from sample data
-            // let seriesToSortBy = type === 'sample' ? state[series].slice() : state[series][gene].slice();
+
+            // pull series data
             let seriesToSortBy = [];
             let order = [];
             if (type === 'sample') {
@@ -194,7 +196,8 @@ const store = new Vuex.Store({
                 order = Object.keys(seriesToSortBy).sort(
                     function(a,b)
                     {
-                        return seriesToSortBy[a]-seriesToSortBy[b]
+
+                        return ascending ? seriesToSortBy[a]-seriesToSortBy[b] : seriesToSortBy[b]-seriesToSortBy[a]
                     });
             }
 

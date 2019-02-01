@@ -67,19 +67,11 @@ def download_data(request):
     select_gene_data = all_gene_data.loc[all_gene_data['Gene symbol'].isin(genes)]
 
     gene_data = json.loads(select_gene_data.to_json(orient='table'))
-    actual_data = json.loads(select_gene_data.drop(columns=['Data type', 'Gene symbol']).to_json(orient='index'))
+    actual_data = json.loads(select_gene_data.drop(columns=['Data type', 'Gene symbol']).fillna(-100).to_json(orient='index'))
     sample_data = json.loads(sample_data.to_json(orient='table'))
     data = sample_data['data'] + gene_data['data']
-    # print(data)
-    # params = {}
-    # fields = gene_data['schema']['fields']
-    # for field in fields:
-    #     name = field['name']
-    #     type = field['type']
-    #     params[name] = type
 
     return JsonResponse({
-        # 'params': params,
         'data': data,
         'actualData': actual_data
     }, safe=False)
