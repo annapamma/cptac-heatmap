@@ -153,7 +153,7 @@ import pickle
 
 sample_ids = pickle.load(open('/Users/calina01/PycharmProjects/cptac-heatmap/data/sample_id_mapping.pkl', 'rb'))
 
-data_type = 'methylation'
+data_type = 'cnv_lr'
 df = pd.read_csv('data/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
 df[(df >= 3)] = 14000
 df[(df > 2) & (df < 3)] = 12000
