@@ -15,6 +15,7 @@ const store = new Vuex.Store({
         '3p-CNV': [],
         '5q-CNV': [],
         '7p-CNV': [],
+        'actualData': {},
         'CCRCC': [],
         'CIMP': [],
         'CNV (baf)': {},
@@ -60,6 +61,9 @@ const store = new Vuex.Store({
         't(3;5)': [],
     },
     mutations: {
+        'ADD_ACTUAL_GENE_DATA' (state, { actualData }) {
+            state.actualData = actualData;
+        },
         'ADD_CCRCC' (state, ccrcc) {
             state['CCRCC'] = ccrcc;
         },
@@ -169,19 +173,30 @@ const store = new Vuex.Store({
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
             // pull gene from series name (eg VHL Mut)
             let gene = '';
-
-            if (type === 'gene') {
-                let dat = series.split(' ');
-                gene = dat[0];
-                series = dat.slice(1,).join(' ');
+            //
+            // if (type === 'gene') {
+            //     let dat = series.split(' ');
+            //     gene = dat[0];
+            //     series = dat.slice(1,).join(' ');
+            // }
+            //
+            // // pull series data
+            // // TODO: make this from sample data
+            // let seriesToSortBy = type === 'sample' ? state[series].slice() : state[series][gene].slice();
+            let seriesToSortBy = [];
+            let order = [];
+            if (type === 'sample') {
+                seriesToSortBy = state[series].slice();
+                const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
+                order = sortedSeries.map(el => { return el.x });
+            } else {
+                seriesToSortBy = state['actualData'][series];
+                order = Object.keys(seriesToSortBy).sort(
+                    function(a,b)
+                    {
+                        return seriesToSortBy[a]-seriesToSortBy[b]
+                    });
             }
-
-            // pull series data
-            // TODO: make this from sample data
-            let seriesToSortBy = type === 'sample' ? state[series].slice() : state[series][gene].slice();
-
-            const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
-            const order = sortedSeries.map(el => { return el.x });
 
             store.commit('UPDATE_SORT_ORDER', order);
 
@@ -270,6 +285,12 @@ const store = new Vuex.Store({
                             'ADD_SELECT_GENE_DATA',
                             {
                                 'data': selectGeneData['data']
+                            }
+                        );
+                        store.commit(
+                            'ADD_ACTUAL_GENE_DATA',
+                            {
+                                'actualData': selectGeneData['actualData']
                             }
                         );
                     }
