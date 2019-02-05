@@ -189,8 +189,10 @@ const store = new Vuex.Store({
             let order = [];
             if (type === 'sample') {
                 seriesToSortBy = state[series].slice();
-                const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
-                // const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending_with_segregation) : seriesToSortBy.sort(compare_descending);
+                // const sortedSeries = ascending ? seriesToSortBy.sort(compare_ascending) : seriesToSortBy.sort(compare_descending);
+                const sortedSeries = ascending ?
+                    seriesToSortBy.sort(compare_ascending_with_segregation) :
+                    seriesToSortBy.sort(compare_descending_with_segregation);
                 order = sortedSeries.map(el => { return el.x });
             } else {
                 seriesToSortBy = state['actualData'][series];
@@ -417,51 +419,28 @@ const store = new Vuex.Store({
     }
 });
 
-function compare_ascending (a,b) {
-  if (a.y < b.y)
-    return -1;
-  if (a.y > b.y)
-    return 1;
-  return 0;
-}
 
 function compare_ascending_with_segregation (a,b) {
-    const ccrccPositive = {'C3L-00103': 1, 'C3L-00097': 1, 'C3L-00088': 1, 'C3L-00096': 1, 'C3L-00010': 1, 'C3L-00079': 1, 'C3L-00011': 1, 'C3L-00026': 1, 'C3L-00004': 1, 'C3L-00359': 0, 'C3L-00360': 1, 'C3L-00369': 1, 'C3L-00418': 1, 'C3L-00447': 1, 'C3L-00581': 1, 'C3L-00910': 1, 'C3N-00310': 1, 'C3N-00312': 1, 'C3L-00416': 1, 'C3L-00448': 1, 'C3N-00305': 1, 'C3N-00313': 0, 'C3N-00314': 1, 'C3N-00315': 1, 'C3N-00317': 1, 'C3N-00320': 1, 'C3N-00437': 1, 'C3N-00491': 1, 'C3N-00494': 1, 'C3N-00194': 1, 'C3N-00244': 1, 'C3N-00242': 1, 'C3L-00792': 1, 'C3L-00813': 1, 'C3L-00765': 1, 'C3N-00390': 1, 'C3N-00435': 0, 'C3L-00583': 1, 'C3N-00168': 1, 'C3N-00177': 1, 'C3N-00380': 1, 'C3L-00561': 1, 'C3L-00917': 1, 'C3N-00852': 1, 'C3L-00607': 1, 'C3L-00610': 1, 'C3L-00766': 1, 'C3L-00799': 1, 'C3L-00800': 1, 'C3L-00812': 1, 'C3N-00246': 1, 'C3N-00733': 1, 'C3L-00791': 1, 'C3L-00902': 1, 'C3L-01302': 1, 'C3L-00907': 1, 'C3N-00953': 1, 'C3L-00790': 1, 'C3L-00796': 1, 'C3L-00814': 1, 'C3L-00817': 1, 'C3L-01553': 1, 'C3L-00183': 1, 'C3N-00150': 1, 'C3N-00573': 1, 'C3N-00577': 1, 'C3L-01352': 1, 'C3N-01200': 1, 'C3N-01214': 1, 'C3N-01213': 1, 'C3N-01220': 1, 'C3N-01522': 1, 'C3N-01524': 1, 'C3N-01261': 1, 'C3N-00495': 1, 'C3N-01175': 0, 'C3N-00832': 0, 'C3N-00834': 1, 'C3N-01176': 1, 'C3N-01178': 1, 'C3N-00492': 0, 'C3L-01288': 1, 'C3L-00606': 1, 'C3L-01283': 1, 'C3L-01287': 1, 'C3L-01281': 1, 'C3N-00148': 1, 'C3N-00154': 1, 'C3N-00646': 1, 'C3N-00149': 1, 'C3L-01557': 1, 'C3L-01560': 1, 'C3L-00908': 1, 'C3L-01313': 1, 'C3L-01836': 1, 'C3L-01286': 1, 'C3L-01603': 1, 'C3N-01646': 1, 'C3N-01648': 1, 'C3N-01649': 1, 'C3N-01651': 1, 'C3N-01361': 1, 'C3N-01179': 1, 'C3N-01180': 0, 'C3N-00831': 1, 'C3N-01808': 1, 'C3L-01607': 1, 'C3L-01861': 1, 'C3L-01882': 1, 'C3L-01885': 1};
+    const ccrccPositive = {
+        'C3L-00103': 1, 'C3L-00097': 1, 'C3L-00088': 1, 'C3L-00096': 1, 'C3L-00010': 1, 'C3L-00079': 1, 'C3L-00011': 1, 'C3L-00026': 1, 'C3L-00004': 1, 'C3L-00359': 0, 'C3L-00360': 1, 'C3L-00369': 1, 'C3L-00418': 1, 'C3L-00447': 1, 'C3L-00581': 1, 'C3L-00910': 1, 'C3N-00310': 1, 'C3N-00312': 1, 'C3L-00416': 1, 'C3L-00448': 1, 'C3N-00305': 1, 'C3N-00313': 0, 'C3N-00314': 1, 'C3N-00315': 1, 'C3N-00317': 1, 'C3N-00320': 1, 'C3N-00437': 1, 'C3N-00491': 1, 'C3N-00494': 1, 'C3N-00194': 1, 'C3N-00244': 1, 'C3N-00242': 1, 'C3L-00792': 1, 'C3L-00813': 1, 'C3L-00765': 1, 'C3N-00390': 1, 'C3N-00435': 0, 'C3L-00583': 1, 'C3N-00168': 1, 'C3N-00177': 1, 'C3N-00380': 1, 'C3L-00561': 1, 'C3L-00917': 1, 'C3N-00852': 1, 'C3L-00607': 1, 'C3L-00610': 1, 'C3L-00766': 1, 'C3L-00799': 1, 'C3L-00800': 1, 'C3L-00812': 1, 'C3N-00246': 1, 'C3N-00733': 1, 'C3L-00791': 1, 'C3L-00902': 1, 'C3L-01302': 1, 'C3L-00907': 1, 'C3N-00953': 1, 'C3L-00790': 1, 'C3L-00796': 1, 'C3L-00814': 1, 'C3L-00817': 1, 'C3L-01553': 1, 'C3L-00183': 1, 'C3N-00150': 1, 'C3N-00573': 1, 'C3N-00577': 1, 'C3L-01352': 1, 'C3N-01200': 1, 'C3N-01214': 1, 'C3N-01213': 1, 'C3N-01220': 1, 'C3N-01522': 1, 'C3N-01524': 1, 'C3N-01261': 1, 'C3N-00495': 1, 'C3N-01175': 0, 'C3N-00832': 0, 'C3N-00834': 1, 'C3N-01176': 1, 'C3N-01178': 1, 'C3N-00492': 0, 'C3L-01288': 1, 'C3L-00606': 1, 'C3L-01283': 1, 'C3L-01287': 1, 'C3L-01281': 1, 'C3N-00148': 1, 'C3N-00154': 1, 'C3N-00646': 1, 'C3N-00149': 1, 'C3L-01557': 1, 'C3L-01560': 1, 'C3L-00908': 1, 'C3L-01313': 1, 'C3L-01836': 1, 'C3L-01286': 1, 'C3L-01603': 1, 'C3N-01646': 1, 'C3N-01648': 1, 'C3N-01649': 1, 'C3N-01651': 1, 'C3N-01361': 1, 'C3N-01179': 1, 'C3N-01180': 0, 'C3N-00831': 1, 'C3N-01808': 1, 'C3L-01607': 1, 'C3L-01861': 1, 'C3L-01882': 1, 'C3L-01885': 1};
 
-    //   if (cancerA && cancerB) {
-    //     return valA > valB ? 1 : -1;
-    //   } else if (!cancerA && !cancerB) {
-    //     return valA > valB ? 1 : -1;
-    //   } else if (cancerA && !cancerB) {
-    //     return -1;
-    //   } else if (!cancerA && cancerB) {
-    //     return 1;
-    //   }
-    // }
+    if (ccrccPositive[a.x] === ccrccPositive[b.x]) {
+        return a.y >= b.y ? 1 : -1
+    } else {
+        return !ccrccPositive[a.x] ? 1 : -1
+    }
+}
 
-    if (ccrccPositive[a] === ccrccPositive[b]) {
+function compare_descending_with_segregation (a,b) {
+    const ccrccPositive = {
+        'C3L-00103': 1, 'C3L-00097': 1, 'C3L-00088': 1, 'C3L-00096': 1, 'C3L-00010': 1, 'C3L-00079': 1, 'C3L-00011': 1, 'C3L-00026': 1, 'C3L-00004': 1, 'C3L-00359': 0, 'C3L-00360': 1, 'C3L-00369': 1, 'C3L-00418': 1, 'C3L-00447': 1, 'C3L-00581': 1, 'C3L-00910': 1, 'C3N-00310': 1, 'C3N-00312': 1, 'C3L-00416': 1, 'C3L-00448': 1, 'C3N-00305': 1, 'C3N-00313': 0, 'C3N-00314': 1, 'C3N-00315': 1, 'C3N-00317': 1, 'C3N-00320': 1, 'C3N-00437': 1, 'C3N-00491': 1, 'C3N-00494': 1, 'C3N-00194': 1, 'C3N-00244': 1, 'C3N-00242': 1, 'C3L-00792': 1, 'C3L-00813': 1, 'C3L-00765': 1, 'C3N-00390': 1, 'C3N-00435': 0, 'C3L-00583': 1, 'C3N-00168': 1, 'C3N-00177': 1, 'C3N-00380': 1, 'C3L-00561': 1, 'C3L-00917': 1, 'C3N-00852': 1, 'C3L-00607': 1, 'C3L-00610': 1, 'C3L-00766': 1, 'C3L-00799': 1, 'C3L-00800': 1, 'C3L-00812': 1, 'C3N-00246': 1, 'C3N-00733': 1, 'C3L-00791': 1, 'C3L-00902': 1, 'C3L-01302': 1, 'C3L-00907': 1, 'C3N-00953': 1, 'C3L-00790': 1, 'C3L-00796': 1, 'C3L-00814': 1, 'C3L-00817': 1, 'C3L-01553': 1, 'C3L-00183': 1, 'C3N-00150': 1, 'C3N-00573': 1, 'C3N-00577': 1, 'C3L-01352': 1, 'C3N-01200': 1, 'C3N-01214': 1, 'C3N-01213': 1, 'C3N-01220': 1, 'C3N-01522': 1, 'C3N-01524': 1, 'C3N-01261': 1, 'C3N-00495': 1, 'C3N-01175': 0, 'C3N-00832': 0, 'C3N-00834': 1, 'C3N-01176': 1, 'C3N-01178': 1, 'C3N-00492': 0, 'C3L-01288': 1, 'C3L-00606': 1, 'C3L-01283': 1, 'C3L-01287': 1, 'C3L-01281': 1, 'C3N-00148': 1, 'C3N-00154': 1, 'C3N-00646': 1, 'C3N-00149': 1, 'C3L-01557': 1, 'C3L-01560': 1, 'C3L-00908': 1, 'C3L-01313': 1, 'C3L-01836': 1, 'C3L-01286': 1, 'C3L-01603': 1, 'C3N-01646': 1, 'C3N-01648': 1, 'C3N-01649': 1, 'C3N-01651': 1, 'C3N-01361': 1, 'C3N-01179': 1, 'C3N-01180': 0, 'C3N-00831': 1, 'C3N-01808': 1, 'C3L-01607': 1, 'C3L-01861': 1, 'C3L-01882': 1, 'C3L-01885': 1};
+
+    if (ccrccPositive[a.x] === ccrccPositive[b.x]) {
         return a.y <= b.y ? 1 : -1
     } else {
-        return ccrccPositive[a] ? 1 : -1
+        return !ccrccPositive[a.x] ? 1 : -1
     }
-    //
-    //
-    //
-    // if (a.y < b.y)
-    //     return -1;
-    // if (a.y > b.y)
-    //     return 1;
-    // return 0;
 }
-
-function compare_descending (a,b) {
-  if (a.y > b.y)
-    return -1;
-  if (a.y < b.y)
-    return 1;
-  return 0;
-}
-
 function sortBySample (sortOrder) {
     return function (a, b) {
         return sortOrder.indexOf(a.x) - sortOrder.indexOf(b.x);
