@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-stage-grade-gender">
-        <apexchart type=heatmap :height="60" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="62" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -102,26 +102,6 @@
                                         to: 4,
                                         color: '#063b00'
                                     },
-                                    // {
-                                    //     from: 10,
-                                    //     to: 10,
-                                    //     color: '#003366'
-                                    // },
-                                    // {
-                                    //     from: 20,
-                                    //     to: 20,
-                                    //     color: '#ADD8E6'
-                                    // },
-                                    // {
-                                    //     from: 30,
-                                    //     to: 30,
-                                    //     color: '#b4b4b4'
-                                    // },
-                                    // {
-                                    //     from: 40,
-                                    //     to: 40,
-                                    //     color: '#cc0000'
-                                    // },
                                     {
                                         from: 100,
                                         to: 100,
