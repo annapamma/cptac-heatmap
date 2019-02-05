@@ -2,8 +2,8 @@
     <div class="track-selector">
         <div v-for="(val, dataType) in selected">
             <div class="track-selector-checkbox" >
-                <input type="checkbox" id="dataType" value="dataType" v-model="selected[dataType]">
-                <label for="dataType"><span>{{ dataType }}</span></label>
+                <input type="checkbox" :id="dataType" :value="dataType" v-model="selected[dataType]">
+                <label :for="dataType"><span>{{ dataType }}</span></label>
             </div>
         </div>
     </div>
