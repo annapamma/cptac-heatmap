@@ -10,12 +10,7 @@
 </template>
 
 <script>
-    // import TrackSelectorCheckbox from "./TrackSelectorCheckbox.vue";
-
     export default {
-        components: {
-            // TrackSelectorCheckbox
-        },
         name: "track-selector",
         computed: {
             selected() {

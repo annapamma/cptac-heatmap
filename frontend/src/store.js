@@ -357,6 +357,7 @@ const store = new Vuex.Store({
 
                         const geneDetails = parsed_res['gene_details'];
                         store.commit('ADD_GENE_DETAILS', geneDetails);
+
                         const sampleData = parsed_res['sample_data'];
                         // add sample data
                         const ccrcc = orderData(originalOrder, sampleData['CCRCC']);
