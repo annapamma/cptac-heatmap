@@ -169,20 +169,37 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-            this.$store.dispatch(
-                'submitGenes',
-                {
-                    // genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A']
-                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
-                }
-            );
-            this.$store.dispatch(
-                'downloadGeneData',
-                {
-                    // genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
-                    genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
-                }
-            );
+
+            let gene = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+
+            if (gene) {
+                this.geneInput = gene;
+                this.$store.dispatch(
+                    'submitGenes',
+                    {
+                        genes: [gene],
+                    }
+                );
+                this.$store.dispatch(
+                    'downloadGeneData',
+                    {
+                        genes: [gene],
+                    }
+                );
+            } else {
+                this.$store.dispatch(
+                    'submitGenes',
+                    {
+                        genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
+                    }
+                );
+                this.$store.dispatch(
+                    'downloadGeneData',
+                    {
+                        genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
+                    }
+                );
+            }
             enableTabsInTextarea()
         }
     }
