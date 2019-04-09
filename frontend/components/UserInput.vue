@@ -57,8 +57,6 @@
         name: 'user-input',
         data () {
             return {
-                // geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
-                // geneInput: 'VHL',
                 geneInput: [],
             }
         },
@@ -176,34 +174,20 @@
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
             let genes = urlTrail.length ? urlTrail.split("&") : defaultGenes;
 
-            // if (genes.length > 0) {
             this.geneInput = genes.join("\n");
             this.$store.dispatch(
                 'submitGenes',
                 {
-                    genes: genes,
+                    genes,
                 }
             );
             this.$store.dispatch(
                 'downloadGeneData',
                 {
-                    genes: genes,
+                    genes,
                 }
             );
-            // } else {
-            //     this.$store.dispatch(
-            //         'submitGenes',
-            //         {
-            //             genes: defaultGenes,
-            //         }
-            //     );
-            //     this.$store.dispatch(
-            //         'downloadGeneData',
-            //         {
-            //             genes: defaultGenes,
-            //         }
-            //     );
-            // }
+
             enableTabsInTextarea()
         }
     }
