@@ -57,8 +57,9 @@
         name: 'user-input',
         data () {
             return {
-                geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
+                // geneInput: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'].join('\n'),
                 // geneInput: 'VHL',
+                geneInput: [],
             }
         },
         computed: {
@@ -170,36 +171,39 @@
         mounted () {
             this.$store.dispatch('loadFirstData');
 
-            let gene = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+            const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
+                'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
+            const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+            let genes = urlTrail.length ? urlTrail.split("&") : defaultGenes;
 
-            if (gene) {
-                this.geneInput = gene;
-                this.$store.dispatch(
-                    'submitGenes',
-                    {
-                        genes: [gene],
-                    }
-                );
-                this.$store.dispatch(
-                    'downloadGeneData',
-                    {
-                        genes: [gene],
-                    }
-                );
-            } else {
-                this.$store.dispatch(
-                    'submitGenes',
-                    {
-                        genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
-                    }
-                );
-                this.$store.dispatch(
-                    'downloadGeneData',
-                    {
-                        genes: ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2', 'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'],
-                    }
-                );
-            }
+            // if (genes.length > 0) {
+            this.geneInput = genes.join("\n");
+            this.$store.dispatch(
+                'submitGenes',
+                {
+                    genes: genes,
+                }
+            );
+            this.$store.dispatch(
+                'downloadGeneData',
+                {
+                    genes: genes,
+                }
+            );
+            // } else {
+            //     this.$store.dispatch(
+            //         'submitGenes',
+            //         {
+            //             genes: defaultGenes,
+            //         }
+            //     );
+            //     this.$store.dispatch(
+            //         'downloadGeneData',
+            //         {
+            //             genes: defaultGenes,
+            //         }
+            //     );
+            // }
             enableTabsInTextarea()
         }
     }
