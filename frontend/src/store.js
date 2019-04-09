@@ -4,10 +4,8 @@ import Vuex from 'vuex'
 
 import api from './api.js'
 
-Vue.use(Vuex); // only required if you're using modules.
-              // We're using modules, so there you go.
+Vue.use(Vuex);
 
-// ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut'];
 
 const store = new Vuex.Store({
     state: {
