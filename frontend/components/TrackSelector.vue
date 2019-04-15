@@ -1,20 +1,34 @@
 <template>
     <div class="track-selector">
-        <div v-for="(val, dataType) in selected">
+        <div v-for="(val, dataType) in displayDataTypes">
             <div class="track-selector-checkbox" >
-                <input type="checkbox" :id="dataType" :value="dataType" v-model="selected[dataType]">
+                <input type="checkbox" :id="dataType" :value="dataType" v-model="displayDataTypes[dataType]">
                 <label :for="dataType"><span>{{ dataType }}</span></label>
             </div>
         </div>
+        <button @click="redraw">Redraw</button>
     </div>
 </template>
 
 <script>
     export default {
         name: "track-selector",
-        computed: {
-            selected() {
-                return this.$store.state.displayDataTypes;
+        data() {
+            return {
+                displayDataTypes: {
+                    'Phospho': true,
+                    'Protein': true,
+                    'mRNA': true,
+                    'CNV (baf)': true,
+                    'CNV (lr)': true,
+                    'Methy': true,
+                    'Mut': true
+                }
+            }
+        },
+        methods: {
+            redraw() {
+                this.$store.dispatch('updateDisplayDataTypes', this.displayDataTypes)
             }
         }
     }

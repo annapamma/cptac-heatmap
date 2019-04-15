@@ -214,10 +214,10 @@
                 return calcHeights[series]
             },
             series () {
-                // this.$store.dispatch('startLoading')
                 const dataTypes = this.$store.state.displayDataTypes;
+
                 let allData = [{name: '', data: this.$store.state['emptyForShade']}];
-                // dataTypes.forEach((dataType) => {
+
                 for (let dataType in dataTypes) {
                     if (!dataTypes[dataType]) {
                         continue;
@@ -230,11 +230,8 @@
                                 data: data
                             }
                         )
-                    };
+                    }
                 }
-                console.log('loadeddd')
-                // this.$store.dispatch('finishLoading')
-
                 return allData;
             }
         },

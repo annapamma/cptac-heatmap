@@ -24,6 +24,7 @@ const store = new Vuex.Store({
             sample: '',
             value: ''
         },
+        // displayDataTypes: ['Phospho', 'Protein', 'mRNA', 'CNV (baf)', 'CNV (lr)', 'Methy', 'Mut'],
         displayDataTypes: {
             'Phospho': true,
             'Protein': true,
@@ -265,6 +266,9 @@ const store = new Vuex.Store({
         'UPDATE_DISPLAY_DATA' (state, displayData) {
             state.displayData = displayData;
         },
+        'UPDATE_DISPLAY_DATA_TYPES' (state, displayDataTypes) {
+            Object.assign(state.displayDataTypes, displayDataTypes)
+        },
         'UPDATE_HISTOLOGY_LINKS' (state, sample) {
             state.histologyDisplay = state.histology[sample]
         },
@@ -421,8 +425,11 @@ const store = new Vuex.Store({
                         store.commit('API_FAIL', error);
                     }
                 )
-        }
-    }
+        },
+        updateDisplayDataTypes(store, displayDataTypes) {
+            store.commit('UPDATE_DISPLAY_DATA_TYPES', displayDataTypes)
+        },
+    },
 });
 
 
@@ -449,6 +456,7 @@ function compare_descending_with_segregation (a,b) {
         return !ccrccPositive[a.x] ? 1 : -1
     }
 }
+
 function sortBySample (sortOrder) {
     return function (a, b) {
         return sortOrder.indexOf(a.x) - sortOrder.indexOf(b.x);
