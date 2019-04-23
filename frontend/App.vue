@@ -10,22 +10,26 @@
         </div>
         <div id="content">
             <user-input class="user-input-main"/>
-            <the-heatmap-container />
-            <the-legend-container />
+            <!--<the-heatmap-container />-->
+            <!--<the-legend-container />-->
+            <the-heatmap-and-legend-container />
         </div>
     </div>
 </template>
 
 <script>
-import TheHeatmapContainer from '././components/TheHeatmapContainer.vue';
+// import TheHeatmapContainer from '././components/TheHeatmapContainer.vue';
 import UserInput from '././components/UserInput.vue'
-import TheLegendContainer from './components/TheLegendContainer.vue';
+// import TheLegendContainer from './components/TheLegendContainer.vue';
+import TheHeatmapAndLegendContainer from './components/TheHeatmapAndLegendContainer.vue';
 
 export default {
     components: {
-        TheLegendContainer,
+        // TheLegendContainer,
         UserInput,
-        TheHeatmapContainer},
+        // TheHeatmapContainer,
+        TheHeatmapAndLegendContainer,
+    },
     name: 'app',
     data () {
         return {
