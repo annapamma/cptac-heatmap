@@ -304,7 +304,7 @@
     .sample-description img {
         width:1em;
         height:1em;
-        /*margin: auto;*/
+        margin: 5px;
         padding: 2px;
         border: solid 1px black;
         cursor: pointer;
