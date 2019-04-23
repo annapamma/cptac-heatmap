@@ -34,8 +34,7 @@
             </modal>
             <modal :height="'auto'" :scrollable="true" :draggable="true" :name="clinicalDataModalName">
                 <div class="modal-content">
-                    <h3>{{ displayData['sample'] }}</h3>
-                    <!--<histology-display :sample="displayData['sample']"/>-->
+                    <clinical-data-display :sample="displayData['sample']"/>
                 </div>
             </modal>
             <div class="track-selector-container">
@@ -57,12 +56,15 @@
 
     import domtoimage from 'dom-to-image';
     import HistologyDisplay from './HistologyDisplay.vue';
+    import ClinicalDataDisplay from './ClinicalDataDisplay.vue';
     import TrackSelector from './TrackSelector.vue';
 
     export default {
         components: {
             TrackSelector,
-            HistologyDisplay},
+            HistologyDisplay,
+            ClinicalDataDisplay,
+        },
         name: 'user-input',
         data () {
             return {
