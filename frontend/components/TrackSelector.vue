@@ -13,17 +13,9 @@
 <script>
     export default {
         name: "track-selector",
-        data() {
-            return {
-                displayDataTypes: {
-                    'Phospho': true,
-                    'Protein': true,
-                    'mRNA': true,
-                    'CNV (baf)': true,
-                    'CNV (lr)': true,
-                    'Methy': true,
-                    'Mut': true
-                }
+        computed: {
+            displayDataTypes() {
+                return this.$store.state.displayDataTypes
             }
         },
         methods: {
