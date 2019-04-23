@@ -9,13 +9,16 @@
         <div class="responsive-data-displays" v-if="loadedExcel">
             <div class="data-display-container">
                 <div class="data-display">
+                    <p>Sample: <b @click="displaySampleHistologyLinks">{{ displayData['sample'] }}</b></p>
                     <div class="sample-description">
-                        <p>Sample: <b @click="displaySampleHistologyLinks">{{ displayData['sample'] }}</b></p>
                         <img @click="displaySampleHistologyLinks"
-                             src="../assets/histology-icon.png"
-                             alt="links for histologic images"
-                             title="links for histologic images"
-                        >
+                                 src="../assets/histology-icon.png"
+                                 alt="links for histologic images"
+                                 title="links for histologic images">
+                        <img @click="displayClinicalData"
+                                 src="../assets/clipboard.png"
+                                 alt="links for clinical data"
+                                 title="links for clinical data">
                     </div>
                     <p>Data type: <b>{{ displayData['series'] }}</b></p>
                     <p>Value: <b>{{ displayData['value'] }}</b></p>
@@ -27,6 +30,12 @@
             <modal :height="'auto'" :scrollable="true" :draggable="true" :name="displayData['sample']">
                 <div class="modal-content">
                     <histology-display :sample="displayData['sample']"/>
+                </div>
+            </modal>
+            <modal :height="'auto'" :scrollable="true" :draggable="true" :name="clinicalDataModalName">
+                <div class="modal-content">
+                    <h3>{{ displayData['sample'] }}</h3>
+                    <!--<histology-display :sample="displayData['sample']"/>-->
                 </div>
             </modal>
             <div class="track-selector-container">
@@ -61,6 +70,9 @@
             }
         },
         computed: {
+            clinicalDataModalName() {
+                return this.$store.state.displayData + "_clinical"
+            },
             displayData () {
                 return this.$store.state.displayData;
             },
@@ -122,6 +134,12 @@
             hideSampleHistologyLinks () {
                 this.$modal.hide(this.displayData['sample']);
             },
+            displayClinicalData () {
+                this.$modal.show(this.clinicalDataModalName);
+            },
+            hideClinicalData () {
+                // this.$modal.hide(this.displayData['sample']);
+            },
             downloadExcelFile: function () {
                 let excelHeaders = ['Index', 'Data type', 'Gene symbol', ...this.$store.state.sortOrder];
                 const ws = utils.json_to_sheet(this.selectGeneData, {header: excelHeaders});
@@ -168,9 +186,9 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-
-            const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
-                'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
+            const defaultGenes = []
+            // const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
+            //     'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
             let genes = urlTrail.length ? urlTrail.split("&") : defaultGenes;
 
@@ -278,13 +296,13 @@
     .sample-description {
         display: flex;
         flex-direction: row;
-        /*justify-content: space-evenly;*/
+        justify-content: flex-start;
     }
 
     .sample-description img {
         width:1em;
         height:1em;
-        margin: auto;
+        /*margin: auto;*/
         padding: 2px;
         border: solid 1px black;
         cursor: pointer;
