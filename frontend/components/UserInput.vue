@@ -131,17 +131,29 @@
         },
         methods: {
             displaySampleHistologyLinks () {
+                if (!this.displayData['sample']) {
+                    return
+                }
                 this.$modal.show(this.displayData['sample']);
             },
-            hideSampleHistologyLinks () {
-                this.$modal.hide(this.displayData['sample']);
-            },
+            // hideSampleHistologyLinks () {
+            //     if (!this.displayData['sample']) {
+            //         return
+            //     }
+            //     this.$modal.hide(this.displayData['sample']);
+            // },
             displayClinicalData () {
+                if (!this.displayData['sample']) {
+                    return
+                }
                 this.$modal.show(this.clinicalDataModalName);
             },
-            hideClinicalData () {
-                // this.$modal.hide(this.displayData['sample']);
-            },
+            // hideClinicalData () {
+            //     if (this.displayData['sample']) {
+            //         return
+            //     }
+            //     this.$modal.hide(this.clinicalDataModalName);
+            // },
             downloadExcelFile: function () {
                 let excelHeaders = ['Index', 'Data type', 'Gene symbol', ...this.$store.state.sortOrder];
                 const ws = utils.json_to_sheet(this.selectGeneData, {header: excelHeaders});
@@ -150,6 +162,7 @@
                 writeFile(wb, 'CPTAC-CCRCC.xls');
             },
             downloadImage () {
+                //TODO: make this a PDF download!!
                 let node = document.querySelectorAll('.the-heatmap-container')[0];
                 domtoimage.toPng(node, { quality: 0.95, bgcolor: '#FFFFFF' })
                     .then(function (dataUrl) {
@@ -188,9 +201,8 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-            const defaultGenes = []
-            // const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
-            //     'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
+            const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
+                'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
             let genes = urlTrail.length ? urlTrail.split("&") : defaultGenes;
 
