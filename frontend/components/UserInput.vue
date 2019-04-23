@@ -54,7 +54,8 @@
     /* eslint-disable camelcase */
     import { utils, writeFile } from 'xlsx'
 
-    import domtoimage from 'dom-to-image';
+    import html2canvas from 'html2canvas'
+
     import HistologyDisplay from './HistologyDisplay.vue';
     import ClinicalDataDisplay from './ClinicalDataDisplay.vue';
     import TrackSelector from './TrackSelector.vue';
@@ -150,15 +151,14 @@
                 writeFile(wb, 'CPTAC-CCRCC.xls');
             },
             downloadImage () {
-                // let node = document.querySelectorAll('.the-heatmap-container')[0];
-                let node = document.getElementById('the-heatmap-and-legend-container');
-                domtoimage.toPng(node, { quality: 0.95, bgcolor: '#FFFFFF' })
-                    .then(function (dataUrl) {
-                        let link = document.createElement('a');
-                        link.download = 'CPTAC-heatmap.png';
-                        link.href = dataUrl;
-                        link.click();
-                    });
+                html2canvas(document.querySelector('#the-heatmap-and-legend-container'),
+                    {scale: 1}
+                ).then(canvas => {
+                    let a = document.createElement('a');
+                    a.href = canvas.toDataURL("image/jpeg", 1).replace("image/jpeg", "image/octet-stream");
+                    a.download = 'cptac_ccrcc.jpg';
+                    a.click();
+                });
             },
             sortBySeries (ascending) {
                 const series = this.displayData['series'];
