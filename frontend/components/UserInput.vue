@@ -136,24 +136,12 @@
                 }
                 this.$modal.show(this.displayData['sample']);
             },
-            // hideSampleHistologyLinks () {
-            //     if (!this.displayData['sample']) {
-            //         return
-            //     }
-            //     this.$modal.hide(this.displayData['sample']);
-            // },
             displayClinicalData () {
                 if (!this.displayData['sample']) {
                     return
                 }
                 this.$modal.show(this.clinicalDataModalName);
             },
-            // hideClinicalData () {
-            //     if (this.displayData['sample']) {
-            //         return
-            //     }
-            //     this.$modal.hide(this.clinicalDataModalName);
-            // },
             downloadExcelFile: function () {
                 let excelHeaders = ['Index', 'Data type', 'Gene symbol', ...this.$store.state.sortOrder];
                 const ws = utils.json_to_sheet(this.selectGeneData, {header: excelHeaders});
