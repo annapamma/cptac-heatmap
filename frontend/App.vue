@@ -1,12 +1,20 @@
 <template>
     <div id="app">
-        <div class="logo-bar">
+        <div id="logo-bar">
              <div class="cptac-logo">
-                <img src="./assets/cptac-logo.png" align="left">
+                <img src="./assets/cptac-logo.png">
             </div>
             <div class="mssm-logo">
-                <img src="./assets/MSSMLogo.png" align="right">
+                <img src="./assets/MSSMLogo.png">
             </div>
+        </div>
+        <div class="cptac-description">
+            NCI supported Clinical Proteomic Tumor Analysis Consortium (CPTAC),
+                is a comprehensive and coordinated effort to accelerate the understanding of the molecular
+                basis of cancer through the application of large-scale proteome (proteins) and genome (DNA and RNA)
+                analysis technologies to different cancer types. CPTAC is composed of expertise in proteomics, genomics,
+                cancer biology, oncology, and clinical chemistry, while creating open community resources that
+                are widely used by the cancer community.
         </div>
         <div id="content">
             <user-input class="user-input-main"/>
@@ -83,19 +91,30 @@ export default {
         /*height: 100%;*/
     }
 
-    .logo-bar {
+    #logo-bar {
         height: 10%;
+        display: flex;
         flex-direction: row;
         /*background-color: pink;*/
-        justify-content: right;
+        justify-content: space-between;
     }
 
     .cptac-logo {
-        margin-left: 30px;
+        margin-left: 15px;
     }
 
     .mssm-logo {
-       margin-right: 30px;
+       margin-left: 30px;
+    }
+
+    .cptac-description {
+        font-size: small;
+        text-align: left;
+        /*margin-left: 10px;*/
+        font-family: "Times New Roman", Times, serif;
+        font-weight: bold;
+        margin: 15px;
+        /*border-bottom: solid 2px dimgray;*/
     }
 
 </style>
