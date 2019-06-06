@@ -24,8 +24,7 @@
         flex-direction: row;
         width: 100%;
         overflow: auto;
-        margin-top: 10px;
+        margin-top: 0px;
+        margin-left: -30px;
     }
-
-
 </style>

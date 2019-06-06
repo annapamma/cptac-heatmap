@@ -16,11 +16,13 @@
                 cancer biology, oncology, and clinical chemistry, while creating open community resources that
                 are widely used by the cancer community.
         </div>
+        <!--<div class="instructions" align="left">Click gene symbol to see more details. Click sample ID for links to histology images.</div>-->
         <div id="content">
             <user-input class="user-input-main"/>
             <!--<the-heatmap-container />-->
             <!--<the-legend-container />-->
-            <the-heatmap-and-legend-container />
+            <the-heatmap-legend-instructions-container />
+            <!--<the-heatmap-and-legend-container />-->
         </div>
     </div>
 </template>
@@ -30,10 +32,12 @@
 import UserInput from '././components/UserInput.vue'
 // import TheLegendContainer from './components/TheLegendContainer.vue';
 import TheHeatmapAndLegendContainer from './components/TheHeatmapAndLegendContainer.vue';
+import TheHeatmapLegendInstructionsContainer from "./components/TheHeatmapLegendInstructionsContainer.vue";
 
 export default {
     components: {
         // TheLegendContainer,
+        TheHeatmapLegendInstructionsContainer,
         UserInput,
         // TheHeatmapContainer,
         TheHeatmapAndLegendContainer,
