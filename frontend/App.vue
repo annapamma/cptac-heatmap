@@ -110,11 +110,9 @@ export default {
     .cptac-description {
         font-size: small;
         text-align: left;
-        /*margin-left: 10px;*/
         font-family: "Times New Roman", Times, serif;
         font-weight: bold;
         margin: 15px;
-        /*border-bottom: solid 2px dimgray;*/
     }
 
 </style>
