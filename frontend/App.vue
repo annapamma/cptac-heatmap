@@ -53,7 +53,6 @@ export default {
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        /*margin-top: 60px;*/
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -80,22 +79,18 @@ export default {
     #content {
         display: flex;
         flex-direction: row;
-        /*height: 100%;*/
         overflow: auto;
         margin-top: 10px;
     }
 
     .user-input-main {
-        /*background-color: lightgray;*/
         background: lightgray;
-        /*height: 100%;*/
     }
 
     #logo-bar {
         height: 10%;
         display: flex;
         flex-direction: row;
-        /*background-color: pink;*/
         justify-content: space-between;
     }
 
