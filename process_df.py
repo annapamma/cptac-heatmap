@@ -8,7 +8,7 @@ import pickle
 # df = df.replace({'loss': 1, 'LR neutral LOH': 2, 'LR neutral': 3, 'LR amplification': 4, 'No': -100, 'Yes': 100})
 # df = df.rename(str.lower, axis="columns")
 # #
-# pickle.dump(df, open('data/cptac.pkl', 'wb'))
+# pickle.dump(df, open('data/cptac_old.pkl', 'wb'))
 
 # PROCESS GENE INFO
 # z-score data (-3 to +3)
@@ -21,30 +21,30 @@ import pickle
 # df[(df > -2) & (df <= -1)] = light_blue --> 6
 # df[(df > -3) & (df <= -2)] = med_blue --> 4
 # df[df <= -3] = dark_blue --> 2
-
-import pandas as pd
-import pickle
-
-sample_ids = pickle.load(open('/Users/calina01/PycharmProjects/cptac-heatmap/data/sample_id_mapping.pkl', 'rb'))
-
-# data_types_with_z_scores = ['protein', 'rna', 'phospho', 'methylation']
-# data_types_with_z_scores = ['protein', 'rna', ''phospho_normal'', 'methylation']
-# for data_type in data_types_with_z_scores:
-for data_type in ['protein_normal']:
-    df = pd.read_csv('archived/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
-    df[(df >= 3)] = 14000
-    df[(df > 2) & (df < 3)] = 12000
-    df[(df > 0.1) & (df <= 2)] = 10000
-    df[(df > -0.1) & (df <= 0.1)] = 8000
-    df[(df > -2) & (df <= -0.1)] = 6000
-    df[(df > -3) & (df <= -2)] = 4000
-    df[df <= -3] = 2000
-
-    df = df/1000 # avoids conflicts with transformation
-    df = df.fillna(-100)
-    # df = df.rename(columns = sample_ids).T
-
-    pickle.dump(df, open('data/{}.pkl'.format(data_type), 'wb'))
+#
+# import pandas as pd
+# import pickle
+#
+# sample_ids = pickle.load(open('/Users/calina01/PycharmProjects/cptac-heatmap/data/sample_id_mapping.pkl', 'rb'))
+#
+# # data_types_with_z_scores = ['protein', 'rna', 'phospho', 'methylation']
+# # data_types_with_z_scores = ['protein', 'rna', ''phospho_normal'', 'methylation']
+# # for data_type in data_types_with_z_scores:
+# for data_type in ['protein_normal']:
+#     df = pd.read_csv('archived/heatmap/heatmap_{}.csv'.format(data_type), index_col=0)
+#     df[(df >= 3)] = 14000
+#     df[(df > 2) & (df < 3)] = 12000
+#     df[(df > 0.1) & (df <= 2)] = 10000
+#     df[(df > -0.1) & (df <= 0.1)] = 8000
+#     df[(df > -2) & (df <= -0.1)] = 6000
+#     df[(df > -3) & (df <= -2)] = 4000
+#     df[df <= -3] = 2000
+#
+#     df = df/1000 # avoids conflicts with transformation
+#     df = df.fillna(-100)
+#     # df = df.rename(columns = sample_ids).T
+#
+#     pickle.dump(df, open('data/{}.pkl'.format(data_type), 'wb'))
 
 
 # CNV data (-0.5 to 0.5)

@@ -46,7 +46,7 @@
             They can be separated by comma (‘,’), semicolon (';'), space (‘ ‘), tab, or newline.
             The dataset provides data for 22,867 genes. Not all data types will be available for every gene.</p>
         <!--<p class="description">Click gene symbol to see more details. Click sample ID for links to histology images.</p>-->
-        <p class="description">For more details, see publication …</p>
+        <!--<p class="description">For more details, see publication …</p>-->
     </div>
 </template>
 
@@ -189,9 +189,9 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-            // const defaultGenes = [];
-            const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
-                'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
+            const defaultGenes = [];
+            // const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
+            //     'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
             let genes = urlTrail.length ? urlTrail.split("&") : defaultGenes;
 

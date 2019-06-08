@@ -28,7 +28,7 @@
                                 const series_i = event.target.getAttribute('i');
                                 const sample_i = event.target.getAttribute('j');
                                 let series = this.series[series_i]['name'];
-
+                                // const sample = this.series[series_i]['data'][sample_i]['x'];
                                 const sample = this.series[series_i]['data'][sample_i]['x'];
                                 const values = this.$store.state['selectGeneData']['data'];
 
