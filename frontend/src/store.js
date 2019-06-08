@@ -13,6 +13,7 @@ const store = new Vuex.Store({
         '3p-CNV': [],
         '5q-CNV': [],
         '7p-CNV': [],
+        '9p-CNV': [],
         'actualData': {},
         'CCRCC': [],
         'CIMP': [],
@@ -108,6 +109,9 @@ const store = new Vuex.Store({
         'ADD_MUTATION' (state, mutation) {
             state['Mut'] = mutation;
         },
+        'ADD_NINE_P' (state, nineP) {
+            state['9p-CNV'] = nineP;
+        },
         'ADD_PHOSPHO' (state, phospho) {
             state['Phospho'] = phospho;
         },
@@ -172,13 +176,13 @@ const store = new Vuex.Store({
                 '3p-CNV',
                 '5q-CNV',
                 '7p-CNV',
+                '9p-CNV',
                 '14q-CNV',
                 'Immune Group',
                 'Grade',
                 'Stage',
                 'Gender',
                 'CIMP',
-                // 'CNV subtype',
                 't(3;2)',
                 't(3;5)'];
             const type = dataTypesSamples.indexOf(series) > -1 ? 'sample' : 'gene';
@@ -210,12 +214,12 @@ const store = new Vuex.Store({
             }
 
             store.commit('UPDATE_SORT_ORDER', order);
-            // console.log(state['sampleData'])
              // add sample data
             const ccrcc = orderData(order, state['sampleData']['CCRCC']);
             const threeP = orderData(order, state['sampleData']['3p-CNV']);
             const fiveQ = orderData(order, state['sampleData']['5q-CNV']);
             const sevenP = orderData(order, state['sampleData']['7p-CNV']);
+            const nineP = orderData(order, state['sampleData']['9p-CNV']);
             const fourteenQ = orderData(order, state['sampleData']['14q-CNV']);
             const stage = orderData(order, state['sampleData']['Stage']);
             const grade = orderData(order, state['sampleData']['Grade']);
@@ -224,7 +228,6 @@ const store = new Vuex.Store({
             const gender = orderData(order, state['sampleData']['Gender']);
             const translocation_3_2 = orderData(order, state['sampleData']['t(3;2)']);
             const translocation_3_5 = orderData(order, state['sampleData']['t(3;5)']);
-            // const cnv_subtype = orderData(order, state['sampleData']['CNV subtype']);
 
             store.commit('ADD_CCRCC', ccrcc);
             store.commit('ADD_THREE_P', threeP);
@@ -240,6 +243,7 @@ const store = new Vuex.Store({
 
             store.commit('ADD_FIVE_Q', fiveQ);
             store.commit('ADD_SEVEN_P', sevenP);
+            store.commit('ADD_NINE_P', nineP);
             store.commit('ADD_FOURTEEN_Q', fourteenQ);
 
             const mutation = orderData(order, state['geneData']['mutation'], true);
@@ -367,6 +371,7 @@ const store = new Vuex.Store({
                         const fiveQ = orderData(originalOrder, sampleData['5q-CNV']);
                         const sevenP = orderData(originalOrder, sampleData['7p-CNV']);
                         const fourteenQ = orderData(originalOrder, sampleData['14q-CNV']);
+                        const nineP = orderData(originalOrder, sampleData['9p-CNV']);
                         const stage = orderData(originalOrder, sampleData['Stage']);
                         const grade = orderData(originalOrder, sampleData['Grade']);
                         const cimp = orderData(originalOrder, sampleData['CIMP']);
@@ -390,6 +395,7 @@ const store = new Vuex.Store({
 
                         store.commit('ADD_FIVE_Q', fiveQ);
                         store.commit('ADD_SEVEN_P', sevenP);
+                        store.commit('ADD_NINE_P', nineP);
                         store.commit('ADD_FOURTEEN_Q', fourteenQ);
 
                         store.commit('MAINTAIN_SAMPLE_OBJECT', sampleData);

@@ -144,12 +144,12 @@
             series () {
                 // data: an array of {x: label, y: value}
                 return [
-                    {name: 'CNV subtype', data: this.$store.state['CNV subtype']},
                     {name: 'CIMP', data: this.$store.state['CIMP']},
                     {name: 't(3;5)', data: this.$store.state['t(3;5)']},
                     {name: 't(3;2)', data: this.$store.state['t(3;2)']},
                     {name: '14q-CNV', data: this.$store.state['14q-CNV']},
                     {name: '7p-CNV', data: this.$store.state['7p-CNV']},
+                    {name: '9p-CNV', data: this.$store.state['9p-CNV']},
                     {name: '5q-CNV', data: this.$store.state['5q-CNV']},
                 ]
             }
