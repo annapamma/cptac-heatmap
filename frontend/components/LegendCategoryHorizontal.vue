@@ -1,6 +1,8 @@
 <template>
     <div class="legend-category">
-        <label for="v-for-object">{{ category }}<p v-if="category === 'Z-Score'">Adjusted log ratio values</p></label>
+        <label for="v-for-object">{{ category }}
+            <p v-if="category === 'Z-Score'">Adjusted log ratio values</p>
+        </label>
         <ul id="v-for-object" class="legend-elements">
           <li v-for="element in elements">
             <legend-element-horizontal :value="element[0]" :color="element[1]" :missing="category === 'Missing'"/>
@@ -41,7 +43,4 @@
     margin: 0;
 }
 
-    .missing {
-        background-color: yellow;
-    }
 </style>

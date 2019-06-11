@@ -1,6 +1,6 @@
 <template>
     <div class="the-heatmap-legend-instructions-container">
-        <div class="instructions">Click gene symbol to see more details. Click sample ID for links to histology images.</div>
+        <div class="instructions">Click gene symbol for description and sample ID for links to histology images. Click data point to display and enable sorting.</div>
         <the-heatmap-and-legend-container />
     </div>
 </template>

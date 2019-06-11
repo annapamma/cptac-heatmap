@@ -9,7 +9,7 @@
         <div class="responsive-data-displays" v-if="loadedExcel">
             <div class="data-display-container">
                 <div class="data-display">
-                    <p>Sample: <b @click="displaySampleHistologyLinks">{{ displayData['sample'] }}</b></p>
+                    <p>Sample: <div class="specific-data" @click="displaySampleHistologyLinks">{{ displayData['sample'] }}</div></p>
                     <div class="sample-description">
                         <img @click="displaySampleHistologyLinks"
                                  src="../assets/histology-icon.png"
@@ -20,9 +20,9 @@
                                  alt="links for clinical data"
                                  title="links for clinical data">
                     </div>
-                    <p>Data type: <b>{{ displayData['series'] }}</b></p>
-                    <p>Value: <b>{{ displayData['value'] }}</b></p>
-                    <small><i>Click data point to display and enable sorting</i></small>
+                    <p>Data type: <div class="specific-data">{{ displayData['series'] }}</div></p>
+                    <p>Value: <div class="specific-data">{{ displayData['value'] }}</div></p>
+                    <!--<small><i>Click data point to display and enable sorting</i></small>-->
                 </div>
                 <button @click="sortBySeries(ascending=1)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Ascending</button>
                 <button @click="sortBySeries(ascending=0)" :disabled="!displayData['sample'].length">Sort by {{ displayData['series'] }}: Descending</button>
@@ -189,7 +189,7 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-            const defaultGenes = [];
+            const defaultGenes = ['VHL', 'BAP1', 'SETD2', 'PBRM1'];
             // const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
             //     'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
@@ -252,14 +252,14 @@
     .user-input textarea {
         border: 1px solid;
         padding: 1%;
-        height: 300px;
+        height: 100px;
         min-height: 30px;
         width: 80%;
-        margin: 20px auto;
+        margin: 10px auto;
     }
 
     .user-input button {
-        margin: 10px auto;
+        margin: 5px auto;
         width: 80%;
     }
 
@@ -267,7 +267,7 @@
         text-align: justify;
         font-weight: bold;
         margin: 5px auto;
-        padding: 10px;
+        padding: 5px;
         font-family: "Times New Roman", Times, serif;
     }
 
@@ -293,10 +293,24 @@
         text-align: justify;
         font-weight: bold;
         margin: 0 auto;
-        padding: 0px;
+        padding: 0;
         font-family: "Times New Roman", Times, serif;
     }
 
+
+    .data-display p {
+        margin: 0;
+        text-align: left;
+    }
+
+    .specific-data {
+        font-weight: normal;
+
+    }
+    /*.data-display b {*/
+        /*: 0;*/
+        /*background-color: orangered;*/
+    /*}*/
 
     .sample-description {
         display: flex;
