@@ -484,12 +484,23 @@ function orderData (order, obj, gene_type = false) {
             gene_data[gene] = order.map((sample) => {
                 return {x: sample, y: obj[gene][sample]}
             });
+            let samples = gene_data[gene].length;
+            let separator_index = samples - 7;
+            gene_data[gene].splice(separator_index, 0, {x: 'separator', y: -100})
         }
+        // for (let gene in gene_data) {
+        //     // console.log("CCRCC?: ", gene_data[gene][samples - 7])
+        // }
+        // console.log("CCRCC?: ", gene_data['VHL'])
         return gene_data
+    } else {
+        const samples = order.length;
+        const separator_index = samples - 7;
+        let orderedSamples = order.map((sample) => {
+            return {x: sample, y: obj[sample]}
+        });
+        orderedSamples.splice(separator_index, 0, {x: 'separator', y: 0});
+        return orderedSamples
     }
-
-    return order.map((sample) => {
-        return {x: sample, y: obj[sample]}
-    });
 }
 export default store;

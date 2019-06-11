@@ -30,8 +30,12 @@
                                 let series = this.series[series_i]['name'];
                                 // const sample = this.series[series_i]['data'][sample_i]['x'];
                                 const sample = this.series[series_i]['data'][sample_i]['x'];
-                                const values = this.$store.state['selectGeneData']['data'];
 
+                                if (sample === 'separator') {
+                                    return
+                                }
+
+                                const values = this.$store.state['selectGeneData']['data'];
                                 const found = values.find((obj) => {
                                     series = series === 'Immune Group Label' ? 'Immune Group' : series;
                                     return obj['Index'] === series
