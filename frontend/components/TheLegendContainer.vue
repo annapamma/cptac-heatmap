@@ -90,7 +90,7 @@
                         ['III', '#0a5d00'],
                         ['IV', '#063b00'],
                     ],
-                    '3p/5q/7p/14q-CNV': [
+                    '3p/5q/7p/9p/14q-CNV': [
                         ['Loss', '#003366'],
                         ['Neutral LOH', '#c2e2ec'],
                         ['Neutral', '#E8E8E8'],

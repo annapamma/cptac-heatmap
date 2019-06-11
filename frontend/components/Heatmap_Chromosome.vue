@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-chromosome">
-        <apexchart type=heatmap :height="110" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="117" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -144,6 +144,7 @@
             series () {
                 // data: an array of {x: label, y: value}
                 return [
+                    {name: 'Genome instability', data: this.$store.state['Genome instability']},
                     {name: 'CIMP', data: this.$store.state['CIMP']},
                     {name: 't(3;5)', data: this.$store.state['t(3;5)']},
                     {name: 't(3;2)', data: this.$store.state['t(3;2)']},

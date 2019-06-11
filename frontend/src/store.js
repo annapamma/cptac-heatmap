@@ -39,6 +39,7 @@ const store = new Vuex.Store({
         geneData: {},
         geneDetails: {},
         genes: [],
+        'Genome instability': [],
         'Grade': [],
         histology: {},
         histologyDisplay: {},
@@ -94,6 +95,9 @@ const store = new Vuex.Store({
         },
         'ADD_GENE_LIST' (state, genes) {
             state.genes = genes
+        },
+        'ADD_GENOME_INSTABILITY' (state, genomeInstability) {
+            state['Genome instability'] = genomeInstability;
         },
         'ADD_GRADE' (state, grade) {
             state['Grade'] = grade;
@@ -358,7 +362,6 @@ const store = new Vuex.Store({
                         for (let dataType in res) {
                             parsed_res[dataType] = JSON.parse(res[dataType])
                         }
-                        console.log("RESULTS FROM SUBMIT GENES: ", parsed_res)
                         const originalOrder =
                                 ['C3N-00242', 'C3N-00852', 'C3N-00310', 'C3N-00244', 'C3L-00583', 'C3L-00610', 'C3N-00494', 'C3L-01281', 'C3N-00320', 'C3N-00154', 'C3L-00791', 'C3L-00814', 'C3N-01261', 'C3L-00418', 'C3L-00606', 'C3N-00312', 'C3L-00799', 'C3L-00907', 'C3L-01557', 'C3N-00168', 'C3L-00910', 'C3N-01649', 'C3N-01179', 'C3L-01836', 'C3N-00148', 'C3L-00004', 'C3L-01861', 'C3L-01885', 'C3N-00733', 'C3N-00305', 'C3N-00380', 'C3L-01607', 'C3N-00491', 'C3N-01213', 'C3L-00790', 'C3L-00011', 'C3L-01313', 'C3L-00792', 'C3N-00437', 'C3L-00581', 'C3N-01200', 'C3L-00813', 'C3N-00317', 'C3N-00953', 'C3L-01287', 'C3N-01214', 'C3L-00369', 'C3N-00246', 'C3N-01524', 'C3L-00447', 'C3L-00026', 'C3N-00834', 'C3L-00448', 'C3L-00097', 'C3L-01560', 'C3L-00103', 'C3N-01176', 'C3N-01178', 'C3L-00561', 'C3N-00495', 'C3L-01603', 'C3L-00096', 'C3N-00573', 'C3N-00390', 'C3L-00902', 'C3L-00088', 'C3L-00800', 'C3L-00010', 'C3L-00812', 'C3N-01651', 'C3L-00917', 'C3L-00817', 'C3L-00360', 'C3N-00177', 'C3N-00315', 'C3L-00908', 'C3L-01286', 'C3L-01302', 'C3N-01522', 'C3L-00183', 'C3N-00314', 'C3N-00577', 'C3L-00796', 'C3N-00646', 'C3N-01646', 'C3L-01283', 'C3N-00150', 'C3L-00766', 'C3N-00831', 'C3L-01352', 'C3N-01808', 'C3L-00607', 'C3L-00765', 'C3N-01220', 'C3L-01882', 'C3L-00416', 'C3L-00079', 'C3N-00149', 'C3L-01288', 'C3L-01553', 'C3N-01361', 'C3N-00194', 'C3N-01648', 'C3N-00435', 'C3N-00832', 'C3N-00313', 'C3N-01175', 'C3L-00359', 'C3N-00492', 'C3N-01180']
 
@@ -366,6 +369,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_GENE_DETAILS', geneDetails);
 
                         const sampleData = parsed_res['sample_data'];
+
                         // add sample data
                         const ccrcc = orderData(originalOrder, sampleData['CCRCC']);
                         const threeP = orderData(originalOrder, sampleData['3p-CNV']);
@@ -380,6 +384,7 @@ const store = new Vuex.Store({
                         const gender = orderData(originalOrder, sampleData['Gender']);
                         const translocation_3_2 = orderData(originalOrder, sampleData['t(3;2)']);
                         const translocation_3_5 = orderData(originalOrder, sampleData['t(3;5)']);
+                        const genomeInstability = orderData(originalOrder, sampleData['Genome instability']);
                         // const cnv_subtype = orderData(originalOrder, sampleData['CNV subtype']);
 
                         store.commit('ADD_CCRCC', ccrcc);
@@ -392,6 +397,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_IMMUNE_GROUP', immune_group);
                         store.commit('ADD_TRANSLOCATION_3_2', translocation_3_2);
                         store.commit('ADD_TRANSLOCATION_3_5', translocation_3_5);
+                        store.commit('ADD_GENOME_INSTABILITY', genomeInstability);
                         // store.commit('ADD_CNV_SUBTYPE', cnv_subtype);
 
                         store.commit('ADD_FIVE_Q', fiveQ);

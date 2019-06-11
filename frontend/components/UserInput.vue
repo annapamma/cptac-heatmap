@@ -189,9 +189,9 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-            // const defaultGenes = [];
-            const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
-                'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
+            const defaultGenes = [];
+            // const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
+            //     'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
             let genes = urlTrail.length ? urlTrail.split("&") : defaultGenes;
 
