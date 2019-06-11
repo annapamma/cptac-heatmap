@@ -72,7 +72,7 @@
                         ['Yes', '#00004d'],
                         ['No', '#ececec'],
                     ],
-                    't(3;2)/t(3;5)': [
+                    't(3;2)/t(3;5)/Genome instability': [
                         ['Yes', '#d94040'],
                         ['No', '#ececec'],
                     ],
