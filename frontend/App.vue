@@ -15,7 +15,7 @@
                 analysis technologies to different cancer types. CPTAC is composed of expertise in proteomics, genomics,
                 cancer biology, oncology, and clinical chemistry, while creating open community resources that
                 are widely used by the cancer community.
-            <p>This page provide data visualization for proteogenomic data from CPTAC-CCRCC discovery project. For more information, visit the <a href="(https://cptac-data-portal.georgetown.edu/cptac/s/S044;jsessionid=4C05CF34AAD5381E6E20ED192E932F5F">CPTAC-CCRCC data portal</a>.</p>
+            <p>This page provide data visualization for proteogenomic data from CPTAC-CCRCC discovery project. For more information, visit the <a href="https://cptac-data-portal.georgetown.edu/cptac/s/S044;jsessionid=4C05CF34AAD5381E6E20ED192E932F5F">CPTAC-CCRCC data portal</a>.</p>
         </div>
         <!--<div class="instructions" align="left">Click gene symbol to see more details. Click sample ID for links to histology images.</div>-->
         <div id="content">
