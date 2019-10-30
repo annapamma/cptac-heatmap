@@ -1,6 +1,6 @@
 <template>
     <div class="heatmap-ccrcc-3p">
-        <apexchart type=heatmap :height="89" :options="chartOptions" :series="series" />
+        <apexchart type=heatmap :height="72" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -13,6 +13,11 @@
         data () {
             return {
                 chartOptions: {
+                    grid: {
+                        padding: {
+                            top: -20,
+                        }
+                    },
                     legend: {
                         show: false
                     },
@@ -102,6 +107,26 @@
                                         to: 4,
                                         color: '#cc0000'
                                     },
+                                                                        {
+                                        from: 1001,
+                                        to: 1001,
+                                        color: '#fff871'
+                                    },
+                                    {
+                                        from: 1002,
+                                        to: 1002,
+                                        color: '#98f367'
+                                    },
+                                    {
+                                        from: 1003,
+                                        to: 1003,
+                                        color: '#9ecae3'
+                                    },
+                                    {
+                                        from: 1004,
+                                        to: 1004,
+                                        color: '#cc0000'
+                                    },
                                     {
                                         from: 100,
                                         to: 100,
@@ -135,4 +160,7 @@
 </script>
 
 <style scoped>
+    /*.heatmap-chromosome {*/
+        /*padding-bottom: -10px;*/
+    /*}*/
 </style>
