@@ -72,6 +72,12 @@
                         ['Yes', '#00004d'],
                         ['No', '#ececec'],
                     ],
+                    'Immune Group': [
+                        ['CD8- inflamed', '#9ecae3'],
+                        ['CD8+ inflamed', '#cc0000'],
+                        ['Metabolic immune-desert', '#98f367'],
+                        ['VEGF immune-desert', '#fff871'],
+                    ],
                     't(3;2)/t(3;5)/Genome instability': [
                         ['Yes', '#d94040'],
                         ['No', '#ececec'],
