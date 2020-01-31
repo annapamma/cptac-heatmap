@@ -189,7 +189,7 @@
         },
         mounted () {
             this.$store.dispatch('loadFirstData');
-            const defaultGenes = ['VHL', 'BAP1', 'SETD2', 'PBRM1'];
+            const defaultGenes = ['CD8A', 'PDCD1', 'CD274', 'VEGFA', 'BAP1'];
             // const defaultGenes = ['VHL', 'SETD2', 'PBRM1', 'BAP1', 'NDUFA4L2',
             //     'VIM', 'ANGPTL4', 'CA9', 'RHCG', 'FOXI1', 'VSTM2A'];
             const urlTrail = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
@@ -240,11 +240,11 @@
     .user-input {
         display: flex;
         flex-direction: column;
-        width: 30%;
+        width: 300px;
         margin-left: 10px;
         padding: 0;
         height: 100%;
-        min-height: 1000px;
+        min-height: 868px;
         border: solid 1px black;
         background-color: #edeff2;
     }
@@ -268,7 +268,6 @@
         font-weight: bold;
         margin: 5px auto;
         padding: 5px;
-        font-family: "Times New Roman", Times, serif;
     }
 
     .responsive-data-displays {
@@ -294,7 +293,6 @@
         font-weight: bold;
         margin: 0 auto;
         padding: 0;
-        font-family: "Times New Roman", Times, serif;
     }
 
 
@@ -307,10 +305,6 @@
         font-weight: normal;
 
     }
-    /*.data-display b {*/
-        /*: 0;*/
-        /*background-color: orangered;*/
-    /*}*/
 
     .sample-description {
         display: flex;

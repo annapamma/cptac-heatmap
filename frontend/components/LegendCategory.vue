@@ -42,7 +42,7 @@
 }
 
 .legend-category label {
-    font-size: small;
+    font-size: 18px;
     font-weight: bold;
 }
 

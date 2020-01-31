@@ -33,7 +33,7 @@
     margin: 5px -9.5px;
 }
 .legend-category label {
-    font-size: small;
+    font-size: 18px;
     font-weight: bold;
 }
 

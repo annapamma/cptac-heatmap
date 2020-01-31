@@ -45,7 +45,7 @@
 
 <style scoped>
     .the-heatmap-container {
-        width: 95%;
+        min-width: 1400px;
         min-height: 100vh;
         overflow: auto;
         /*display: flex;*/

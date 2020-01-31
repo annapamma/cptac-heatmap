@@ -30,7 +30,6 @@
     .track-selector-checkbox {
         display: flex;
         flex-direction: row;
-        font-family: "Times New Roman", Times, serif;
         width: 100%;
     }
 </style>
