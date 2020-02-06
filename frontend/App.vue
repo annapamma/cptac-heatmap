@@ -1,11 +1,11 @@
 <template>
     <div id="app">
         <div id="logo-bar">
-             <div class="cptac-logo">
-                <img src="./assets/cptac-logo.png">
+            <div class="protrack" style="font-size: 3em; font-weight: bold; margin-left: 10px; margin-top: 12px">
+                ProTrack
             </div>
             <div class="mssm-logo">
-                <img src="./assets/MSSMLogo.png">
+                <img src="./assets/logo_combined.png" height="72" style="margin-left:auto; margin-right:0;">
             </div>
         </div>
         <div class="cptac-description">
