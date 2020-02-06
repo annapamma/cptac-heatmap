@@ -240,7 +240,7 @@
     .user-input {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        width: 400px;
         margin-left: 10px;
         padding: 0;
         height: 100%;
