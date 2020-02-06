@@ -110,7 +110,7 @@
                                                                         {
                                         from: 1001,
                                         to: 1001,
-                                        color: '#fff871'
+                                        color: '#ffa500'
                                     },
                                     {
                                         from: 1002,

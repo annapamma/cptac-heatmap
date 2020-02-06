@@ -30,7 +30,7 @@ const store = new Vuex.Store({
             'Phospho': true,
             'Protein': true,
             'mRNA': true,
-            'CNV (baf)': true,
+//            'CNV (baf)': true,
             'CNV (lr)': true,
             'Methy': true,
             'Mut': true

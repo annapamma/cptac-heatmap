@@ -51,7 +51,7 @@
                     //     ['-2', '#4d88ff'],
                     //     ['-3', '#003366'],
                     // ],
-                    'CNV': [
+                    'CNV (lr)': [
                         ['(-Inf, -0.5)', '#003366'],
                         ['(-0.5, -0.2]', '#80aaff'],
                         ['(-0.2, 0.2]', '#E8E8E8'],
@@ -70,7 +70,7 @@
                         ['CD8- inflamed', '#9ecae3'],
                         ['CD8+ inflamed', '#cc0000'],
                         ['Metabolic immune-desert', '#98f367'],
-                        ['VEGF immune-desert', '#fff871'],
+                        ['VEGF immune-desert', '#ffa500'],
                     ],
                     't(3;2)/t(3;5)/Genome instability': [
                         ['Yes', '#d94040'],

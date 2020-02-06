@@ -100,8 +100,53 @@
                                 ranges: [
                                     {
                                         from: 0,
+                                        to: 0.05,
+                                        color: '#003366'
+                                    },
+                                    {
+                                        from: .05,
                                         to: 0.1,
-                                        color: '#E8E8E8'
+                                        color: '#2E5780'
+                                    },
+                                    {
+                                        from: 0.1,
+                                        to: 0.15,
+                                        color: '#5c7b9a'
+                                    },
+                                    {
+                                        from: 0.15,
+                                        to: 0.2,
+                                        color: '#8b9fb4'
+                                    },
+                                    {
+                                        from: 0.2,
+                                        to: 0.25,
+                                        color: '#b9c3ce'
+                                    },
+                                    {
+                                        from: 0.25,
+                                        to: 0.3,
+                                        color: '#e8e8e8'
+                                    },
+                                    {
+                                        from: 0.3,
+                                        to: 0.35,
+                                        color: '#d8b9b9'
+                                    },
+                                    {
+                                        from: 0.35,
+                                        to: 0.4,
+                                        color: '#c88b8b'
+                                    },
+                                    {
+                                        from: 0.4,
+                                        to: 0.45,
+                                        color: '#b85c5c'
+                                    },
+                                    {
+                                        from: 0.45,
+                                        to: 0.5,
+                                        color: '#a82e2e'
                                     },
                                     {
                                         from: 1,

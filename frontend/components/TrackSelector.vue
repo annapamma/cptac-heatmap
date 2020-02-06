@@ -6,7 +6,6 @@
                 <label :for="dataType"><span>{{ dataType }}</span></label>
             </div>
         </div>
-        <button @click="redraw">Redraw</button>
     </div>
 </template>
 
