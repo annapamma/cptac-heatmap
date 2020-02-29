@@ -16,7 +16,7 @@
                 cancer biology, oncology, and clinical chemistry, while creating open community resources that
                 are widely used by the cancer community.
             <p>This page provide data visualization for proteogenomic data from CPTAC-CCRCC discovery project. To view the data as a co-expression network, visit the <a href="http://ccrcc.cptac-network-view.org/"> CPTAC Interactive Network Portal</a>.</p>
-            <p>For more information, visit the <a href="https://cptac-data-portal.georgetown.edu/cptac/s/S044;jsessionid=4C05CF34AAD5381E6E20ED192E932F5F">CPTAC-CCRCC data portal</a>.</p>
+            <p>For more information, please see the publication <a href="https://www.ncbi.nlm.nih.gov/pubmed/31675502">Fenyo et al. Cell. 2019</a>.</p>
         </div>
         <!--<div class="instructions" align="left">Click gene symbol to see more details. Click sample ID for links to histology images.</div>-->
         <div id="content">
