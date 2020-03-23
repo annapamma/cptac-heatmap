@@ -71,7 +71,17 @@
                         }
                     },
                     tooltip: {
-                        enabled: false,
+                        enabled: true,
+                        x: {
+                          show: false,
+                          // format: 'dd MMM',
+                          formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                              return value
+                          },
+                        },
+                        items: {
+                            display: 'none',
+                        }
                     },
                     plotOptions: {
                         heatmap: {

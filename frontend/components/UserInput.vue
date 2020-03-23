@@ -37,6 +37,8 @@
                     <clinical-data-display :sample="displayData['sample']"/>
                 </div>
             </modal>
+
+
             <div class="track-selector-container">
                 <track-selector />
             </div>

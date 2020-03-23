@@ -75,7 +75,17 @@
                         }
                     },
                     tooltip: {
-                        enabled: false,
+                        enabled: true,
+                        x: {
+                          show: false,
+                          // format: 'dd MMM',
+                          formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                              return value
+                          },
+                        },
+                        items: {
+                            display: 'none',
+                        }
                     },
                     plotOptions: {
                         heatmap: {
@@ -154,6 +164,9 @@
                     {name: '3p-CNV', data: this.$store.state['3p-CNV']},
                     {name: 'CCRCC', data: this.$store.state['CCRCC']},
                 ]
+            },
+            displayData() {
+                return this.$store.state.displayData;
             }
         },
     }

@@ -14,9 +14,9 @@
 
 <script>
     import HeatmapCcrcc3p from './Heatmap_CCRCC_ThreeP.vue';
-    import HeatmapGene from './HeatmapGene.vue';
-    import HeatmapStageGradeGender from './Heatmap_Stage_Grade_Gender.vue';
     import HeatmapChromosome from './Heatmap_Chromosome.vue';
+    import HeatmapStageGradeGender from './Heatmap_Stage_Grade_Gender.vue';
+    import HeatmapGene from './HeatmapGene.vue';
     import TheLegendContainer from './TheLegendContainer.vue';
 
     export default {
