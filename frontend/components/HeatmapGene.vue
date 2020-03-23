@@ -94,8 +94,17 @@
                         x: {
                           show: false,
                           // format: 'dd MMM',
-                          formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
-                              return value
+                          formatter: (value, { seriesIndex, dataPointIndex, w }) => {
+                              let sample = value;
+                              while (sample === 'a' || sample === 'b') {
+                                 seriesIndex -= 1;
+                                 if (seriesIndex === 0) {
+                                     sample = ''
+                                 } else {
+                                    sample = this.series[seriesIndex].data[dataPointIndex].x
+                                 }
+                              }
+                              return sample
                           },
                         },
                         items: {
