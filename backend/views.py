@@ -9,7 +9,7 @@ from django.conf import settings
 color_df = settings.COLOR
 actual_df = settings.ACTUAL
 
-def df_to_apex_data(color_scale_df, actual):
+def df_to_apex_data(color_scale_df, actual, gene_tracks):
     series = [
         {
             'name': data_type,
@@ -24,13 +24,29 @@ def df_to_apex_data(color_scale_df, actual):
         }
         for data_type, vals in color_scale_df.iterrows()
     ]
-    clinical_series_len = actual[actual['Data type'] == ''].shape[0]
     blank_row = { 'name': '', 'data': [] }
-    series.insert(clinical_series_len, blank_row)
+    series.insert(2, blank_row)
+    series.insert(4, blank_row)
+    last_track_i = 4
+    for i, tracks in gene_tracks.items():
+        last_track_i += 1
+        last_track_i += tracks
+        series.insert(last_track_i, blank_row)
+    series.insert(-3, blank_row)
     return series[::-1]
 
 def filtered_df(df, genes):
     return df[(df['Gene symbol'].isin(genes)) | (df['Gene symbol'] == '')]
+
+def gene_track_counts(df):
+    counts = {}
+    for gene in df['Gene symbol'].values:
+        if len(gene):
+            if gene not in counts:
+                counts[gene] = 0
+            counts[gene] += 1
+            print(gene)
+    return counts
 
 @csrf_exempt
 def index(request):
@@ -44,13 +60,14 @@ def submit_genes(request):
 
     # data = json.loads(request.body)
     # genes = data['genes']
-    genes = ['VHL']
-
+    genes = ['VHL', 'BAP1', 'CD8A']
     filtered_scale = filtered_df(color_df, genes)
+    gene_tracks = gene_track_counts(filtered_scale)
 
     series = df_to_apex_data(
         filtered_scale.drop(columns=['Data type', 'Gene symbol']),
-        actual_df
+        actual_df,
+        gene_tracks
     )
 
     return JsonResponse({

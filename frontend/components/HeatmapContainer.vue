@@ -16,8 +16,8 @@
 <script>
 import TheLegendContainer from './TheLegendContainer.vue';
 
-import chartOptions from '../heatmap_specs/chartOptions';
-import colorScale from '../heatmap_specs/colorScale';
+import chartOptions from '../heatmap_specs/chartOptions.js';
+import colorScale from '../heatmap_specs/colorScale.js';
 
 export default {
   name: 'HeatmapContainer',
@@ -37,7 +37,7 @@ export default {
       return this.$store.state.series;
     },
     height() {
-      return this.clinicalSeries.length * 30;
+      return this.clinicalSeries.length * 16;
     }
   },
 };

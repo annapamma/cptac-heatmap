@@ -10,7 +10,7 @@
     </div>
     <input class="pathway-container-text-input" v-model="searchTerm" placeholder="Search pathways"/>
     <ul>
-      <li v-for="pw in pathwayNames" v-on:click="addPathwayGenes(pw)">
+      <li v-for="(pw, idx) in pathwayNames" :key="pw + idx" v-on:click="addPathwayGenes(pw)">
         {{ pw }}
       </li>
     </ul>

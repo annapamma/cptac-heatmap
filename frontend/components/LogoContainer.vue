@@ -4,7 +4,7 @@
         ProTrack
     </div>
     <div class="mssm-logo">
-        <img src="@/assets/logo_combined.png" height="72" style="margin-left:auto; margin-right:0;">
+        <img src="../assets/logo_combined.png" height="72" style="margin-left:auto; margin-right:0;">
     </div>
   </div>
 </template>

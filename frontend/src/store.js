@@ -10,7 +10,7 @@ import initialSortOrder from './initialSortOrder.js';
 
 Vue.use(Vuex);
 
-const apiRoot = 'http://127.0.0.1:8000';
+const apiRoot = API_ROOT;
 
 export default new Vuex.Store({
   state: {
@@ -46,7 +46,6 @@ export default new Vuex.Store({
     },
     ASSIGN_SERIES_PHOSPHO(state, series) {
       state.series_phospho = series;
-      console.log('IN ASSIGN', state.series_phospho)
     },
     UPDATE_SELECTED_DATA_POINT(state, {
       selectedSeries, selectedSample, selectedValue, selectedPhosphoId,
@@ -134,7 +133,6 @@ export default new Vuex.Store({
     fetchPhospho(store) {
       store.commit('SET_LOADING', true);
       const genes = store.state.genes.join('%20');
-      console.log(`${apiRoot}/api/phospho/color/${genes}/`)
       axios.get(
         `${apiRoot}/api/phospho/color/${genes}/`,
       ).then(
@@ -147,8 +145,8 @@ export default new Vuex.Store({
           store.commit('SET_LOADING', false);
         },
       ).catch(
-        () => {
-          console.log('oh no there was an error!');
+        (e) => {
+          console.error('FetchError: ', e.message);
         },
       );
     },
@@ -216,10 +214,10 @@ export default new Vuex.Store({
     },
     fetchPathwayGenes(store, { db, pw }) {
       store.commit('UPDATE_SELECTED_PATHWAY', pw);
-      const pw_clean = pw.split('/').join('%2F');
+      const pwClean = pw.split('/').join('%2F');
       axios
         .get(
-          `${apiRoot}/api/pathways/${db}/${pw_clean}`,
+          `${apiRoot}/api/pathways/${db}/${pwClean}`,
         )
         .then(
           ({ data }) => {
@@ -240,5 +238,4 @@ export default new Vuex.Store({
       store.commit('SET_GENE_LIST', [...new Set(geneListArr)]);
     },
   },
-
 });
