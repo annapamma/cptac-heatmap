@@ -6,10 +6,10 @@
 </template>
 
 <script>
-    export default {
-        name: 'legend-element-horizontal',
-        props: ['value', 'color', 'missing']
-    }
+export default {
+  name: 'legend-element-horizontal',
+  props: ['value', 'color', 'missing'],
+};
 </script>
 
 <style scoped>
@@ -17,29 +17,22 @@
         display: flex;
         flex-direction: column;
         justify-content: left;
-        /*margin: -1.5px;*/
-        /*margin-left: -10px;*/
-        /*margin-right: -10px;*/
-        /*border: solid 1px black;*/
-        /*background-color: pink;*/
+        margin: 0 5px;
     }
 
     .legend-element label {
         font-size: 9px;
         font-weight: bold;
-        margin-left: 1px;
     }
 
-    .box{
+    .box {
         width:9px;
         height:9px;
         border-radius: 1px;
-        /*padding-bottom: -1px;*/
-
+        border: 1px solid lightgrey;
     }
 
     .missing {
-        /*padding: -1px;*/
         width:8px;
         height:8px;
         border: solid 1px black;

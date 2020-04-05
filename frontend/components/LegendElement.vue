@@ -6,10 +6,10 @@
 </template>
 
 <script>
-    export default {
-        name: 'legend-element',
-        props: ['value', 'color']
-    }
+export default {
+  name: 'legend-element',
+  props: ['value', 'color'],
+};
 </script>
 
 <style scoped>
@@ -17,8 +17,6 @@
         display: flex;
         flex-direction: row;
         justify-content: left;
-        margin: -1px;
-        /*margin: 0px;*/
     }
 
     .legend-element label {
@@ -31,7 +29,7 @@
         width:9px;
         height:9px;
         border-radius: 1px;
-        /*padding-bottom: -1px;*/
-
+        border: 1px solid lightgrey;
+        margin-right: 4px;
     }
 </style>

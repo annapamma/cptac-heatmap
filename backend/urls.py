@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^$', backend.views.index),
     url('download_gene_data', backend.views.download_data),
     url('load_first_data', backend.views.load_first_data),
-    url('submit_genes', backend.views.submit_genes),
+    url('api/series', backend.views.submit_genes),
 ]
 
 if settings.DEBUG:

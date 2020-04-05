@@ -19,14 +19,14 @@
 
 
 <script>
-import pwNames from '../pathwayNames';
+import pwNames from '../src/pathwayNames.js';
 
 export default {
   name: 'PathwayContainer',
   data() {
     return {
       searchTerm: '',
-      selectedPathwayDb: 'hallmark',
+      selectedPathwayDb: 'kegg',
     };
   },
   computed: {
@@ -41,7 +41,7 @@ export default {
   methods: {
     addPathwayGenes(pw) {
       // clears pathway genes
-      this.$store.dispatch('clearGeneList');
+      this.$store.dispatch('setGeneList', '');
 
       // shows pathway name
       this.$store.dispatch(
