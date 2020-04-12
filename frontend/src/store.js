@@ -10,19 +10,20 @@ import initialSortOrder from './initialSortOrder.js';
 
 Vue.use(Vuex);
 
-const apiRoot = API_ROOT;
+const apiRoot = '';
 
 export default new Vuex.Store({
   state: {
     excelData: {},
     firstPhosphoFetched: false,
     genes: ['CXCR2', 'CXCR4', 'CCR7', 'IL6', 'MAGEA1', 'TP53', 'EIF4E'],
+    geneDetails: {},
     isLoading: false,
     pathwayIsSelected: false,
     series: landingData.series,
     series_phospho: landingDataPhospho.series,
     selectedView: 'all',
-    selectedDisease: 'all',
+    selectedGene: '',
     selectedPathway: '',
     selectedPhosphoId: '',
     selectedSeries: '',
@@ -32,12 +33,18 @@ export default new Vuex.Store({
     sortOrderPhospho: [],
   },
   mutations: {
+    ADD_GENE_DETAILS(state, geneDetails) {
+        state.geneDetails = geneDetails;
+    },
     ADD_PATHWAY_GENES(state, pwGenes) {
       state.genes = [...new Set([...state.genes, ...pwGenes])];
     },
     ASSIGN_EXCEL_DATA(state, excelData) {
       state.excelData = excelData;
     },
+      ASSIGN_GENE_DETAILS(state, geneDetails) {
+        state.geneDetails = geneDetails;
+      },
     ASSIGN_GENE_LIST(state, genes) {
       state.genes = genes;
     },
@@ -48,22 +55,32 @@ export default new Vuex.Store({
       state.series_phospho = series;
     },
     UPDATE_SELECTED_DATA_POINT(state, {
-      selectedSeries, selectedSample, selectedValue, selectedPhosphoId,
+      selectedSeries, selectedSample, selectedValue, selectedPhosphoId, selectedGene
     }) {
       state.selectedSeries = selectedSeries;
       state.selectedSample = selectedSample;
       state.selectedValue = selectedValue;
       state.selectedPhosphoId = selectedPhosphoId;
+      state.selectedGene = selectedGene;
     },
     REORDER_SAMPLES(state) {
       const sortOrder = state.sortOrder.slice();
 
       const sortByIndex = (a, b) => (sortOrder.indexOf(a.x) > sortOrder.indexOf(b.x) ? 1 : -1);
+      let sortedObj = {};
+      for (let geneName in state.series) {
+          const series = state.series[geneName];
 
-      state.series = state.series.map(el => ({
-        name: el.name,
-        data: el.data.sort(sortByIndex),
-      }));
+          sortedObj[geneName] =
+              series.map((el) => {
+                  return {
+                    name: el.name,
+                    data: el.data.sort(sortByIndex),
+                  }
+              });
+      }
+
+      state.series = sortedObj;
     },
     REORDER_SAMPLES_PHOSPHO(state) {
       const sortOrder = state.sortOrderPhospho.slice();
@@ -82,16 +99,15 @@ export default new Vuex.Store({
     SET_LOADING(state, isLoading) {
       state.isLoading = isLoading;
     },
-    SORT_SAMPLES(state, { ascending, series }) {
+    SORT_SAMPLES(state, ascending) {
       const sortAscendingByY = (a, b) => {
         if (ascending) {
           return a.y > b.y ? 1 : -1;
         }
         return a.y > b.y ? -1 : 1;
       };
-      const seriesToSortBy = state.series.find(s => s.name === series);
+      const seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
       const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
-
       state.sortOrder = sorted.map(el => el.x);
     },
     SORT_SAMPLES_PHOSPHO(state, { ascending, series, phospho }) {
@@ -116,20 +132,25 @@ export default new Vuex.Store({
     UPDATE_FIRST_PHOSPHO_FETCHED(state, firstPhosphoFetched) {
       state.firstPhosphoFetched = firstPhosphoFetched;
     },
-    UPDATE_SELECTED_DISEASE(state, disease) {
-      state.selectedDisease = disease;
-    },
-    UPDATE_SELECTED_VIEW(state, selectedView) {
-      state.selectedView = selectedView;
-    },
-    UPDATE_PW_SELECTED(state, pathwayIsSelected) {
-      state.pathwayIsSelected = pathwayIsSelected;
-    },
-    UPDATE_SELECTED_PATHWAY(state, pw) {
-      state.selectedPathway = pw;
-    },
+      UPDATE_SERIES(state, series) {
+        state.series = series;
+      }
   },
   actions: {
+    fetchGeneDetails(store, genes) {
+        axios.post(
+        `/api/genedetails/`,
+            genes
+      ).then(
+        ({ data }) => {
+            store.commit('ASSIGN_GENE_DETAILS', data.geneDetails)
+        },
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
+        },
+      );
+    },
     fetchPhospho(store) {
       store.commit('SET_LOADING', true);
       const genes = store.state.genes.join('%20');
@@ -179,30 +200,30 @@ export default new Vuex.Store({
         store.commit('UPDATE_SELECTED_PATHWAY', '');
       }
     },
-    sortSamples(store, { ascending, series }) {
-      store.commit('SORT_SAMPLES', { ascending, series });
+    sortSamples(store, ascending) {
+      store.commit('SORT_SAMPLES', ascending);
       store.commit('REORDER_SAMPLES');
     },
     sortSamplesPhospho(store, { ascending, series, phospho }) {
       store.commit('SORT_SAMPLES_PHOSPHO', { ascending, series, phospho });
       store.commit('REORDER_SAMPLES_PHOSPHO');
     },
-
     selectDisease(store, disease) {
       store.commit('UPDATE_SELECTED_DISEASE', disease);
     },
     submitGenes(store, { genes }) {
       store.commit('SET_LOADING', true);
-      store.commit('ASSIGN_GENE_LIST', genes.split('%20'));
-      axios.get(
-        `${apiRoot}/api/series/${genes}/`,
+      store.commit('ASSIGN_GENE_LIST', genes);
+      axios.post(
+        `/api/series/`,
+            genes
       ).then(
         ({ data }) => {
-          store.commit('ASSIGN_SERIES', data.series);
+            store.commit('UPDATE_SERIES', data.series)
         },
-      ).then(
-        () => {
-          store.commit('SET_LOADING', false);
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
         },
       );
     },

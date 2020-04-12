@@ -50,7 +50,13 @@ export default {
       this.$store.dispatch(
         'submitGenes',
         {
-          genes: this.genes.join('%20'),
+          genes: this.genes,
+        },
+      );
+      this.$store.dispatch(
+        'fetchGeneDetails',
+        {
+          genes: this.genes,
         },
       );
     },

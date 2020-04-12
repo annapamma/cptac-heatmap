@@ -10,3 +10,5 @@ __pycache__
 *venv/*
 gene_summaries/
 archived/
+.vscode/
+data/6_CPTAC3_CCRCC_Phospho_abundance_phosphosite_protNorm=2_CB_imputed.tsv

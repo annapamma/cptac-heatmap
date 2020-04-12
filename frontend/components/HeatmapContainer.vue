@@ -1,13 +1,15 @@
 <template>
   <div class="heatmap-container">
     <div class="heatmap-and-legend">
-      <apexchart
-        class="apex-container"
-        type=heatmap
-        :height="height"
-        :options="chartOptionsClinical"
-        :series="clinicalSeries"
-      />
+        <div>
+        <heatmap
+            v-for="(val, gene) in series"
+            :options="options"
+            :series="val"
+            :gene="gene"
+            :key="gene"
+        />
+        </div>
       <the-legend-container />
     </div>
   </div>
@@ -15,31 +17,34 @@
 
 <script>
 import TheLegendContainer from './TheLegendContainer.vue';
+import Heatmap from './Heatmap.vue';
 
 import chartOptions from '../heatmap_specs/chartOptions.js';
 import colorScale from '../heatmap_specs/colorScale.js';
 
 export default {
-  name: 'HeatmapContainer',
-  components: {
-    TheLegendContainer,
-  },
-  data() {
-    return {
-      chartOptionsClinical: chartOptions(colorScale, this),
-      isLoading: true,
-      fullPage: false,
-      // clinicalSeries: landingData['series'],
-    };
-  },
-  computed: {
-    clinicalSeries() {
-      return this.$store.state.series;
+    name: 'HeatmapContainer',
+    components: {
+        Heatmap,
+        TheLegendContainer,
     },
-    height() {
-      return this.clinicalSeries.length * 16;
-    }
-  },
+    data() {
+        return {
+            options: chartOptions(colorScale, this),
+            isLoading: true,
+            fullPage: false,
+            // clinicalSeries: landingData['series'],
+        };
+    },
+    computed: {
+        series() {
+            return this.$store.state.series;
+        },
+        height() {
+            // return this.series.length * 16;
+            return 300;
+        }
+    },
 };
 </script>
 
@@ -69,36 +74,5 @@ export default {
     display: flex;
   }
 
-  .apex-container {
-    width: 1200px;
-  }
-
-  .apexcharts-canvas {
-    height: 100%;
-  }
-
-  .apexcharts-legend {
-    height: 100%;
-  }
-
-  .disease-all {
-    background-color: white;
-    width: 85%;
-    height: 100vh;
-  }
-
-  .apexcharts-heatmap-rect {
-    stroke-width: 0 !important;
-  }
-
-  .apexcharts-heatmap-rect:hover {
-      outline: black 1px solid !important;
-      cursor: pointer;
-      z-index: 100;
-  }
-
-  .apexcharts-yaxis {
-    border: solid 1px black;
-  }
 
 </style>

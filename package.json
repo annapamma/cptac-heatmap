@@ -21,7 +21,7 @@
     "lodash": "^4.17.11",
     "vue": "^2.1.0",
     "vue-apexcharts": "^1.5.3",
-    "vue-js-modal": "^1.3.27",
+    "vue-js-modal": "^1.3.33",
     "vue-json-excel": "^0.2.96",
     "vue-json-to-excel": "0.0.8",
     "vue-resource": "^1.5.1",

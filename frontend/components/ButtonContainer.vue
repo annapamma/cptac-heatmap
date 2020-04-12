@@ -8,7 +8,7 @@
         <b>phosphosite id:</b> {{ this.phosphoId }}
       </div>
       <div class="sort-buttons" v-if="genes.length <= 30 && !this.phosphoId">
-        <button @click="sort(ascending=true)" style="background-color: lightgray;">
+        <button @click="sort(true)" style="background-color: lightgray;">
           Sort {{ this.series.length ? `by ${this.series}: ascending` : '' }}
         </button>
         <button @click="sort(ascending=false)" style="background-color: lightgray;">
@@ -57,26 +57,10 @@ export default {
   },
   methods: {
     sort(ascending) {
-      if (this.selectedView === 'phospho') {
-        if (this.series) {
-          this.$store.dispatch(
-            'sortSamplesPhospho',
-            {
-              series: this.phosphoId.length ? this.phosphoId : this.series,
-              ascending,
-              phospho: this.phosphoId.length,
-            },
-          );
-        }
-      } else if (this.series || this.series === 'rna cl') {
         this.$store.dispatch(
           'sortSamples',
-          {
-            series: this.series,
-            ascending,
-          },
+          ascending
         );
-      }
     },
   },
 };

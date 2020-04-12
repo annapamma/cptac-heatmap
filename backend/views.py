@@ -9,6 +9,24 @@ from django.conf import settings
 color_df = settings.COLOR
 actual_df = settings.ACTUAL
 
+def df_to_apex_data_single_gene(filtered_gene_df, actual):
+    series = [
+        {
+            'name': data_type,
+            'data': [
+                {
+                    'x': val[0],  # sample ID
+                    'y': val[1],  # color scale val
+                    'value': actual[val[0]][data_type],
+                    'gene': actual.loc[data_type]['Gene symbol'],
+                }
+                for val in vals.items()
+            ]
+        }
+        for data_type, vals in filtered_gene_df.iterrows()
+    ]
+    return series[::-1]
+
 def df_to_apex_data(color_scale_df, actual, gene_tracks):
     series = [
         {
@@ -31,12 +49,16 @@ def df_to_apex_data(color_scale_df, actual, gene_tracks):
     for i, tracks in gene_tracks.items():
         last_track_i += 1
         last_track_i += tracks
+        print(i, last_track_i)
         series.insert(last_track_i, blank_row)
     series.insert(-3, blank_row)
     return series[::-1]
 
 def filtered_df(df, genes):
     return df[(df['Gene symbol'].isin(genes)) | (df['Gene symbol'] == '')]
+
+def filtered_df_single_gene(df, gene):
+    return df[df['Gene symbol'] == gene]
 
 def gene_track_counts(df):
     counts = {}
@@ -45,70 +67,36 @@ def gene_track_counts(df):
             if gene not in counts:
                 counts[gene] = 0
             counts[gene] += 1
-            print(gene)
     return counts
 
 @csrf_exempt
 def index(request):
     return render(request, 'index.html')
 
+@csrf_exempt
+def gene_details(request):
+    genes = [g for g in json.loads(request.body)['genes'] if g in settings.GENE_DETAILS.index]
+    return JsonResponse({
+        'geneDetails': settings.GENE_DETAILS.reindex(genes).to_dict(orient='index')
+    })
 
 @csrf_exempt
 def submit_genes(request):
-    # if request.method != "POST":
-    #     return render(request, 'index.html')
+    if request.method != "POST":
+        return render(request, 'index.html')
 
-    # data = json.loads(request.body)
-    # genes = data['genes']
-    genes = ['VHL', 'BAP1', 'CD8A']
-    filtered_scale = filtered_df(color_df, genes)
-    gene_tracks = gene_track_counts(filtered_scale)
-
-    series = df_to_apex_data(
-        filtered_scale.drop(columns=['Data type', 'Gene symbol']),
-        actual_df,
-        gene_tracks
-    )
+    genes = [g for g in json.loads(request.body) if g in actual_df['Gene symbol'].values]
+    gene_dfs = {
+        g: df_to_apex_data_single_gene(
+            filtered_df_single_gene(color_df, g).drop(columns=['Data type', 'Gene symbol']),
+            actual_df
+        )
+        for g in genes
+    }
 
     return JsonResponse({
-        'series': series
+        'series': gene_dfs
     })
-    # all_genes = settings.ALL_GENES
-    #
-    # mutation_genes = [gene for gene in genes if gene in all_genes['mutation']]
-    # methylation_genes = [gene for gene in genes if gene in all_genes['methylation']]
-    # cnv_lr_genes = [gene for gene in genes if gene in all_genes['cnv_lr']]
-    # # cnv_baf_genes = [gene for gene in genes if gene in all_genes['cnv_baf']]
-    # cnv_baf_genes = []
-    # rna_genes = [gene for gene in genes if gene in all_genes['rna']]
-    # protein_genes = [gene for gene in genes if gene in all_genes['protein']]
-    # phospho_genes = [gene for gene in genes if gene in all_genes['phospho']]
-    # gene_details_genes = [gene for gene in genes if gene in all_genes['gene_details']]
-    #
-    # # might want to just transpose all of the data in the databases
-    # sample_data = settings.CPTAC_DATA.T.to_json(orient='index')
-    # mutation = settings.MUTATION[mutation_genes].T.to_json(orient='index')
-    # methylation = settings.METHYLATION[methylation_genes].T.to_json(orient='index')
-    # cnv_lr = settings.CNV_LR[cnv_lr_genes].T.to_json(orient='index')
-    # cnv_baf = settings.CNV_BAF[cnv_baf_genes].T.to_json(orient='index')
-    # rna = settings.RNA[rna_genes].T.to_json(orient='index')
-    # protein = settings.PROTEIN[protein_genes].T.to_json(orient='index')
-    # phospho = settings.PHOSPHO[phospho_genes].T.to_json(orient='index')
-    # gene_details = settings.GENE_DETAILS.loc[gene_details_genes].to_json(orient='index')
-    #
-    # return JsonResponse(
-    #     {'sample_data': sample_data,
-    #      'mutation': mutation,
-    #      'methylation': methylation,
-    #      'cnv_lr': cnv_lr,
-    #      'cnv_baf': cnv_baf,
-    #      'rna': rna,
-    #      'protein': protein,
-    #      'phospho': phospho,
-    #      'gene_details': gene_details
-    #      },
-    #     safe=False
-    # )
 
 
 @csrf_exempt

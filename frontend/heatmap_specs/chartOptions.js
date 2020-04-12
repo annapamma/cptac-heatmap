@@ -23,6 +23,7 @@ export default (colorScale, ctx) => ({
         const selectedSample = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].x;
         const selectedValue = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].value;
         const selectedPhosphoId = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].phospho_id;
+        const selectedGene = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex]['gene'];
         ctx.$store.dispatch(
           'updateSelectedDataPoint',
           {
@@ -30,6 +31,7 @@ export default (colorScale, ctx) => ({
             selectedSample,
             selectedValue,
             selectedPhosphoId,
+            selectedGene
           },
         );
       },
@@ -68,7 +70,7 @@ export default (colorScale, ctx) => ({
       top: 0,
       right: 3,
       bottom: 0,
-      left: 3,
+      left: 6,
     },
   },
   xaxis: {
@@ -84,8 +86,9 @@ export default (colorScale, ctx) => ({
   },
   yaxis: {
     labels: {
+
       minWidth: 190,
-      offsetY: 0,
+      offsetY: 100,
       // show: false,
     },
   },
