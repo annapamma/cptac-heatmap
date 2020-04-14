@@ -26,7 +26,7 @@ export default new Vuex.Store({
     isLoading: false,
     pathwayIsSelected: false,
     series: landingData.series,
-    series_phospho: landingDataPhospho.series,
+    phosphoSeries: {},
     selectedView: 'all',
     selectedGene: '',
     selectedPathway: '',
@@ -74,15 +74,6 @@ export default new Vuex.Store({
 
       const sortByIndex = (a, b) => (sortOrder.indexOf(a.x) > sortOrder.indexOf(b.x) ? 1 : -1);
       let sortedObj = {};
-      // if (state.selectedGene.length) {
-      //     seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
-      // } else {
-      //     seriesToSortBy = [
-      //         ...state.topSeries,
-      //         ...state.chromosomeSeries,
-      //         ...state.bottomSeries
-      //     ].find(s => s.name === state.selectedSeries);
-      // }
       for (let geneName in state.series) {
           const series = state.series[geneName];
 
@@ -188,9 +179,16 @@ export default new Vuex.Store({
     UPDATE_SERIES(state, series) {
         state.series = series;
     },
+      UPDATE_SERIES_PHOSPHO(state, series) {
+        console.log(series)
+        state.phosphoSeries = series;
+      },
     UPDATE_TOP_SERIES(state, topSeries) {
         state.topSeries = topSeries;
     },
+      UPDATE_SELECTED_VIEW(state, selectedView) {
+        state.selectedView = selectedView
+      }
   },
   actions: {
     fetchGeneDetails(store, genes) {
@@ -274,6 +272,21 @@ export default new Vuex.Store({
       ).then(
         ({ data }) => {
             store.commit('UPDATE_SERIES', data.series);
+        },
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
+        },
+      );
+    },
+    submitGenesPhospho(store, genes) {
+      axios.post(
+        `/api/phospho_series/`,
+            genes
+      ).then(
+        ({ data }) => {
+            console.log(data.series)
+            store.commit('UPDATE_SERIES_PHOSPHO', data.series);
         },
       ).catch(
         (e) => {

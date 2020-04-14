@@ -3,9 +3,6 @@
     <label for="view-dropdown">View</label>
       <select v-model="selectedView" id="view-dropdown">
         <option value="all">all</option>
-        <option value="mutation">mutation</option>
-        <option value="rna">rna</option>
-        <option value="proteo">proteo</option>
         <option value="phospho">phospho</option>
       </select>
   </div>
@@ -23,11 +20,6 @@ export default {
       set(view) {
         this.$store.dispatch('updateSelectedView', view);
       },
-    },
-  },
-  watch: {
-    selectedView() {
-      this.$router.push({ name: `disease-${this.selectedView}` });
     },
   },
 };

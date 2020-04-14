@@ -6,12 +6,19 @@
                 :series="topSeries"
                 :options="options"
             />
-            <heatmap
+            <heatmap v-if="selectedView === 'all'"
                 v-for="(val, gene) in series"
                 :options="options"
                 :series="val"
                 :gene="gene"
                 :key="gene"
+            />
+            <heatmap v-if="selectedView === 'phospho'"
+                v-for="(val, gene) in phosphoSeries"
+                :options="options"
+                :series="val"
+                :gene="gene"
+                :key="gene.toString()"
             />
             <heatmap-clinical
                 :series="chromosomeSeries"
@@ -51,6 +58,10 @@ export default {
         };
     },
     computed: {
+        phosphoSeries() {
+            console.log('pseries ', this.$store.state.phosphoSeries);
+            return this.$store.state.phosphoSeries;
+        },
         series() {
             return this.$store.state.series;
         },
@@ -63,6 +74,9 @@ export default {
         bottomSeries() {
             return this.$store.state.bottomSeries;
         },
+        selectedView() {
+            return this.$store.state.selectedView;
+        }
     },
 };
 </script>

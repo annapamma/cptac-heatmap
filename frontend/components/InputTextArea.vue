@@ -12,12 +12,16 @@
       </div>
       <button class="button-visualize" @click="submitGenes">Visualize</button>
       <button class="button-excel" @click="downloadExcel">Download Excel</button>
+        <view-dropdown />
   </div>
 </template>
 
 <script>
+import ViewDropdown from "./ViewDropdown.vue";
+
 export default {
-  name: 'InputTextArea',
+    components: {ViewDropdown},
+    name: 'InputTextArea',
   computed: {
     geneInput: {
       set(txt) {
@@ -49,6 +53,12 @@ export default {
       }
       this.$store.dispatch(
         'submitGenes',
+        {
+          genes: this.genes,
+        },
+      );
+      this.$store.dispatch(
+        'submitGenesPhospho',
         {
           genes: this.genes,
         },

@@ -142,6 +142,11 @@ COLOR = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'color.pkl'),
          'rb')
 )
+
+PHOSPHO = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'phospho_normalized.pkl'),
+         'rb')
+)
 # ALL_GENES = pickle.load(
 #     open(os.path.join(BASE_DIR, 'data', 'all_genes.pkl'),
 #          'rb')

@@ -8,6 +8,7 @@ from django.conf import settings
 
 color_df = settings.COLOR
 actual_df = settings.ACTUAL
+phospho_df = settings.PHOSPHO
 
 def df_to_apex_data_single_gene(filtered_gene_df, actual):
     series = [
@@ -29,30 +30,25 @@ def df_to_apex_data_single_gene(filtered_gene_df, actual):
         s['data'].insert(-7, {'x': 'separator', 'y': 1000, 'value': 'separator', 'gene': 'separator'})
     return series[::-1]
 
-def df_to_apex_data(color_scale_df, actual, gene_tracks):
+def df_to_apex_data_phospho(filtered_gene_df, actual):
+
     series = [
         {
             'name': data_type,
             'data': [
                 {
-                 'x': val[0], # sample ID
-                 'y': val[1], # color scale val
-                 'value': actual[val[0]][data_type]
+                    'x': val[0],  # sample ID
+                    'y': val[1],  # color scale val
+                    'value': actual[val[0]][data_type],
+                    'gene': actual.loc[data_type]['Gene symbol'],
                 }
                 for val in vals.items()
             ]
         }
-        for data_type, vals in color_scale_df.iterrows()
+        for data_type, vals in filtered_gene_df.iterrows()
     ]
-    blank_row = { 'name': '', 'data': [] }
-    series.insert(2, blank_row)
-    series.insert(4, blank_row)
-    last_track_i = 4
-    for i, tracks in gene_tracks.items():
-        last_track_i += 1
-        last_track_i += tracks
-        series.insert(last_track_i, blank_row)
-    series.insert(-3, blank_row)
+    for s in series:
+        s['data'].insert(-7, {'x': 'separator', 'y': 1000, 'value': 'separator', 'gene': 'separator'})
     return series[::-1]
 
 def filtered_df(df, genes):
@@ -114,6 +110,23 @@ def submit_genes(request):
         'series': gene_dfs,
     })
 
+@csrf_exempt
+def phospho_series(request):
+    if request.method != "POST":
+        return render(request, 'index.html')
+
+    genes = [g for g in json.loads(request.body)['genes'] if g in phospho_df['Gene symbol'].values]
+
+    gene_dfs = {
+        g: df_to_apex_data_phospho(
+            filtered_df_single_gene(phospho_df, g).drop(columns=['Index', 'Peptide', 'Gene symbol']),
+            phospho_df
+        )
+        for g in genes
+    }
+    return JsonResponse({
+        'series': gene_dfs,
+    })
 
 @csrf_exempt
 def download_data(request):
