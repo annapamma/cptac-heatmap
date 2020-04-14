@@ -25,6 +25,8 @@ def df_to_apex_data_single_gene(filtered_gene_df, actual):
         }
         for data_type, vals in filtered_gene_df.iterrows()
     ]
+    for s in series:
+        s['data'].insert(-7, {'x': 'separator', 'y': 1000, 'value': 'separator', 'gene': 'separator'})
     return series[::-1]
 
 def df_to_apex_data(color_scale_df, actual, gene_tracks):
@@ -49,7 +51,6 @@ def df_to_apex_data(color_scale_df, actual, gene_tracks):
     for i, tracks in gene_tracks.items():
         last_track_i += 1
         last_track_i += tracks
-        print(i, last_track_i)
         series.insert(last_track_i, blank_row)
     series.insert(-3, blank_row)
     return series[::-1]
@@ -74,6 +75,21 @@ def index(request):
     return render(request, 'index.html')
 
 @csrf_exempt
+def table(request):
+    genes = [g for g in json.loads(request.body) if g in actual_df['Gene symbol'].values]
+
+    filtered_scale = filtered_df(actual_df, genes)
+    df_list = filtered_scale.to_dict(orient='records')
+
+    for i, row in enumerate(df_list):
+        row['idx'] = filtered_scale.index[i]
+
+    return JsonResponse({
+        'excelData': df_list
+    })
+
+
+@csrf_exempt
 def gene_details(request):
     genes = [g for g in json.loads(request.body)['genes'] if g in settings.GENE_DETAILS.index]
     return JsonResponse({
@@ -85,7 +101,7 @@ def submit_genes(request):
     if request.method != "POST":
         return render(request, 'index.html')
 
-    genes = [g for g in json.loads(request.body) if g in actual_df['Gene symbol'].values]
+    genes = [g for g in json.loads(request.body)['genes'] if g in actual_df['Gene symbol'].values]
     gene_dfs = {
         g: df_to_apex_data_single_gene(
             filtered_df_single_gene(color_df, g).drop(columns=['Data type', 'Gene symbol']),
@@ -95,7 +111,7 @@ def submit_genes(request):
     }
 
     return JsonResponse({
-        'series': gene_dfs
+        'series': gene_dfs,
     })
 
 

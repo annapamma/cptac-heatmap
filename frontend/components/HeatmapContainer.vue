@@ -2,13 +2,25 @@
   <div class="heatmap-container">
     <div class="heatmap-and-legend">
         <div>
-        <heatmap
-            v-for="(val, gene) in series"
-            :options="options"
-            :series="val"
-            :gene="gene"
-            :key="gene"
-        />
+            <heatmap-clinical
+                :series="topSeries"
+                :options="options"
+            />
+            <heatmap
+                v-for="(val, gene) in series"
+                :options="options"
+                :series="val"
+                :gene="gene"
+                :key="gene"
+            />
+            <heatmap-clinical
+                :series="chromosomeSeries"
+                :options="options"
+            />
+            <heatmap-clinical
+                :series="bottomSeries"
+                :options="options"
+            />
         </div>
       <the-legend-container />
     </div>
@@ -18,19 +30,27 @@
 <script>
 import TheLegendContainer from './TheLegendContainer.vue';
 import Heatmap from './Heatmap.vue';
+import HeatmapClinical from "./HeatmapClinical.vue";
 
 import chartOptions from '../heatmap_specs/chartOptions.js';
 import colorScale from '../heatmap_specs/colorScale.js';
+import topSeries from '../src/topSeries.js';
+import chromosomeSeries from '../src/chromosomeSeries.js';
+import bottomSeries from '../src/bottomSeries.js';
 
 export default {
     name: 'HeatmapContainer',
     components: {
+        HeatmapClinical,
         Heatmap,
         TheLegendContainer,
     },
     data() {
         return {
             options: chartOptions(colorScale, this),
+            topSeries,
+            chromosomeSeries,
+            bottomSeries,
             isLoading: true,
             fullPage: false,
             // clinicalSeries: landingData['series'],

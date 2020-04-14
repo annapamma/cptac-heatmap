@@ -62,9 +62,9 @@ export default {
     },
     downloadExcel() {
       this.$store.dispatch(
-        'getExcelData',
+        'downloadExcel',
         {
-          genes: this.genes.join('%20'),
+          genes: this.genes,
         },
       );
     },
