@@ -7,6 +7,9 @@ import { utils, writeFile } from 'xlsx';
 import landingData from './landingData.js';
 import landingDataPhospho from './landingDataPhospho.js';
 import initialSortOrder from './initialSortOrder.js';
+import topSeries from '../src/topSeries.js';
+import chromosomeSeries from '../src/chromosomeSeries.js';
+import bottomSeries from '../src/bottomSeries.js';
 
 Vue.use(Vuex);
 
@@ -14,6 +17,8 @@ const apiRoot = '';
 
 export default new Vuex.Store({
   state: {
+    bottomSeries,
+    chromosomeSeries,
     excelData: {},
     firstPhosphoFetched: false,
     genes: ['CXCR2', 'CXCR4', 'CCR7', 'IL6', 'MAGEA1', 'TP53', 'EIF4E'],
@@ -31,7 +36,7 @@ export default new Vuex.Store({
     selectedValue: '',
     sortOrder: initialSortOrder,
     sortOrderPhospho: [],
-      topSeries: {}
+    topSeries,
   },
   mutations: {
     ADD_GENE_DETAILS(state, geneDetails) {
@@ -69,6 +74,15 @@ export default new Vuex.Store({
 
       const sortByIndex = (a, b) => (sortOrder.indexOf(a.x) > sortOrder.indexOf(b.x) ? 1 : -1);
       let sortedObj = {};
+      // if (state.selectedGene.length) {
+      //     seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
+      // } else {
+      //     seriesToSortBy = [
+      //         ...state.topSeries,
+      //         ...state.chromosomeSeries,
+      //         ...state.bottomSeries
+      //     ].find(s => s.name === state.selectedSeries);
+      // }
       for (let geneName in state.series) {
           const series = state.series[geneName];
 
@@ -80,8 +94,25 @@ export default new Vuex.Store({
                   }
               });
       }
-
       state.series = sortedObj;
+      state.topSeries = state.topSeries.map((el) => {
+                  return {
+                    name: el.name,
+                    data: el.data.sort(sortByIndex),
+                  }
+              });
+      state.bottomSeries = state.bottomSeries.map((el) => {
+                  return {
+                    name: el.name,
+                    data: el.data.sort(sortByIndex),
+                  }
+              });
+      state.chromosomeSeries = state.chromosomeSeries.map((el) => {
+                  return {
+                    name: el.name,
+                    data: el.data.sort(sortByIndex),
+                  }
+              });
     },
     REORDER_SAMPLES_PHOSPHO(state) {
       const sortOrder = state.sortOrderPhospho.slice();
@@ -119,7 +150,16 @@ export default new Vuex.Store({
                 return !ccrccPositive[a.x] ? 1 : -1
             }
       };
-      const seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
+      let seriesToSortBy = [];
+      if (state.selectedGene.length) {
+          seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
+      } else {
+          seriesToSortBy = [
+              ...state.topSeries,
+              ...state.chromosomeSeries,
+              ...state.bottomSeries
+          ].find(s => s.name === state.selectedSeries);
+      }
       const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
       state.sortOrder = sorted.map(el => el.x);
     },

@@ -34,9 +34,6 @@ import HeatmapClinical from "./HeatmapClinical.vue";
 
 import chartOptions from '../heatmap_specs/chartOptions.js';
 import colorScale from '../heatmap_specs/colorScale.js';
-import topSeries from '../src/topSeries.js';
-import chromosomeSeries from '../src/chromosomeSeries.js';
-import bottomSeries from '../src/bottomSeries.js';
 
 export default {
     name: 'HeatmapContainer',
@@ -48,9 +45,6 @@ export default {
     data() {
         return {
             options: chartOptions(colorScale, this),
-            topSeries,
-            chromosomeSeries,
-            bottomSeries,
             isLoading: true,
             fullPage: false,
             // clinicalSeries: landingData['series'],
@@ -60,10 +54,15 @@ export default {
         series() {
             return this.$store.state.series;
         },
-        height() {
-            // return this.series.length * 16;
-            return 300;
-        }
+        topSeries() {
+            return this.$store.state.topSeries;
+        },
+        chromosomeSeries() {
+            return this.$store.state.chromosomeSeries;
+        },
+        bottomSeries() {
+            return this.$store.state.bottomSeries;
+        },
     },
 };
 </script>
