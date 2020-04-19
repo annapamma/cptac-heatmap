@@ -22,7 +22,7 @@ export default (colorScale, ctx) => ({
         const selectedSeries = chartContext.series.w.config.series[seriesIndex].name;
         const selectedSample = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].x;
         const selectedValue = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].value;
-        const selectedPhosphoId = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].phospho_id;
+        const selectedPeptide = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].Peptide;
         const selectedGene = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex]['gene'];
         ctx.$store.dispatch(
           'updateSelectedDataPoint',
@@ -30,7 +30,7 @@ export default (colorScale, ctx) => ({
             selectedSeries,
             selectedSample,
             selectedValue,
-            selectedPhosphoId,
+            selectedPeptide,
             selectedGene
           },
         );

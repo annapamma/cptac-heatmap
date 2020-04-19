@@ -26,11 +26,11 @@ export default new Vuex.Store({
     isLoading: false,
     pathwayIsSelected: false,
     series: landingData.series,
-    phosphoSeries: {},
-    selectedView: 'all',
+    phosphoSeries: landingDataPhospho.series,
+    selectedView: 'phospho',
     selectedGene: '',
     selectedPathway: '',
-    selectedPhosphoId: '',
+    selectedPeptide: '',
     selectedSeries: '',
     selectedSample: '',
     selectedValue: '',
@@ -61,12 +61,12 @@ export default new Vuex.Store({
       state.series_phospho = series;
     },
     UPDATE_SELECTED_DATA_POINT(state, {
-      selectedSeries, selectedSample, selectedValue, selectedPhosphoId, selectedGene
+      selectedSeries, selectedSample, selectedValue, selectedPeptide, selectedGene
     }) {
       state.selectedSeries = selectedSeries;
       state.selectedSample = selectedSample;
       state.selectedValue = selectedValue;
-      state.selectedPhosphoId = selectedPhosphoId;
+      state.selectedPeptide = selectedPeptide;
       state.selectedGene = selectedGene;
     },
     REORDER_SAMPLES(state) {
@@ -74,18 +74,34 @@ export default new Vuex.Store({
 
       const sortByIndex = (a, b) => (sortOrder.indexOf(a.x) > sortOrder.indexOf(b.x) ? 1 : -1);
       let sortedObj = {};
-      for (let geneName in state.series) {
-          const series = state.series[geneName];
+      if (state.selectedView === 'phospho') {
+          for (let geneName in state.phosphoSeries) {
+              console.log('sorting by ', geneName);
+              const series = state.phosphoSeries[geneName];
 
-          sortedObj[geneName] =
-              series.map((el) => {
-                  return {
-                    name: el.name,
-                    data: el.data.sort(sortByIndex),
-                  }
-              });
+              sortedObj[geneName] =
+                  series.map((el) => {
+                      return {
+                        name: el.name,
+                        data: el.data.sort(sortByIndex),
+                      }
+                  });
+          }
+          state.phosphoSeries = sortedObj;
+      } else {
+          for (let geneName in state.series) {
+              const series = state.series[geneName];
+
+              sortedObj[geneName] =
+                  series.map((el) => {
+                      return {
+                        name: el.name,
+                        data: el.data.sort(sortByIndex),
+                      }
+                  });
+          }
+          state.series = sortedObj;
       }
-      state.series = sortedObj;
       state.topSeries = state.topSeries.map((el) => {
                   return {
                     name: el.name,
@@ -143,7 +159,13 @@ export default new Vuex.Store({
       };
       let seriesToSortBy = [];
       if (state.selectedGene.length) {
-          seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
+          if (state.selectedView === 'phospho') {
+            seriesToSortBy = state.phosphoSeries[state.selectedGene].find(s => {
+                return s.name === state.selectedSeries
+            });
+          } else {
+            seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
+          }
       } else {
           seriesToSortBy = [
               ...state.topSeries,
@@ -154,41 +176,40 @@ export default new Vuex.Store({
       const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
       state.sortOrder = sorted.map(el => el.x);
     },
-    SORT_SAMPLES_PHOSPHO(state, { ascending, series, phospho }) {
-      const sortAscendingByY = (a, b) => {
-        if (ascending) {
-          return a.y > b.y ? 1 : -1;
-        }
-        return a.y > b.y ? -1 : 1;
-      };
-
-      let seriesToSortBy = [];
-
-      if (phospho) {
-        seriesToSortBy = state.series_phospho.find(s => s.phospho_id === series);
-      } else {
-        seriesToSortBy = state.series_phospho.find(s => s.name === series);
-      }
-
-      const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
-      state.sortOrderPhospho = sorted.map(el => el.x);
-    },
+    // SORT_SAMPLES_PHOSPHO(state, { ascending, series, phospho }) {
+    //   const sortAscendingByY = (a, b) => {
+    //     if (ascending) {
+    //       return a.y > b.y ? 1 : -1;
+    //     }
+    //     return a.y > b.y ? -1 : 1;
+    //   };
+    //
+    //   let seriesToSortBy = [];
+    //
+    //   if (phospho) {
+    //     seriesToSortBy = state.phosphoSeries.find(s => s.phospho_id === series);
+    //   } else {
+    //     seriesToSortBy = state.phosphoSeries.find(s => s.name === series);
+    //   }
+    //
+    //   const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
+    //   state.sortOrderPhospho = sorted.map(el => el.x);
+    // },
     UPDATE_FIRST_PHOSPHO_FETCHED(state, firstPhosphoFetched) {
       state.firstPhosphoFetched = firstPhosphoFetched;
     },
     UPDATE_SERIES(state, series) {
         state.series = series;
     },
-      UPDATE_SERIES_PHOSPHO(state, series) {
-        console.log(series)
+    UPDATE_SERIES_PHOSPHO(state, series) {
         state.phosphoSeries = series;
-      },
+    },
     UPDATE_TOP_SERIES(state, topSeries) {
         state.topSeries = topSeries;
     },
-      UPDATE_SELECTED_VIEW(state, selectedView) {
+    UPDATE_SELECTED_VIEW(state, selectedView) {
         state.selectedView = selectedView
-      }
+    }
   },
   actions: {
     fetchGeneDetails(store, genes) {

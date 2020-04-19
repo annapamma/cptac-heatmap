@@ -40,6 +40,7 @@ def df_to_apex_data_phospho(filtered_gene_df, actual):
                     'x': val[0],  # sample ID
                     'y': val[1],  # color scale val
                     'value': actual[val[0]][data_type],
+                    'Peptide': actual['Peptide'][data_type],
                     'gene': actual.loc[data_type]['Gene symbol'],
                 }
                 for val in vals.items()

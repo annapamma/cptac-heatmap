@@ -61,7 +61,7 @@ const zscoreRanges = [
   {
   from: -0.1,
   to: 0.1,
-  color: '#ffffff',
+  color: '#E8E8E8',
 },
 {
   from: 0.1,
