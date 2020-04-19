@@ -14,6 +14,7 @@ def df_to_apex_data_single_gene(filtered_gene_df, actual):
     series = [
         {
             'name': data_type,
+            'dataType': actual.loc[data_type]['Data type'],
             'data': [
                 {
                     'x': val[0],  # sample ID

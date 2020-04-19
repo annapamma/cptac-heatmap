@@ -54,12 +54,10 @@ export default {
             options: chartOptions(colorScale, this),
             isLoading: true,
             fullPage: false,
-            // clinicalSeries: landingData['series'],
         };
     },
     computed: {
         phosphoSeries() {
-            console.log('pseries ', this.$store.state.phosphoSeries);
             return this.$store.state.phosphoSeries;
         },
         series() {
@@ -73,6 +71,9 @@ export default {
         },
         bottomSeries() {
             return this.$store.state.bottomSeries;
+        },
+        selectedTracks() {
+            return this.$store.state.selectedTracks;
         },
         selectedView() {
             return this.$store.state.selectedView;

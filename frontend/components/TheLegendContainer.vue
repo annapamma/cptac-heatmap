@@ -1,13 +1,13 @@
 <template>
     <div class="the-legend-container">
-      <ul id="legend-categories" class="legend-categories">
-        <li v-for="(elements, category) in categories">
-          <legend-category :category="category" :elements="elements"/>
-        </li>
-      </ul>
       <ul id="legend-categories-horizontal" class="legend-categories">
         <li v-for="(elements, category) in categoriesHorizontal">
           <legend-category-horizontal :category="category" :elements="elements"/>
+        </li>
+      </ul>
+      <ul id="legend-categories" class="legend-categories">
+        <li v-for="(elements, category) in categories">
+          <legend-category :category="category" :elements="elements"/>
         </li>
       </ul>
     </div>
@@ -27,34 +27,61 @@ export default {
     return {
       categoriesHorizontal: {
         'Proteo/Phospho/RNA/Methyl Z-Score': [
-          ['0.0', '#00004d'],
-          ['0.1', '#004c99'],
-          ['0.2', '#0080ff'],
-          ['0.3', '#66b2ff'],
-          ['0.4', '#99ccff'],
-          ['0.5', '#ffffff'],
-          ['0.6', '#ffcccc'],
-          ['0.7', '#ff6666'],
-          ['0.8', '#ff3333'],
-          ['0.9', '#ff0000'],
-          ['1.0', '#990000'],
+          ['-3', '#00004d'],
+          ['-2', '#0066cc'],
+          ['-1', '#82b6ff'],
+          ['0', '#E8E8E8'],
+          ['1', '#ff7777'],
+          ['2', '#ff1111'],
+          ['3', '#990000'],
+        ],
+          'CNV (lr)': [
+          ['(-inf, -0.5]', '#00004d'],
+          ['(-0.5, -0.2]', '#82b6ff'],
+          ['(-0.2, 0.2]', '#E8E8E8'],
+          ['(0.2, 0.5]', '#ff7777'],
+          ['(0.5, +inf)', '#990000'],
         ],
         Missing: [
           ['', '#ffffff'],
         ],
       },
       categories: {
+        'Stage/Grade': [
+          ['I', '#1fc600'],
+          ['II', '#089000'],
+          ['III', '#0a5d00'],
+          ['IV', '#063b00'],
+        ],
         'Mutation': [
-          ['Wild type', '#d3d3d3'],
-          ['Mutant', '#0c08c9'],
+          ['No', '#E8E8E8'],
+          ['Yes', '#003366'],
         ],
-        'Gender': [
-          ['Male', '#363ab0'],
-          ['Female', '#f26522'],
+       'CCRCC': [
+          ['No', '#E8E8E8'],
+          ['Yes', '#003366'],
         ],
-        'Smoking history': [['Lifelong non-smoker: Less than 100 cigarettes smoked in lifetime', '#7FC97F'], ['Current reformed smoker within past 15 years', '#d4d417'], ['Current reformed smoker, more than 15 years', '#F0027F'], ['Current reformed smoker, years unknown', '#b09021'], ['Current smoker: Includes daily and non-daily smokers', '#4cb6ff'], ['Smoking history not available', '#800080']],
-        'Tumor location': [['Lip', '#FF89B0'], ['epiglottis', '#7CA4E8'], ['Tonsil', '#DBCBF1'], ['Floor of mouth', '#FFD9BB'], ['Hypopharynx', '#FA8F61'], ['Pyrifrom sinus', '#FFFFC3'], ['Oropharynx', '#9CE59C'], ['Larynx', '#A0A0A0'], ['Tongue', '#468189'], ['Alveolar ridge', '#8EF9F3'], ['Oral cavity', '#BF1A2F'], ['Buccal mucosa', '#755B69'], ['Base of tongue', '#379634']],
-        'HPV inference': [['NO', '#d3d3d3'], ['YES', '#0c08c9']]
+      'Immune Group': [
+          ['Metabolic immune-desert', '#98f367'],
+          ['VEGF immune-desert', '#ffa500'],
+          ['CD8- inflamed', '#9ecae3'],
+          ['CD8+ inflamed', '#cc0000'],
+        ],
+      'Gender': [
+          ['Male', '#57d440'],
+          ['Female', '#446c40'],
+        ],
+      't(3;2)/t(3;5)/Genome instability/CIMP': [
+          ['Negative', '#ececec'],
+          ['Positive', '#cc0000'],
+        ],
+      '3p/5q/7p/9p/14q-CNV': [
+          ['Loss', '#003366'],
+          ['LR neutral LOH', '#c2e2ec'],
+          ['LR neutral', '#E8E8E8'],
+          ['LR amplification', '#d94040'],
+        ],
+
       },
     };
   },

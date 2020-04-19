@@ -127,13 +127,13 @@ const colorsRanges = {
   1002: '#089000', // II
   1003: '#0a5d00', // III
   1004: '#063b00', // IV
-  1005: '#ececec', // No
+  1005: '#E8E8E8', // No
   1006: '#003366', // Yes
   1007: '#ececec', // Negative
   1008: '#cc0000', // Positive
   1013: '#98f367', // Metabolic immune-desert
   1014: '#ffa500', // VEGF immune-desert
-    1015: '#9ecae3', // CD8- inflamed
+   1015: '#9ecae3', // CD8- inflamed
     1016: '#cc0000', // CD8+ inflamed
   1017: '#57d440', // Male
   1018: '#446c40', // Female
@@ -143,6 +143,11 @@ const colorsRanges = {
     1022: '#c2e2ec', // LR neutral LOH
   1023: '#E8E8E8', // LR neutral
   1024: '#d94040', // LR amplification
+  1025: '#00004d', // (-inf, -0.5]
+  1026: '#82b6ff', // (-0.5, -0.2]
+  1027: '#E8E8E8', // (-0.2, 0.2]
+  1028: '#ff7777', // (0.2, 0.5]
+  1029: '#990000', // (0.5, +inf)
 };
 
 export default {

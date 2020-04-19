@@ -26,13 +26,21 @@ export default new Vuex.Store({
     isLoading: false,
     pathwayIsSelected: false,
     series: landingData.series,
+    seriesUnfiltered: landingData.series,
     phosphoSeries: landingDataPhospho.series,
-    selectedView: 'phospho',
+    selectedView: 'all',
     selectedGene: '',
     selectedPathway: '',
     selectedPeptide: '',
     selectedSeries: '',
     selectedSample: '',
+      selectedTracks: [
+                'CNV (baf)',
+                'CNV (lr)',
+                'Protein',
+                'Mutation',
+                'Methy',
+            ],
     selectedValue: '',
     sortOrder: initialSortOrder,
     sortOrderPhospho: [],
@@ -176,29 +184,22 @@ export default new Vuex.Store({
       const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
       state.sortOrder = sorted.map(el => el.x);
     },
-    // SORT_SAMPLES_PHOSPHO(state, { ascending, series, phospho }) {
-    //   const sortAscendingByY = (a, b) => {
-    //     if (ascending) {
-    //       return a.y > b.y ? 1 : -1;
-    //     }
-    //     return a.y > b.y ? -1 : 1;
-    //   };
-    //
-    //   let seriesToSortBy = [];
-    //
-    //   if (phospho) {
-    //     seriesToSortBy = state.phosphoSeries.find(s => s.phospho_id === series);
-    //   } else {
-    //     seriesToSortBy = state.phosphoSeries.find(s => s.name === series);
-    //   }
-    //
-    //   const sorted = seriesToSortBy.data.slice().sort(sortAscendingByY);
-    //   state.sortOrderPhospho = sorted.map(el => el.x);
-    // },
     UPDATE_FIRST_PHOSPHO_FETCHED(state, firstPhosphoFetched) {
       state.firstPhosphoFetched = firstPhosphoFetched;
     },
+      UPDATE_SELECTED_TRACKS(state, selectedTracks) {
+        let series = {};
+        state.selectedTracks = selectedTracks;
+        for (const [g, d] of Object.entries(state.seriesUnfiltered)) {
+          const filtered = d.filter(s => selectedTracks.includes(s.dataType));
+          if (filtered.length) {
+              series[g] = filtered;
+          }
+        }
+        state.series = series;
+      },
     UPDATE_SERIES(state, series) {
+        state.seriesUnfiltered = series;
         state.series = series;
     },
     UPDATE_SERIES_PHOSPHO(state, series) {
@@ -306,7 +307,6 @@ export default new Vuex.Store({
             genes
       ).then(
         ({ data }) => {
-            console.log(data.series)
             store.commit('UPDATE_SERIES_PHOSPHO', data.series);
         },
       ).catch(
@@ -318,6 +318,9 @@ export default new Vuex.Store({
     updateSelectedDataPoint(store, selectedDataPoint) {
       store.commit('UPDATE_SELECTED_DATA_POINT', selectedDataPoint);
     },
+      updateSelectedTracks(store, selectedTracks) {
+        store.commit('UPDATE_SELECTED_TRACKS', selectedTracks)
+      },
     updateSelectedView(store, selectedView) {
       store.commit('UPDATE_SELECTED_VIEW', selectedView);
     },

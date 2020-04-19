@@ -1,13 +1,62 @@
 <template>
-    $END$
+    <div class="track-selector">
+        <div id='tracks'>
+            <div v-for="(name, track) in availableTracks">
+              <input type="checkbox" :id="track" :value="track" v-model="selectedTracks">
+              <label :for="track">{{ name }}</label>
+            </div>
+        </div>
+      <span>Checked names: {{ selectedTracks }}</span>
+      <button @click="handleTrackSelection" style="background-color: lightgray;">
+          Redraw
+      </button>
+    </div>
 </template>
 
 <script>
   export default {
-    name: "track-selector"
+    name: "track-selector",
+    data() {
+        return {
+            availableTracks: {
+                'methylation': 'Methy',
+                'rna': 'mRNA',
+                'cnv_baf': 'CNV (baf)',
+                'cnv_lr': 'CNV (lr)',
+                'protein': 'Protein',
+                'mutation': 'Mut',
+            },
+            // availableTracks: [
+            //     'CNV (baf)',
+            //     'CNV (lr)',
+            //     'Protein',
+            //     'Mutation',
+            //     'Methy',
+            // ],
+            selectedTracks: [
+                // 'methylation', 'rna', 'cnv_baf', 'protein', 'mutation', 'cnv_lr'
+                'methylation'
+            ],
+        }
+    },
+      methods: {
+        handleTrackSelection() {
+            this.$store.dispatch('updateSelectedTracks', this.selectedTracks)
+        }
+      }
   }
 </script>
 
 <style scoped>
+.track-selector button {
+    width: 100%;
+    border-radius: 4px;
+    border: solid 1px black;
+    margin-top: 8px;
+  }
 
+    .tracks {
+        display: flex;
+        flex-direction: column;
+    }
 </style>
