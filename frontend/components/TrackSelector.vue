@@ -26,16 +26,8 @@
                 'protein': 'Protein',
                 'mutation': 'Mut',
             },
-            // availableTracks: [
-            //     'CNV (baf)',
-            //     'CNV (lr)',
-            //     'Protein',
-            //     'Mutation',
-            //     'Methy',
-            // ],
             selectedTracks: [
-                // 'methylation', 'rna', 'cnv_baf', 'protein', 'mutation', 'cnv_lr'
-                'methylation'
+                'methylation', 'rna', 'cnv_baf', 'protein', 'mutation', 'cnv_lr'
             ],
         }
     },

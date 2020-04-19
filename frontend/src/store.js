@@ -227,26 +227,6 @@ export default new Vuex.Store({
         },
       );
     },
-    fetchPhospho(store) {
-      store.commit('SET_LOADING', true);
-      const genes = store.state.genes.join('%20');
-      axios.get(
-        `${apiRoot}/api/phospho/color/${genes}/`,
-      ).then(
-        ({ data }) => {
-          store.commit('ASSIGN_SERIES_PHOSPHO', data.series);
-          store.commit('UPDATE_FIRST_PHOSPHO_FETCHED', true);
-        },
-      ).then(
-        () => {
-          store.commit('SET_LOADING', false);
-        },
-      ).catch(
-        (e) => {
-          console.error('FetchError: ', e.message);
-        },
-      );
-    },
     downloadExcel(store, { genes }) {
       axios.post(
         `/api/table/`,
