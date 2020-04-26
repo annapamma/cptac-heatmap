@@ -22,7 +22,7 @@ import ViewDropdown from "./ViewDropdown.vue";
 export default {
     components: {ViewDropdown},
     name: 'InputTextArea',
-  computed: {
+    computed: {
     geneInput: {
       set(txt) {
         this.$store.dispatch('setGeneList', txt);
@@ -71,12 +71,21 @@ export default {
       );
     },
     downloadExcel() {
-      this.$store.dispatch(
-        'downloadExcel',
-        {
-          genes: this.genes,
-        },
-      );
+        if (this.$store.state.selectedView === 'all') {
+          this.$store.dispatch(
+            'downloadExcel',
+            {
+              genes: this.genes,
+            },
+          );
+        } else {
+            this.$store.dispatch(
+            'downloadExcelPhospho',
+            {
+              genes: this.genes,
+            },
+          );
+        }
     },
   },
 };

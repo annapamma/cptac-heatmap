@@ -28,6 +28,7 @@ urlpatterns = [
     url('api/genedetails', backend.views.gene_details),
     url('api/table', backend.views.table),
     url('api/phospho_series', backend.views.phospho_series),
+    url('api/phospho_table', backend.views.phospho_table),
 ]
 
 if settings.DEBUG:

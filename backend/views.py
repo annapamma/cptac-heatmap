@@ -10,6 +10,7 @@ color_df = settings.COLOR
 actual_df = settings.ACTUAL
 phospho_df = settings.PHOSPHO
 
+
 def df_to_apex_data_single_gene(filtered_gene_df, actual):
     series = [
         {
@@ -31,8 +32,8 @@ def df_to_apex_data_single_gene(filtered_gene_df, actual):
         s['data'].insert(-7, {'x': 'separator', 'y': 1000, 'value': 'separator', 'gene': 'separator'})
     return series[::-1]
 
-def df_to_apex_data_phospho(filtered_gene_df, actual):
 
+def df_to_apex_data_phospho(filtered_gene_df, actual):
     series = [
         {
             'name': data_type,
@@ -53,11 +54,14 @@ def df_to_apex_data_phospho(filtered_gene_df, actual):
         s['data'].insert(-7, {'x': 'separator', 'y': 1000, 'value': 'separator', 'gene': 'separator'})
     return series[::-1]
 
+
 def filtered_df(df, genes):
     return df[(df['Gene symbol'].isin(genes)) | (df['Gene symbol'] == '')]
 
+
 def filtered_df_single_gene(df, gene):
     return df[df['Gene symbol'] == gene]
+
 
 def gene_track_counts(df):
     counts = {}
@@ -68,9 +72,11 @@ def gene_track_counts(df):
             counts[gene] += 1
     return counts
 
+
 @csrf_exempt
 def index(request):
     return render(request, 'index.html')
+
 
 @csrf_exempt
 def table(request):
@@ -88,11 +94,26 @@ def table(request):
 
 
 @csrf_exempt
+def phospho_table(request):
+    genes = [g for g in json.loads(request.body) if g in phospho_df['Gene symbol'].values]
+
+    filtered_scale = filtered_df(phospho_df, genes)
+    df_list = filtered_scale.to_dict(orient='records')
+    for i, row in enumerate(df_list):
+        row['idx'] = filtered_scale.loc[filtered_scale.index[i]]['Index']
+
+    return JsonResponse({
+        'excelData': df_list
+    })
+
+
+@csrf_exempt
 def gene_details(request):
     genes = [g for g in json.loads(request.body)['genes'] if g in settings.GENE_DETAILS.index]
     return JsonResponse({
         'geneDetails': settings.GENE_DETAILS.reindex(genes).to_dict(orient='index')
     })
+
 
 @csrf_exempt
 def submit_genes(request):
@@ -112,6 +133,7 @@ def submit_genes(request):
         'series': gene_dfs,
     })
 
+
 @csrf_exempt
 def phospho_series(request):
     if request.method != "POST":
@@ -129,6 +151,7 @@ def phospho_series(request):
     return JsonResponse({
         'series': gene_dfs,
     })
+
 
 @csrf_exempt
 def download_data(request):

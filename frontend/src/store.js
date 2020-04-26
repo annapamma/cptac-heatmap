@@ -245,6 +245,24 @@ export default new Vuex.Store({
         },
       );
     },
+    downloadExcelPhospho(store, { genes }) {
+      axios.post(
+        `/api/phospho_table/`,
+            genes
+      ).then(
+        ({ data }) => {
+          const ws = utils.json_to_sheet(
+            data.excelData,
+            {
+              header: ['idx', 'Peptide', 'Gene symbol', ...store.state.sortOrder],
+            },
+          );
+          const wb = utils.book_new();
+          utils.book_append_sheet(wb, ws);
+          writeFile(wb, 'CPTAC3-ccrcc-phospho.xls');
+        },
+      );
+    },
     loading(store, isLoading) {
       store.commit('SET_LOADING', isLoading);
     },
