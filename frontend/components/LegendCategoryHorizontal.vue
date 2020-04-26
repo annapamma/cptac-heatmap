@@ -1,7 +1,8 @@
 <template>
     <div class="legend-category">
-        <label for="v-for-object">{{ category }}
-        </label>
+        <div class="legend-category-label">
+            <label for="v-for-object">{{ category }}</label>
+        </div>
         <ul id="v-for-object" class="legend-elements">
           <li v-for="element in elements">
             <legend-element-horizontal :value="element[0]" :color="element[1]" :missing="category === 'Missing'"/>
@@ -30,14 +31,19 @@ export default {
     margin: 0;
 }
 
-.legend-category label {
+.legend-category {
     font-size: small;
-    font-weight: bold;
+    margin-top: 12px;
 }
 
 .legend-category label p {
     font-size: x-small;
     margin: 0;
+}
+
+.legend-category-label {
+    font-weight: bold;
+    text-align: center;
 }
 
 ul {

@@ -1,7 +1,7 @@
 export default (colorScale, ctx) => ({
   chart: {
-    width: 800,
-    minWidth: 800,
+      // width: '100%',
+    minWidth: '800px',
     type: 'heatmap',
     animations: {
       enabled: false,

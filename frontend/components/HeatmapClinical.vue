@@ -32,10 +32,6 @@
 </script>
 
 <style scoped>
-  .apex-container {
-    width: 1200px;
-  }
-
   .apexcharts-canvas {
     height: 100%;
   }
@@ -44,8 +40,8 @@
     height: 100%;
   }
 
-    .apex-container {
-    width: 1200px;
+  .apex-container {
+    width: 1000px;
   }
 
   .apexcharts-canvas {

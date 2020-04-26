@@ -9,6 +9,7 @@ from django.conf import settings
 color_df = settings.COLOR
 actual_df = settings.ACTUAL
 phospho_df = settings.PHOSPHO
+histology = settings.HISTOLOGY
 
 
 def df_to_apex_data_single_gene(filtered_gene_df, actual):
@@ -177,5 +178,4 @@ def download_data(request):
 
 @csrf_exempt
 def load_first_data(request):
-    histology = settings.HISTOLOGY
-    return JsonResponse({'histology': histology}, safe=False)
+    return JsonResponse({'histology': histology})

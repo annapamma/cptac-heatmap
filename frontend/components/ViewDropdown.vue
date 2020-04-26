@@ -28,19 +28,12 @@ export default {
 
 <style scoped>
   .view-dropdown {
-    width: 80%;
-    /*min-width: 150px;*/
-    /*height: 100%;*/
-    margin: 0 auto;
-    /*background-color: pink;*/
-    font-size: small;
-    /*overflow-y: scroll;*/
-    /*border: solid 1px black;*/
-    padding: 5px;
+      margin: 6px 0;
   }
 
   .view-dropdown label {
     width: 20%;
+      font-weight: bold;
   }
 
   .view-dropdown select {

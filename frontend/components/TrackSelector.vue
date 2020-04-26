@@ -1,12 +1,12 @@
 <template>
     <div class="track-selector">
         <div id='tracks'>
+            <h3>Select tracks to show</h3>
             <div v-for="(name, track) in availableTracks">
               <input type="checkbox" :id="track" :value="track" v-model="selectedTracks">
               <label :for="track">{{ name }}</label>
             </div>
         </div>
-      <span>Checked names: {{ selectedTracks }}</span>
       <button @click="handleTrackSelection" style="background-color: lightgray;">
           Redraw
       </button>

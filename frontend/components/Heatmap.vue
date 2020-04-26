@@ -53,20 +53,12 @@
 </script>
 
 <style scoped>
-  .apex-container {
-    width: 1200px;
-  }
-
   .apexcharts-canvas {
     height: 100%;
   }
 
   .apexcharts-legend {
     height: 100%;
-  }
-
-    .apex-container {
-    width: 1200px;
   }
 
   .apexcharts-canvas {
@@ -110,7 +102,7 @@
         color: green;
     }
 
-        .modal-header {
+    .modal-header {
         margin: 10px auto -5px;
         text-align: center;
         padding-top: 2px;

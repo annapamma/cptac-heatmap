@@ -23,6 +23,7 @@ export default new Vuex.Store({
     firstPhosphoFetched: false,
     genes: ['CXCR2', 'CXCR4', 'CCR7', 'IL6', 'MAGEA1', 'TP53', 'EIF4E'],
     geneDetails: {},
+      histology: {},
     isLoading: false,
     pathwayIsSelected: false,
     series: landingData.series,
@@ -49,6 +50,9 @@ export default new Vuex.Store({
   mutations: {
     ADD_GENE_DETAILS(state, geneDetails) {
         state.geneDetails = geneDetails;
+    },
+    ADD_HISTOLOGY_DATA(state, histology) {
+        state.histology = histology;
     },
     ADD_PATHWAY_GENES(state, pwGenes) {
       state.genes = [...new Set([...state.genes, ...pwGenes])];
@@ -263,6 +267,17 @@ export default new Vuex.Store({
         },
       );
     },
+      loadFirstData (store) {
+            axios.get('load_first_data/')
+                .then(response => {
+                    store.commit('ADD_HISTOLOGY_DATA', response.data.histology)
+                })
+                .catch(
+                    error => {
+                        store.commit('API_FAIL', error);
+                    }
+                )
+        },
     loading(store, isLoading) {
       store.commit('SET_LOADING', isLoading);
     },

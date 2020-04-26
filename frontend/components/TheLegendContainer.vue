@@ -98,8 +98,9 @@ export default {
 
 <style scoped>
   .the-legend-container {
-      width: 20%;
+      width: 200px;
       height: 100%;
+      margin-left: 10px;
   }
 
   ul {

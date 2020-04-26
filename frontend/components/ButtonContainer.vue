@@ -1,6 +1,7 @@
 <template>
   <div class="button-container">
     <div class="buttons-and-legend">
+        <additional-data />
       <div class="specific-data"><b>Series:</b> {{ this.series }}</div>
       <div class="specific-data"><b>Sample:</b> {{ this.sample }}</div>
       <div class="specific-data"><b>Value:</b> {{ this.value }}</div>
@@ -21,8 +22,10 @@
 </template>
 
 <script>
+import AdditionalData from "./AdditionalData.vue";
 export default {
   components: {
+      AdditionalData
   },
   name: 'ButtonContainer',
   computed: {
@@ -57,12 +60,6 @@ export default {
 </script>
 
 <style scoped>
-  .button-container {
-    width: 80%;
-    height: 30%;
-    margin: 10px auto;
-  }
-
   .button-container button {
     width: 100%;
     border-radius: 4px;

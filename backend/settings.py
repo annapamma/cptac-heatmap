@@ -124,7 +124,7 @@ WEBPACK_LOADER = {
 
 # Load data as pandas dfs
 HISTOLOGY = pickle.load(
-    open(os.path.join(BASE_DIR, 'data', 'histology.pkl'),
+    open(os.path.join(BASE_DIR, 'data', 'histology_json.pkl'),
          'rb')
 )
 

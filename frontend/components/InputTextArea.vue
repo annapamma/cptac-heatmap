@@ -93,8 +93,6 @@ export default {
 
 <style scoped>
   .input-text-area {
-    width: 80%;
-    margin: 10px auto;
     overflow-wrap: break-word;
   }
 
@@ -114,7 +112,7 @@ export default {
   .button-visualize {
     width: 100%;
     background-color: #008CBA;
-    margin: 0 auto;
+    margin: 4px auto;
     border: 1px solid black;
     font-weight: bold;
     color: white;

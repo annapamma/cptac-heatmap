@@ -34,10 +34,10 @@ export default {
   .input-container {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 250px;
     height: 100%;
-    /*background-color: pink;*/
-    /*border: solid 1px black;*/
     margin-top: 2px;
+      padding: 10px;
+      font-size: small;
   }
 </style>

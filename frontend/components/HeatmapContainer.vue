@@ -1,36 +1,31 @@
 <template>
   <div class="heatmap-container">
-    <div class="heatmap-and-legend">
-        <div>
-            <heatmap-clinical
-                :series="topSeries"
-                :options="options"
-            />
-            <heatmap v-if="selectedView === 'all'"
-                v-for="(val, gene) in series"
-                :options="options"
-                :series="val"
-                :gene="gene"
-                :key="gene"
-            />
-            <heatmap v-if="selectedView === 'phospho'"
-                v-for="(val, gene) in phosphoSeries"
-                :options="options"
-                :series="val"
-                :gene="gene"
-                :key="gene.toString()"
-            />
-            <heatmap-clinical
-                :series="chromosomeSeries"
-                :options="options"
-            />
-            <heatmap-clinical
-                :series="bottomSeries"
-                :options="options"
-            />
-        </div>
-      <the-legend-container />
-    </div>
+    <heatmap-clinical
+        :series="topSeries"
+        :options="options"
+    />
+    <heatmap v-if="selectedView === 'all'"
+        v-for="(val, gene) in series"
+        :options="options"
+        :series="val"
+        :gene="gene"
+        :key="gene"
+    />
+    <heatmap v-if="selectedView === 'phospho'"
+        v-for="(val, gene) in phosphoSeries"
+        :options="options"
+        :series="val"
+        :gene="gene"
+        :key="gene.toString()"
+    />
+    <heatmap-clinical
+        :series="chromosomeSeries"
+        :options="options"
+    />
+    <heatmap-clinical
+        :series="bottomSeries"
+        :options="options"
+    />
   </div>
 </template>
 
@@ -86,26 +81,12 @@ export default {
   .heatmap-container {
     display: flex;
     flex-direction: column;
-    width: 85%;
     height: 100%;
-    margin: 10px auto;
-    min-width: 800px;
   }
 
-  .heatmap-container button {
-    margin: 2px;
-    width: 13.5%;
-    border: 1px;
-    opacity: .8;
-    font-weight: bold;
-  }
 
   .heatmap-container p {
     margin: 2px;
-  }
-
-  .heatmap-and-legend {
-    display: flex;
   }
 
 
