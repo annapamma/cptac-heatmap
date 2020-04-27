@@ -1,0 +1,201 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "description": "NCI supported [Clinical Proteomic Tumor Analysis Consortium (CPTAC)](https://proteomics.cancer.gov/programs/cptac), is a comprehensive and coordinated effort to accelerate the understanding of the molecular basis of cancer through the application of large-scale proteome (proteins) and genome (DNA and RNA) analysis technologies to different cancer types. CPTAC is composed of expertise in proteomics, genomics, cancer biology, oncology, and clinical chemistry, while creating open community resources that are widely used by the cancer community.\nThis page provide data visualization for proteogenomic data from CPTAC-CCRCC discovery project. To view the data as a co-expression network, visit the [CPTAC Interactive Network Portal](http://ccrcc.cptac-network-view.org/).\nFor more information, please see the publication [Fenyo et al. Cell. 2019](https://www.ncbi.nlm.nih.gov/pubmed/31675502).\n",
+    "version": "1.0.0",
+    "title": "CPTAC Protrack",
+    "contact": {
+      "email": "anna.calinawan@mssm.edu"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "heatmap",
+      "description": "Heatmap data"
+    }
+  ],
+  "paths": {
+    "/series": {
+      "post": {
+        "tags": [
+          "heatmap"
+        ],
+        "summary": "Submit genes and receive heatmap data",
+        "description": "Submit genes and receive heatmap data.\nGenes symbol names are defined in the [NCBI gene database](https://www.ncbi.nlm.nih.gov/gene)\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeneList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success: JSON heatmap series",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "series": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Series"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/table": {
+      "post": {
+        "tags": [
+          "heatmap"
+        ],
+        "summary": "Submit genes and receive JSON data for use in Excel",
+        "description": "Submit genes and receive raw heatmap data in an Excel-ready JSON format.\nThe 'excelData' array can be readily consumed in a library such as sheetjs\nfor conversion to an Excel file. See: [SheetJS](https://github.com/SheetJS/sheetjs)\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeneList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success: Raw data for Excel (in JSON)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "excelData": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Data type": {
+                            "$ref": "#/components/schemas/DataType"
+                          },
+                          "Gene symbol": {
+                            "$ref": "#/components/schemas/GeneSymbol"
+                          },
+                          "idx": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "string",
+                          "example": "Hot Tumor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GeneList": {
+        "type": "object",
+        "required": [
+          "genes"
+        ],
+        "properties": {
+          "genes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GeneSymbol"
+            }
+          }
+        }
+      },
+      "GeneSymbol": {
+        "description": "Gene symbol name from the NCBI gene database",
+        "type": "string",
+        "example": "CASP3"
+      },
+      "Series": {
+        "type": "object",
+        "required": [
+          "data",
+          "name"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SeriesItem"
+            }
+          },
+          "name": {
+            "type": "string",
+            "example": "RRAS2 rna"
+          }
+        }
+      },
+      "SeriesItem": {
+        "type": "object",
+        "required": [
+          "value",
+          "x",
+          "y"
+        ],
+        "properties": {
+          "value": {
+            "description": "The nominal (as a string) or continuous (as a float) string corresponding\nto a data point\n",
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number",
+                "format": "float"
+              }
+            ],
+            "example": 0.123456789
+          },
+          "x": {
+            "type": "string",
+            "example": "X7316.160"
+          },
+          "y": {
+            "type": "number",
+            "format": "float",
+            "example": 0
+          }
+        }
+      },
+      "DataType": {
+        "type": "string",
+        "enum": [
+          "mutation",
+          "proteo",
+          "rna",
+          "phospho"
+        ]
+      }
+    }
+  }
+}

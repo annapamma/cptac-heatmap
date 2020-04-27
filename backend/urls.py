@@ -29,6 +29,7 @@ urlpatterns = [
     url('api/table', backend.views.table),
     url('api/phospho_series', backend.views.phospho_series),
     url('api/phospho_table', backend.views.phospho_table),
+    url('swagger', backend.views.swagger)
 ]
 
 if settings.DEBUG:

@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
@@ -179,3 +179,6 @@ def download_data(request):
 @csrf_exempt
 def load_first_data(request):
     return JsonResponse({'histology': histology})
+
+def swagger(request):
+    return HttpResponseRedirect(redirect_to='/static/swagger-ui/index.html')
