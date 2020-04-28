@@ -18,6 +18,13 @@
         :gene="gene"
         :key="gene.toString()"
     />
+      <heatmap v-if="selectedView === 'mutation'"
+        v-for="(val, gene) in mutationSeries"
+        :options="options"
+        :series="val"
+        :gene="gene"
+        :key="gene.toString()"
+    />
     <heatmap-clinical
         :series="chromosomeSeries"
         :options="options"
@@ -52,6 +59,9 @@ export default {
         };
     },
     computed: {
+        mutationSeries() {
+            return this.$store.state.mutationSeries;
+        },
         phosphoSeries() {
             return this.$store.state.phosphoSeries;
         },

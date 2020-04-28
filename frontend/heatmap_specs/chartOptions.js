@@ -23,6 +23,7 @@ export default (colorScale, ctx) => ({
         const selectedSample = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].x;
         const selectedValue = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].value;
         const selectedPeptide = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].Peptide;
+        const HGVSp_Short = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex].HGVSp_Short;
         const selectedGene = chartContext.series.w.config.series[seriesIndex].data[dataPointIndex]['gene'];
         ctx.$store.dispatch(
           'updateSelectedDataPoint',
@@ -31,7 +32,8 @@ export default (colorScale, ctx) => ({
             selectedSample,
             selectedValue,
             selectedPeptide,
-            selectedGene
+            selectedGene,
+              HGVSp_Short
           },
         );
       },

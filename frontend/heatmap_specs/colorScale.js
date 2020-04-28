@@ -148,6 +148,9 @@ const colorsRanges = {
   1027: '#E8E8E8', // (-0.2, 0.2]
   1028: '#ff7777', // (0.2, 0.5]
   1029: '#990000', // (0.5, +inf)
+  1030: '#ececec', // Mutation 0
+  1031: '#FFA500', // Mutation 1
+  1032: '#993F00', // Mutation 2
 };
 
 export default {

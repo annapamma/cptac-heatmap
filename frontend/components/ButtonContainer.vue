@@ -6,6 +6,9 @@
       <div class="specific-data"><b>Sample:</b> {{ this.sample }}</div>
       <div class="specific-data"><b>Value:</b> {{ this.value }}</div>
       <div class="specific-data" v-if="selectedView === 'phospho'"><b>Peptide:</b> {{ this.peptide }}</div>
+      <div class="specific-data" v-if="selectedView === 'mutation' && HGVSp_Short.length > 0">
+          <b>HGVSp_Short:</b> {{ HGVSp_Short }}
+      </div>
       <div class="sort-buttons" v-if="genes.length <= 30">
         <button @click="sort(ascending=true)" style="background-color: lightgray;">
           Sort {{ this.series.length ? `by ${this.series}: ascending` : '' }}
@@ -32,6 +35,9 @@ export default {
     series() {
       return this.$store.state.selectedSeries;
     },
+      HGVSp_Short() {
+        return this.$store.state.HGVSp_Short;
+      },
     sample() {
       return this.$store.state.selectedSample;
     },

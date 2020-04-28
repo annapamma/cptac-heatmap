@@ -10,6 +10,7 @@ import initialSortOrder from './initialSortOrder.js';
 import topSeries from '../src/topSeries.js';
 import chromosomeSeries from '../src/chromosomeSeries.js';
 import bottomSeries from '../src/bottomSeries.js';
+import landingDataMutation from "./landingDataMutation.js";
 
 Vue.use(Vuex);
 
@@ -23,13 +24,15 @@ export default new Vuex.Store({
     firstPhosphoFetched: false,
     genes: ['CXCR2', 'CXCR4', 'CCR7', 'IL6', 'MAGEA1', 'TP53', 'EIF4E'],
     geneDetails: {},
+      HGVSp_Short: '',
       histology: {},
     isLoading: false,
+      mutationSeries: landingDataMutation.series,
     pathwayIsSelected: false,
     series: landingData.series,
     seriesUnfiltered: landingData.series,
     phosphoSeries: landingDataPhospho.series,
-    selectedView: 'all',
+    selectedView: 'mutation',
     selectedGene: '',
     selectedPathway: '',
     selectedPeptide: '',
@@ -73,13 +76,14 @@ export default new Vuex.Store({
       state.series_phospho = series;
     },
     UPDATE_SELECTED_DATA_POINT(state, {
-      selectedSeries, selectedSample, selectedValue, selectedPeptide, selectedGene
+      selectedSeries, selectedSample, selectedValue, selectedPeptide, selectedGene, HGVSp_Short
     }) {
       state.selectedSeries = selectedSeries;
       state.selectedSample = selectedSample;
       state.selectedValue = selectedValue;
       state.selectedPeptide = selectedPeptide;
       state.selectedGene = selectedGene;
+      state.HGVSp_Short = HGVSp_Short ? HGVSp_Short.join('; ') : '';
     },
     REORDER_SAMPLES(state) {
       const sortOrder = state.sortOrder.slice();
@@ -88,7 +92,6 @@ export default new Vuex.Store({
       let sortedObj = {};
       if (state.selectedView === 'phospho') {
           for (let geneName in state.phosphoSeries) {
-              console.log('sorting by ', geneName);
               const series = state.phosphoSeries[geneName];
 
               sortedObj[geneName] =
@@ -100,6 +103,19 @@ export default new Vuex.Store({
                   });
           }
           state.phosphoSeries = sortedObj;
+      } else if (state.selectedView === 'mutation') {
+          for (let geneName in state.mutationSeries) {
+              const series = state.mutationSeries[geneName];
+
+              sortedObj[geneName] =
+                  series.map((el) => {
+                      return {
+                        name: el.name,
+                        data: el.data.sort(sortByIndex),
+                      }
+                  });
+          }
+          state.mutationSeries = sortedObj;
       } else {
           for (let geneName in state.series) {
               const series = state.series[geneName];
@@ -133,17 +149,6 @@ export default new Vuex.Store({
                   }
               });
     },
-    REORDER_SAMPLES_PHOSPHO(state) {
-      const sortOrder = state.sortOrderPhospho.slice();
-
-      const sortByIndex = (a, b) => (sortOrder.indexOf(a.x) > sortOrder.indexOf(b.x) ? 1 : -1);
-
-      state.series_phospho = state.series_phospho.map(el => ({
-        name: el.name,
-        phospho_id: el.phospho_id,
-        data: el.data.sort(sortByIndex),
-      }));
-    },
     SET_GENE_LIST(state, geneListArr) {
       state.genes = geneListArr;
     },
@@ -151,6 +156,7 @@ export default new Vuex.Store({
       state.isLoading = isLoading;
     },
     SORT_SAMPLES(state, ascending) {
+        console.log('im in the mutation')
         const ccrccPositive = {
         'C3L-00103': 1, 'C3L-00097': 1, 'C3L-00088': 1, 'C3L-00096': 1, 'C3L-00010': 1, 'C3L-00079': 1, 'C3L-00011': 1, 'C3L-00026': 1, 'C3L-00004': 1, 'C3L-00359': 0, 'C3L-00360': 1, 'C3L-00369': 1, 'C3L-00418': 1, 'C3L-00447': 1, 'C3L-00581': 1, 'C3L-00910': 1, 'C3N-00310': 1, 'C3N-00312': 1, 'C3L-00416': 1, 'C3L-00448': 1, 'C3N-00305': 1, 'C3N-00313': 0, 'C3N-00314': 1, 'C3N-00315': 1, 'C3N-00317': 1, 'C3N-00320': 1, 'C3N-00437': 1, 'C3N-00491': 1, 'C3N-00494': 1, 'C3N-00194': 1, 'C3N-00244': 1, 'C3N-00242': 1, 'C3L-00792': 1, 'C3L-00813': 1, 'C3L-00765': 1, 'C3N-00390': 1, 'C3N-00435': 0, 'C3L-00583': 1, 'C3N-00168': 1, 'C3N-00177': 1, 'C3N-00380': 1, 'C3L-00561': 1, 'C3L-00917': 1, 'C3N-00852': 1, 'C3L-00607': 1, 'C3L-00610': 1, 'C3L-00766': 1, 'C3L-00799': 1, 'C3L-00800': 1, 'C3L-00812': 1, 'C3N-00246': 1, 'C3N-00733': 1, 'C3L-00791': 1, 'C3L-00902': 1, 'C3L-01302': 1, 'C3L-00907': 1, 'C3N-00953': 1, 'C3L-00790': 1, 'C3L-00796': 1, 'C3L-00814': 1, 'C3L-00817': 1, 'C3L-01553': 1, 'C3L-00183': 1, 'C3N-00150': 1, 'C3N-00573': 1, 'C3N-00577': 1, 'C3L-01352': 1, 'C3N-01200': 1, 'C3N-01214': 1, 'C3N-01213': 1, 'C3N-01220': 1, 'C3N-01522': 1, 'C3N-01524': 1, 'C3N-01261': 1, 'C3N-00495': 1, 'C3N-01175': 0, 'C3N-00832': 0, 'C3N-00834': 1, 'C3N-01176': 1, 'C3N-01178': 1, 'C3N-00492': 0, 'C3L-01288': 1, 'C3L-00606': 1, 'C3L-01283': 1, 'C3L-01287': 1, 'C3L-01281': 1, 'C3N-00148': 1, 'C3N-00154': 1, 'C3N-00646': 1, 'C3N-00149': 1, 'C3L-01557': 1, 'C3L-01560': 1, 'C3L-00908': 1, 'C3L-01313': 1, 'C3L-01836': 1, 'C3L-01286': 1, 'C3L-01603': 1, 'C3N-01646': 1, 'C3N-01648': 1, 'C3N-01649': 1, 'C3N-01651': 1, 'C3N-01361': 1, 'C3N-01179': 1, 'C3N-01180': 0, 'C3N-00831': 1, 'C3N-01808': 1, 'C3L-01607': 1, 'C3L-01861': 1, 'C3L-01882': 1, 'C3L-01885': 1};
 
@@ -172,9 +178,13 @@ export default new Vuex.Store({
       let seriesToSortBy = [];
       if (state.selectedGene.length) {
           if (state.selectedView === 'phospho') {
-            seriesToSortBy = state.phosphoSeries[state.selectedGene].find(s => {
-                return s.name === state.selectedSeries
-            });
+              seriesToSortBy = state.phosphoSeries[state.selectedGene].find(s => {
+                  return s.name === state.selectedSeries
+              });
+          } else if (state.selectedView === 'mutation') {
+              seriesToSortBy = state.mutationSeries[state.selectedGene].find(s => {
+                  return s.name === state.selectedSeries
+              });
           } else {
             seriesToSortBy = state.series[state.selectedGene].find(s => s.name === state.selectedSeries);
           }
@@ -206,6 +216,9 @@ export default new Vuex.Store({
         state.seriesUnfiltered = series;
         state.series = series;
     },
+      UPDATE_SERIES_MUTATION(state, series) {
+        state.mutationSeries = series;
+      },
     UPDATE_SERIES_PHOSPHO(state, series) {
         state.phosphoSeries = series;
     },
@@ -291,10 +304,6 @@ export default new Vuex.Store({
       store.commit('SORT_SAMPLES', ascending);
       store.commit('REORDER_SAMPLES');
     },
-    sortSamplesPhospho(store, { ascending, series, phospho }) {
-      store.commit('SORT_SAMPLES_PHOSPHO', { ascending, series, phospho });
-      store.commit('REORDER_SAMPLES_PHOSPHO');
-    },
     selectDisease(store, disease) {
       store.commit('UPDATE_SELECTED_DISEASE', disease);
     },
@@ -321,6 +330,21 @@ export default new Vuex.Store({
       ).then(
         ({ data }) => {
             store.commit('UPDATE_SERIES_PHOSPHO', data.series);
+        },
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
+        },
+      );
+    },
+    submitGenesMutation(store, genes) {
+      axios.post(
+        `/api/mutation_series/`,
+            genes
+      ).then(
+        ({ data }) => {
+            console.log(data)
+            store.commit('UPDATE_SERIES_MUTATION', data.series);
         },
       ).catch(
         (e) => {

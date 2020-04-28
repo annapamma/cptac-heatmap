@@ -10,6 +10,9 @@ color_df = settings.COLOR
 actual_df = settings.ACTUAL
 phospho_df = settings.PHOSPHO
 histology = settings.HISTOLOGY
+mutation_df = settings.MUTATION
+mutation_color_df = settings.MUTATION_COLOR
+HGVSp_Short = settings.HGVSP_SHORT
 
 
 def df_to_apex_data_single_gene(filtered_gene_df, actual):
@@ -45,6 +48,31 @@ def df_to_apex_data_phospho(filtered_gene_df, actual):
                     'value': actual[val[0]][data_type],
                     'Peptide': actual['Peptide'][data_type],
                     'gene': actual.loc[data_type]['Gene symbol'],
+                }
+                for val in vals.items()
+            ]
+        }
+        for data_type, vals in filtered_gene_df.iterrows()
+    ]
+    for s in series:
+        s['data'].insert(-7, {'x': 'separator', 'y': 1000, 'value': 'separator', 'gene': 'separator'})
+    return series[::-1]
+
+
+def df_to_apex_data_mutation(filtered_gene_df, actual):
+    series = [
+        {
+            'name': data_type,
+            'data': [
+                {
+                    'x': val[0],  # sample ID
+                    'y': val[1],  # color scale val
+                    'value': actual[val[0]][data_type],
+                    'gene': actual.loc[data_type]['Gene symbol'],
+                    'HGVSp_Short':
+                        HGVSp_Short[actual.loc[data_type]['Gene symbol']]
+                        [val[0]]
+                        [actual.loc[data_type]['Variant_Classification']]
                 }
                 for val in vals.items()
             ]
@@ -153,6 +181,24 @@ def phospho_series(request):
         'series': gene_dfs,
     })
 
+@csrf_exempt
+def mutation_series(request):
+    if request.method != "POST":
+        return render(request, 'index.html')
+
+    genes = [g for g in json.loads(request.body)['genes'] if g in mutation_df['Gene symbol'].values]
+
+    gene_dfs = {
+        g: df_to_apex_data_mutation(
+            filtered_df_single_gene(mutation_color_df, g).drop(columns=['Gene symbol', 'Variant_Classification']),
+            mutation_df
+        )
+        for g in genes
+    }
+
+    return JsonResponse({
+        'series': gene_dfs,
+    })
 
 @csrf_exempt
 def download_data(request):

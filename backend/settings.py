@@ -147,58 +147,20 @@ PHOSPHO = pickle.load(
     open(os.path.join(BASE_DIR, 'data', 'phospho_normalized.pkl'),
          'rb')
 )
-# ALL_GENES = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'all_genes.pkl'),
-#          'rb')
-# )
-#
-# ALL_GENE_DATA = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'all_gene_data.pkl'),
-#          'rb')
-# )
-#
-#
-# CPTAC_DATA = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'cptac.pkl'),
-#          'rb')
-# )
-#
-# CNV_BAF = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'cnv_baf.pkl'),
-#          'rb')
-# )
-#
-# CNV_LR = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'cnv_lr.pkl'),
-#          'rb')
-# )
-#
-# MUTATION = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'mutation.pkl'),
-#          'rb')
-# )
-#
-# RNA = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'rna.pkl'),
-#          'rb')
-# )
-#
-# METHYLATION = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'methylation.pkl'),
-#          'rb')
-# )
-#
-# PROTEIN = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'protein.pkl'),
-#          'rb')
-# )
-#
-# PHOSPHO = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'phospho.pkl'),
-#          'rb')
-# )
-#
-# SAMPLE_DATA = pickle.load(
-#     open(os.path.join(BASE_DIR, 'data', 'sample.pkl'),
-#          'rb')
-# )
+
+MUTATION = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'mutation_raw.pkl'),
+         'rb')
+)
+
+MUTATION_COLOR = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'mutation_raw_color.pkl'),
+         'rb')
+)
+
+HGVSP_SHORT = pickle.load(
+    open(os.path.join(BASE_DIR, 'data', 'HGVSp_Short.pkl'),
+         'rb')
+)
+
+
