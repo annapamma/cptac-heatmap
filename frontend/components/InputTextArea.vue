@@ -77,16 +77,23 @@ export default {
       );
     },
     downloadExcel() {
-        if (this.$store.state.selectedView === 'all') {
-          this.$store.dispatch(
-            'downloadExcel',
-            {
-              genes: this.genes,
-            },
-          );
+        if (this.$store.state.selectedView === 'phospho') {
+            this.$store.dispatch(
+                'downloadExcelPhospho',
+                {
+                    genes: this.genes,
+                },
+            );
+        } else if (this.$store.state.selectedView === 'mutation') {
+            this.$store.dispatch(
+                'downloadExcelMutation',
+                {
+                    genes: this.genes,
+                },
+            );
         } else {
             this.$store.dispatch(
-            'downloadExcelPhospho',
+            'downloadExcel',
             {
               genes: this.genes,
             },

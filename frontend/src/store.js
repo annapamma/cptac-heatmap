@@ -260,6 +260,10 @@ export default new Vuex.Store({
           utils.book_append_sheet(wb, ws);
           writeFile(wb, 'CPTAC3-ccrcc.xls');
         },
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
+        },
       );
     },
     downloadExcelPhospho(store, { genes }) {
@@ -277,6 +281,33 @@ export default new Vuex.Store({
           const wb = utils.book_new();
           utils.book_append_sheet(wb, ws);
           writeFile(wb, 'CPTAC3-ccrcc-phospho.xls');
+        },
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
+        },
+      );
+    },
+   downloadExcelMutation(store, { genes }) {
+      axios.post(
+        `/api/mutation_table/`,
+            genes
+      ).then(
+        ({ data }) => {
+            console.log(data)
+          const ws = utils.json_to_sheet(
+            data.excelData,
+            {
+              header: ['idx', 'Gene symbol', 'Variant_Classification', ...store.state.sortOrder],
+            },
+          );
+          const wb = utils.book_new();
+          utils.book_append_sheet(wb, ws);
+          writeFile(wb, 'CPTAC3-ccrcc-phospho.xls');
+        },
+      ).catch(
+        (e) => {
+          console.error('FetchError: ', e.message);
         },
       );
     },

@@ -137,6 +137,21 @@ def phospho_table(request):
 
 
 @csrf_exempt
+def mutation_table(request):
+    genes = [g for g in json.loads(request.body) if g in mutation_df['Gene symbol'].values]
+
+    filtered_scale = filtered_df(mutation_df, genes)
+    df_list = filtered_scale.to_dict(orient='records')
+    idxes = filtered_scale.index
+    for i, row in enumerate(df_list):
+        row['idx'] = idxes[i]
+
+    return JsonResponse({
+        'excelData': df_list
+    })
+
+
+@csrf_exempt
 def gene_details(request):
     genes = [g for g in json.loads(request.body)['genes'] if g in settings.GENE_DETAILS.index]
     return JsonResponse({

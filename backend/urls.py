@@ -28,6 +28,7 @@ urlpatterns = [
     url('api/phospho_series', backend.views.phospho_series),
     url('api/phospho_table', backend.views.phospho_table),
     url('api/mutation_series', backend.views.mutation_series),
+    url('api/mutation_table', backend.views.mutation_table),
     url('swagger', backend.views.swagger)
 ]
 
