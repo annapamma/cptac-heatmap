@@ -25,17 +25,7 @@
         props: ['options', 'series', 'gene'],
         computed: {
             height() {
-                const calcHeights = {
-                    8: 168,
-                    7: 153,
-                    6: 138,
-                    5: 123,
-                    4: 108,
-                    3: 93,
-                    2: 78,
-                    1: 68
-                };
-                return calcHeights[this.series.length];
+                return this.$store.state.heights[this.series.length];
             },
             geneDetails () {
                 return this.$store.state.geneDetails[this.gene]
@@ -53,6 +43,10 @@
 </script>
 
 <style scoped>
+  .apex-container {
+    width: calc(100vw - 500px);
+  }
+
   .apexcharts-canvas {
     height: 100%;
   }
