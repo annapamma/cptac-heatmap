@@ -215,6 +215,7 @@ def mutation_series(request):
         'series': gene_dfs,
     })
 
+
 @csrf_exempt
 def download_data(request):
     if request.method == "POST":
@@ -240,6 +241,7 @@ def download_data(request):
 @csrf_exempt
 def load_first_data(request):
     return JsonResponse({'histology': histology})
+
 
 def swagger(request):
     return HttpResponseRedirect(redirect_to='/static/swagger-ui/index.html')

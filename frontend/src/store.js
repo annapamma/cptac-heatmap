@@ -22,29 +22,39 @@ export default new Vuex.Store({
     chromosomeSeries,
     excelData: {},
     firstPhosphoFetched: false,
-    genes: ['CXCR2', 'CXCR4', 'CCR7', 'IL6', 'MAGEA1', 'TP53', 'EIF4E'],
+    genes: ['CD8A', 'PDCD1', 'CD274', 'VEGFA', 'BAP1'],
     geneDetails: {},
-      HGVSp_Short: '',
-      histology: {},
+    heights: {
+        8: 168,
+        7: 153,
+        6: 138,
+        5: 123,
+        4: 108,
+        3: 93,
+        2: 78,
+        1: 68
+    },
+    HGVSp_Short: '',
+    histology: {},
     isLoading: false,
-      mutationSeries: landingDataMutation.series,
+    mutationSeries: landingDataMutation.series,
     pathwayIsSelected: false,
     series: landingData.series,
     seriesUnfiltered: landingData.series,
     phosphoSeries: landingDataPhospho.series,
-    selectedView: 'mutation',
+    selectedView: 'all',
     selectedGene: '',
     selectedPathway: '',
     selectedPeptide: '',
     selectedSeries: '',
     selectedSample: '',
-      selectedTracks: [
-                'CNV (baf)',
-                'CNV (lr)',
-                'Protein',
-                'Mutation',
-                'Methy',
-            ],
+    selectedTracks: [
+        'CNV (baf)',
+        'CNV (lr)',
+        'Protein',
+        'Mutation',
+        'Methy',
+    ],
     selectedValue: '',
     sortOrder: initialSortOrder,
     sortOrderPhospho: [],
@@ -63,9 +73,9 @@ export default new Vuex.Store({
     ASSIGN_EXCEL_DATA(state, excelData) {
       state.excelData = excelData;
     },
-      ASSIGN_GENE_DETAILS(state, geneDetails) {
-        state.geneDetails = geneDetails;
-      },
+    ASSIGN_GENE_DETAILS(state, geneDetails) {
+      state.geneDetails = geneDetails;
+    },
     ASSIGN_GENE_LIST(state, genes) {
       state.genes = genes;
     },
